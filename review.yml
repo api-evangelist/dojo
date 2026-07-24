@@ -1,0 +1,130 @@
+aid: dojo
+name: Dojo
+review:
+  question: Does Dojo publish a real public developer portal with downloadable OpenAPI specifications?
+  answer: true
+  date: '2026-07-24'
+  reviewer: API Evangelist
+findings:
+  summary: |
+    Dojo (Paymentsense trading as Dojo, London, United Kingdom) is an
+    API-native card acquirer / payment service provider. It runs a genuine
+    public developer portal at https://docs.dojo.tech (Docusaurus v3, HTTP
+    200) documenting a REST API served from https://api.dojo.tech. Each
+    API reference page exposes a "Download OpenAPI specification" link that
+    resolves to a static bundled.json file, so specs are harvestable
+    verbatim. Five distinct real OpenAPI documents were downloaded and
+    parsed successfully (see specsHarvested). The core Dojo API is versioned
+    by date; the current version is 2026-02-27 (earlier 2024-02-05 and
+    2025-09-10 versions of the same core API are also published but were not
+    re-saved as they are prior versions of the same product). Authentication
+    is a secret API key sent in the Authorization header, with sandbox
+    (sk_sandbox_) and production (sk_prod_) key prefixes managed in the
+    developer portal. Webhook event subscriptions are first-class in the
+    core API (/webhooks, /webhooks/events, per-subscription signing secrets).
+    Home market is the United Kingdom; Dojo sits in the UK's dense card
+    acquiring / PSP cluster alongside Checkout.com and SumUp. No public
+    GraphQL, gRPC/.proto, or AsyncAPI document was found. A public GitHub
+    org exists (github.com/dojo-engineering, 46 public repos). A Postman
+    resource page exists in the docs; a standalone public Postman workspace
+    could not be independently confirmed.
+  developerPortal:
+    url: https://docs.dojo.tech
+    httpStatus: 200
+    platform: Docusaurus v3.5.2
+    confirmed: true
+  apiReference:
+    url: https://docs.dojo.tech/api
+    httpStatus: 200
+  authModel:
+    scheme: apiKey
+    location: header
+    header: Authorization
+    note: Secret API key; sandbox keys prefixed sk_sandbox_, production keys sk_prod_. Keys generated in the developer portal.
+    oauth2: false
+    mtls: false
+  webhooks:
+    supported: true
+    note: Core Dojo API exposes /webhooks subscription management, /webhooks/events catalog, and per-subscription signing secrets.
+    asyncapiFound: false
+  specsHarvested:
+    - file: openapi/dojo-api.json
+      title: Dojo API
+      openapi: 3.0.0
+      version: '2026-02-27'
+      paths: 40
+      source: https://docs.dojo.tech/api/v3/bundled.json
+      httpStatus: 200
+      fetched: '2026-07-24'
+    - file: openapi/dojo-transactions-api.json
+      title: Transaction API
+      openapi: 3.0.0
+      version: '2023-11-12'
+      paths: 1
+      source: https://docs.dojo.tech/transactions/bundled.json
+      httpStatus: 200
+      fetched: '2026-07-24'
+    - file: openapi/dojo-epos-data-api.json
+      title: EPOS Data API (REST)
+      openapi: 3.1.0
+      version: '1.0'
+      paths: 15
+      source: https://docs.dojo.tech/epos-data/bundled.json
+      httpStatus: 200
+      fetched: '2026-07-24'
+    - file: openapi/dojo-tap-to-pay-on-iphone-api.json
+      title: Tap to Pay on iPhone
+      openapi: 3.0.1
+      version: '2023-12-12'
+      paths: 1
+      source: https://docs.dojo.tech/tap-to-pay-on-iphone/bundled.json
+      httpStatus: 200
+      fetched: '2026-07-24'
+    - file: openapi/dojo-epos-tester-tool-api.json
+      title: EPOS Tester
+      openapi: 3.0.2
+      version: 1.0.0
+      paths: 2
+      source: https://docs.dojo.tech/epos-tester-tool/bundled.json
+      httpStatus: 200
+      fetched: '2026-07-24'
+  notFound:
+    - The /payments/api page's download link (https://docs.dojo.tech/payments/bundled.json) returns the SPA HTML shell, not a spec; the payments reference is a filtered view of the core Dojo API, which already covers payment intents.
+    - No public GraphQL endpoint or SDL.
+    - No published .proto / gRPC surface.
+    - No standalone AsyncAPI document (an EPOS websocket doc page exists at /epos-data/ws/api with no downloadable spec).
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.dojo.tech
+      documented: true
+    - protocol: Webhooks
+      scheme: https
+      documented: true
+      note: HTTP callback event subscriptions managed via the Dojo API /webhooks endpoints.
+    - protocol: WebSocket
+      scheme: wss
+      documented: true
+      note: An EPOS-data websocket API doc page exists (/epos-data/ws/api) but exposes no downloadable machine-readable spec.
+  homeMarket: United Kingdom
+  tier: gateway-psp
+sources:
+  - url: https://docs.dojo.tech
+    type: DeveloperPortal
+    httpStatus: 200
+  - url: https://docs.dojo.tech/api
+    type: APIReference
+    httpStatus: 200
+  - url: https://docs.dojo.tech/development-resources/api-keys
+    type: Documentation
+    httpStatus: 200
+  - url: https://docs.dojo.tech/development-resources/webhooks
+    type: Documentation
+    httpStatus: 200
+  - url: https://status.dojo.tech
+    type: StatusPage
+    httpStatus: 200
+  - url: https://github.com/dojo-engineering
+    type: GitHubOrganization
+    httpStatus: 200
+    note: 46 public repositories.

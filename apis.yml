@@ -1,0 +1,146 @@
+aid: dojo
+url: https://raw.githubusercontent.com/api-evangelist/dojo/refs/heads/main/apis.yml
+name: Dojo
+kind: company
+description: Dojo is a United Kingdom payments company (Paymentsense trading as Dojo,
+  headquartered in London) that provides card acquiring and payment processing for
+  in-person, online, and omnichannel merchants. It combines Dojo card machines and
+  terminals, a payment gateway, and merchant tooling (bookings, EPOS integrations,
+  business banking-style accounts) into a single acquirer-processor stack aimed at
+  UK small and mid-market businesses and hospitality. Dojo is genuinely API-native
+  and publishes a public developer portal at docs.dojo.tech with a REST API for
+  payment intents, customers, refunds, captures, terminals,
+  and webhooks, alongside separate specs for transactions, EPOS data ingestion, and
+  Tap to Pay on iPhone. Authentication is a secret API key sent in the Authorization
+  header (sandbox sk_sandbox_ and production sk_prod_ prefixes), and the platform
+  supports webhook event subscriptions. Positioned within the UK's dense card-acquiring
+  and PSP cluster alongside players like Checkout.com and SumUp.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Payments
+- United Kingdom
+- Payment Gateway
+- Payment Processing
+- Acquiring
+- Card Payments
+- In-Person Payments
+- Terminals
+- Point of Sale
+- Webhooks
+created: '2026-07-24'
+modified: '2026-07-24'
+specificationVersion: '0.19'
+apis:
+- aid: dojo:dojo-api
+  name: Dojo API
+  description: Dojo's core REST payments API for accepting and managing card payments.
+    Covers payment intents, refunds, reversals, captures, customers, setup intents,
+    terminals, terminal sessions, capabilities, and webhook event subscriptions.
+    Uses an API key in the Authorization header. Version 2026-02-27 (40 paths).
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Payments
+  - Payment Intents
+  - Customers
+  - Terminals
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+- aid: dojo:dojo-transactions-api
+  name: Dojo Transaction API
+  description: Retrieves transaction records for a merchant. Documented REST endpoint
+    under https://api.dojo.tech for querying processed card transactions. Version
+    2023-11-12.
+  humanURL: https://docs.dojo.tech/transactions/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Transactions
+  - Reporting
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-transactions-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+- aid: dojo:dojo-epos-data-api
+  name: Dojo EPOS Data API
+  description: A REST contract that a merchant's EPOS (point-of-sale) system implements
+    so Dojo can read orders, tables, areas, parties, and reservations for hospitality
+    integrations. The server is merchant-hosted (example server your-epos.example.com);
+    the spec defines the interface Dojo consumes. Version 1.0 (15 paths).
+  humanURL: https://docs.dojo.tech/epos-data/api
+  tags:
+  - EPOS
+  - Point of Sale
+  - Hospitality
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-epos-data-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+- aid: dojo:dojo-tap-to-pay-on-iphone-api
+  name: Dojo Tap to Pay on iPhone API
+  description: API supporting Dojo's Tap to Pay on iPhone in-person acceptance flow,
+    documented under https://api.dojo.tech. Version 2023-12-12.
+  humanURL: https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Tap to Pay
+  - In-Person Payments
+  - iPhone
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-tap-to-pay-on-iphone-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+- aid: dojo:dojo-epos-tester-tool-api
+  name: Dojo EPOS Tester Tool API
+  description: A small helper API for the Dojo EPOS Tester tool, used to validate
+    an EPOS integration against Dojo's EPOS Data contract. Version 1.0.0 (2 paths).
+  humanURL: https://docs.dojo.tech/epos-tester-tool/api
+  tags:
+  - EPOS
+  - Testing
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-epos-tester-tool-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+common:
+- type: Website
+  url: https://dojo.tech/
+- type: DeveloperPortal
+  url: https://docs.dojo.tech
+- type: Documentation
+  url: https://docs.dojo.tech/docs
+- type: APIReference
+  url: https://docs.dojo.tech/api
+- type: GettingStarted
+  url: https://docs.dojo.tech/get-started
+- type: Postman
+  url: https://docs.dojo.tech/development-resources/postman
+- type: ChangeLog
+  url: https://docs.dojo.tech/changelog
+- type: StatusPage
+  url: https://status.dojo.tech
+- type: GitHubOrganization
+  url: https://github.com/dojo-engineering
+- type: LinkedIn
+  url: https://www.linkedin.com/company/dojo-tech
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

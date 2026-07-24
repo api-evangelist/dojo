@@ -1,0 +1,134 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Tap to Pay on iPhone",
+    "version": "2023-12-12",
+    "description": "# Introduction\n\nThe Tap to Pay on iPhone API is RESTful, using HTTP response codes to convey status, including successful responses and errors. Additionally, it accepts and returns JSON in the HTTP body.\n\n## Documentation\nFor a detailed step-by-step guide on how to integrate the Tap to Pay on iPhone API in your SDK, see the [Tap to Pay on iPhone SDK documentation](/tap-to-pay-on-iphone).\n\n## Base URLs\nUse the following base URL when making requests to the API:  https://api.dojo.tech/\n\n## Authentication\n\nThe Tap to Pay on iPhone API uses [Basic HTTP authentication](https://en.wikipedia.org/wiki/Basic_access_authentication). You can generate API keys in the [Developer Portal](https://developer.dojo.tech).\nSecret keys for the test environment use the prefix `sk_sandbox_`. Production keys use the prefix `sk_prod_`.\n\nYou must include your secret API key in the header of all requests, for example:\n\n```curl\n  --header 'content-type: application/json' \\\n  --header 'Authorization: Basic sk_prod_your_key' \\\n```\n\nAPI requests without authentication will fail.\n\n## Sandbox keys\n\nYou can test the Tap to Pay on iPhone API using the sandbox environment.\nHere's a sample test key:\n\n`sk_sandbox_h9zJhmgbLD_XmHnj75sFtnLr0sEc3zbwcUoJDbSZXqZd0Ra2-fOpZU34d_Iu75BE`\n\n## HTTP Responses\n\nThe API returns standard HTTP response codes [RFC 7231](https://tools.ietf.org/html/rfc7231#section-6) on each request to indicate the success or otherwise of API requests. Summaries for each HTTP code are listed below:\n\n* `200 OK`—The request was successful.\n\n* `201 Created`—The request was successful, and a new resource was created as a result.\n\n* `204 No Content`—The request was successful, but there is no content to send.\n\n* `400 Bad Request`—Bad request, probably due to a syntax error.\n\n* `401 Unauthorized`—Authentication required.\n\n* `403 Forbidden`—The API key doesn't have permissions.\n\n* `404 Not Found`—The resource doesn't exist.\n\n* `405 Method Not Allowed`—The request method is known by the server but isn't supported by the target resource.\n\n* `409 Conflict`—The request couldn't be completed because it conflicted with another request or the server's configuration.\n\n* `500`, `502`, `503`, `504` `Server Errors`—An error occurred with our API.\n\n## Errors\n\nDojo follows the error response format proposed in [RFC 7807](https://tools.ietf.org/html/rfc7807), also known as Problem Details for HTTP APIs. All errors are returned in the form of JSON.\n\n### Error Schema\n\nIn case of an error, the response object contains the following fields:\n\n* `errors` [object]—A human-readable explanation of errors.\n\n* `type` [string]—\nA URI reference RFC 3986 that identifies the problem type.\n\n* `title` [string]—A short, human-readable summary of the error.\n\n* `status` [integer]—The HTTP status code.\n\n* `detail` [string]—A human-readable message giving more details about the error. Not always present.\n\n* `traceId` [string]—The unique identifier of the failing request.\n\nThe following example shows a possible error response:\n\n```json\n{\n    \"errors\": {\n        \"Reference\": [\n            \"The Reference field is required.\"\n        ]\n    },\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"traceId\": \"00-a405f077df056a498323ffbcec05923f-aa63e6f4dbbc734a-01\",\n}\n```\n\n## Versioning\n\nDojo API uses the yyyy-mm-dd API version-naming scheme. You have to pass the version as the `version` header in all API calls, for example:\n\n``` curl\n  --header 'content-type: application/json' \\\n  --header 'Authorization: Basic sk_prod_your_key' \\\n  --header 'version: Pre-release' \\\n```\n\nWhen we make [breaking changes](../payments/development-resources/versioning-overview#breaking-changes) to the API, we release new dated versions.\n\nThe current version is `2023-12-12`.\n"
+  },
+  "servers": [
+    {
+      "url": "https://api.dojo.tech"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Tap to Pay on iPhone",
+      "description": "Allows you to create a terminal secret value."
+    }
+  ],
+  "paths": {
+    "/tap/apple-terminal/secret": {
+      "post": {
+        "tags": [
+          "Tap to Pay on iPhone"
+        ],
+        "summary": "Create a terminal secret",
+        "description": "Creates a secret value that you'll use to initialize the SDK.",
+        "operationId": "CreateTerminalSecret",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTerminalSecretResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-authorization-policies": [
+          "Access"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "version",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The API version with format yyyy-mm-dd. The current version is `2023-12-12`."
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "CreateTerminalSecretResponse": {
+        "title": "CreateActivationSecretResponse",
+        "type": "object",
+        "x-internal": true,
+        "properties": {
+          "secret": {
+            "type": "string",
+            "description": "Secret value to initialize the SDK.",
+            "example": "ts_prod_2dDKpmwtqzOq3qYYA9zU9wQEKoxHg-qRnu6AGpVxAAtoUpP2SGOaiq_A0JoPAr787Ae2k_4vjJDYQFDnIVZz3vK5qpNyY7vVmzM9i-s9dAY"
+          },
+          "expirationDate": {
+            "example": "2024-02-21T14:39:21.6050276Z",
+            "type": "string",
+            "format": "date-time",
+            "description": "The expiry date of `secret` in the format `yyyy-mm-dd`.\n\nThe timestamp and date of when the `secret` will be voided, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format. This occurs when you have not yet authenticated the SDK. The `secret` is short-lived and will expire after 6 hours."
+          }
+        }
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "additionalProperties": {
+          "nullable": true
+        },
+        "properties": {
+          "type": {
+            "description": "A URI reference [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986) that identifies the problem type.\n",
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "description": "A short, human-readable summary of the error.\n",
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "description": "The [HTTP status code](#section/Introduction/HTTP-Responses).\n",
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "description": "A human-readable message giving more details about the error. Not always present.\n",
+            "type": "string",
+            "nullable": true,
+            "additionalProperties": {}
+          }
+        }
+      }
+    }
+  }
+}
