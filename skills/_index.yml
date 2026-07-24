@@ -1,0 +1,26 @@
+generated: '2026-06-20'
+method: generated
+skills:
+- file: dojo-create-and-charge-payment.md
+  name: Create and charge a Dojo payment
+  api: openapi/dojo-api.json
+  operations:
+  - PaymentIntents_CreatePaymentIntent
+  - PaymentIntents_ChargePaymentIntent
+  - PaymentIntents_Get
+  - Captures_Create
+- file: dojo-refund-a-payment.md
+  name: Refund a Dojo payment
+  api: openapi/dojo-api.json
+  operations:
+  - PaymentIntents_Get
+  - Refunds_Create
+  - PaymentIntents_GetRefundById
+- file: dojo-subscribe-to-webhooks.md
+  name: Subscribe to Dojo webhooks
+  api: openapi/dojo-api.json
+  operations:
+  - Webhooks_Subscribe
+  - Webhooks_GenerateSecret
+  - Webhooks_ActivateSecret
+  - Webhooks_GetAlSubscriptions

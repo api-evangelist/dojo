@@ -1,0 +1,44 @@
+generated: '2026-06-20'
+method: searched
+source: https://docs.dojo.tech/llms.txt + https://docs.dojo.tech/llms-payment-intents.txt + openapi/dojo-api.json
+authentication:
+  style: api-key
+  header: Authorization
+  format: 'Authorization: Basic <api_key>'
+  note: '"Basic " is a literal prefix; the api_key is NOT base64-encoded. Sandbox keys are prefixed sk_sandbox_,
+    production keys sk_prod_. See authentication/dojo-authentication.yml.'
+idempotency:
+  supported: true
+  header: IdempotencyKey
+  scope: per-request (e.g. must be unique for each new refund on a payment intent)
+  applies_to:
+  - Refunds_Create
+  - Captures_Create
+  - Reversal_Create
+  - PaymentIntents_CreatePaymentIntent
+  note: Send an IdempotencyKey header to safely retry mutating requests; Dojo recognises retries of the
+    same request. Documented in the OpenAPI (idempotencyKey) and the payment-intents guide.
+versioning:
+  style: date-based
+  header: version
+  current: '2026-02-27'
+  note: 'Each release aligns with a date; select the API version via the version header. Prior: 2025-09-10,
+    2024-02-05, 2022-04-07 (legacy Payments API).'
+pagination:
+  style: search-endpoint
+  note: List/query surfaces are POST *_Search operations (PaymentIntents_Search, Customers_Search, Transactions_Search)
+    that take a filter body; no cursor/offset query parameters are declared in the spec.
+error_envelope:
+  format: json
+  problem_json: false
+  note: Errors are returned as JSON (not RFC 9457 application/problem+json). See errors/dojo-problem-types.yml.
+    Payment intents do not transition to a "declined" status — a declined authorization keeps the intent
+    in its prior state.
+rate_limits:
+  documented: false
+  note: No rate-limit headers (RateLimit-*/Retry-After) are declared in the OpenAPI.
+cross_links:
+- errors/dojo-problem-types.yml
+- lifecycle/dojo-lifecycle.yml
+- authentication/dojo-authentication.yml
+- sandbox/dojo-sandbox.yml

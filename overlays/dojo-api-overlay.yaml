@@ -1,0 +1,13 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Dojo API
+  version: 1.0.0
+extends: openapi/dojo-api.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: dojo
+    x-apievangelist-auth: 'api-key (Authorization: Basic <api_key>)'
+    x-apievangelist-idempotency-header: IdempotencyKey
+    x-apievangelist-version-header: version
+    x-apievangelist-sandbox: sk_sandbox_ vs sk_prod_ key prefixes on a shared host

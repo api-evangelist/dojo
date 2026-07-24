@@ -1,0 +1,89 @@
+generated: '2026-06-20'
+method: derived
+source: openapi/dojo-api.json
+entities:
+- name: PaymentIntent
+  description: Reusable intent to collect a payment; transitions Created -> Authorized -> Captured / Cancelled.
+  operations:
+  - PaymentIntents_CreatePaymentIntent
+  - PaymentIntents_Get
+  - PaymentIntents_ChargePaymentIntent
+  - PaymentIntents_Search
+- name: Capture
+  description: Captures an authorized payment intent.
+  operations:
+  - Captures_Create
+- name: Refund
+  description: Refund against a payment intent.
+  operations:
+  - Refunds_Create
+  - PaymentIntents_GetRefundById
+- name: Reversal
+  description: Reversal of an authorization.
+  operations:
+  - Reversal_Create
+- name: SetupIntent
+  description: Saves a card/payment method for future use.
+  operations:
+  - SetupIntents_Create
+  - SetupIntents_GetById
+- name: Customer
+  description: A payer with saved payment methods.
+  operations:
+  - Customers_Create
+  - Customers_Get
+  - Customers_GetPaymentMethods
+  - Customers_Search
+- name: PaymentMethod
+  description: A saved card/wallet belonging to a customer.
+  operations:
+  - Customers_GetPaymentMethods
+  - Customers_DeletePaymentMethod
+- name: Terminal
+  description: A physical Dojo card terminal.
+  operations:
+  - Terminals_ListTerminals
+  - Terminals_GetTerminal
+- name: TerminalSession
+  description: An in-person payment session on a terminal.
+  operations:
+  - TerminalSession_Create
+  - TerminalSession_Get
+  - TerminalSession_Cancel
+  - TerminalSession_Signature
+- name: Webhook
+  description: Event subscription + signing secret management.
+  operations:
+  - Webhooks_Subscribe
+  - Webhooks_GetAlSubscriptions
+  - Webhooks_GenerateSecret
+  - Webhooks_ActivateSecret
+relationships:
+- from: PaymentIntent
+  to: Customer
+  type: belongs_to
+  via: customer
+- from: Capture
+  to: PaymentIntent
+  type: belongs_to
+  via: paymentIntentId
+- from: Refund
+  to: PaymentIntent
+  type: belongs_to
+  via: paymentIntentId
+- from: Reversal
+  to: PaymentIntent
+  type: belongs_to
+  via: paymentIntentId
+- from: Customer
+  to: PaymentMethod
+  type: has_many
+  via: paymentMethods
+- from: SetupIntent
+  to: Customer
+  type: belongs_to
+  via: customer
+- from: TerminalSession
+  to: Terminal
+  type: belongs_to
+  via: terminalId

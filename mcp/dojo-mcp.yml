@@ -1,0 +1,137 @@
+generated: '2026-06-20'
+method: derived
+status: candidate
+source: openapi/dojo-api.json
+server:
+  name: dojo
+  transport: http
+  url: null
+  note: No official hosted/remote Dojo MCP server was found (checked docs, npm @modelcontextprotocol,
+    MCP registries). Tools below are a candidate surface derived one-per-operation from the Dojo API OpenAPI.
+tools:
+- name: PaymentIntents_CreatePaymentIntent
+  description: Create a payment intent
+  source_operation: openapi/dojo-api.json#PaymentIntents_CreatePaymentIntent
+- name: PaymentIntents_Get
+  description: Retrieve a payment intent
+  source_operation: openapi/dojo-api.json#PaymentIntents_Get
+- name: PaymentIntents_Delete
+  description: Cancel a payment intent
+  source_operation: openapi/dojo-api.json#PaymentIntents_Delete
+- name: Captures_Create
+  description: Captures a payment
+  source_operation: openapi/dojo-api.json#Captures_Create
+- name: PaymentIntents_ChargePaymentIntent
+  description: Charge a card
+  source_operation: openapi/dojo-api.json#PaymentIntents_ChargePaymentIntent
+- name: PaymentIntents_RefreshClientSessionSecret
+  description: Update a client session secret
+  source_operation: openapi/dojo-api.json#PaymentIntents_RefreshClientSessionSecret
+- name: PaymentIntents_Search
+  description: List all payment intents
+  source_operation: openapi/dojo-api.json#PaymentIntents_Search
+- name: PaymentIntents_SetTipsAmount
+  description: Change tips amount
+  source_operation: openapi/dojo-api.json#PaymentIntents_SetTipsAmount
+- name: PaymentIntents_SetCustomAmount
+  description: Change a payment intent amount
+  source_operation: openapi/dojo-api.json#PaymentIntents_SetCustomAmount
+- name: Receipt_Create
+  description: Send a receipt
+  source_operation: openapi/dojo-api.json#Receipt_Create
+- name: Refunds_Create
+  description: Create a refund
+  source_operation: openapi/dojo-api.json#Refunds_Create
+- name: PaymentIntents_GetRefundById
+  description: Retrieve a refund
+  source_operation: openapi/dojo-api.json#PaymentIntents_GetRefundById
+- name: Reversal_Create
+  description: Create a reversal
+  source_operation: openapi/dojo-api.json#Reversal_Create
+- name: SetupIntents_Create
+  description: Create a setup intent
+  source_operation: openapi/dojo-api.json#SetupIntents_Create
+- name: SetupIntents_GetById
+  description: Retrieve a setup intent
+  source_operation: openapi/dojo-api.json#SetupIntents_GetById
+- name: SetupIntents_Delete
+  description: Cancel a setup intent
+  source_operation: openapi/dojo-api.json#SetupIntents_Delete
+- name: SetupIntents_GetPublicById
+  description: Retrieve a setup intent (no auth)
+  source_operation: openapi/dojo-api.json#SetupIntents_GetPublicById
+- name: SetupIntents_RefreshPaymentIntentToken
+  description: Update a client session secret
+  source_operation: openapi/dojo-api.json#SetupIntents_RefreshPaymentIntentToken
+- name: SetupIntents_RefreshSetupIntentTokenPublic
+  description: Update a client session secret (no auth)
+  source_operation: openapi/dojo-api.json#SetupIntents_RefreshSetupIntentTokenPublic
+- name: Webhooks_GetAllWebhooks
+  description: List all events
+  source_operation: openapi/dojo-api.json#Webhooks_GetAllWebhooks
+- name: Webhooks_GetAlSubscriptions
+  description: List all subscriptions
+  source_operation: openapi/dojo-api.json#Webhooks_GetAlSubscriptions
+- name: Webhooks_Subscribe
+  description: Subscribe to an event
+  source_operation: openapi/dojo-api.json#Webhooks_Subscribe
+- name: Webhooks_GetSecrets
+  description: List all secrets
+  source_operation: openapi/dojo-api.json#Webhooks_GetSecrets
+- name: Webhooks_GenerateSecret
+  description: Generate a secret
+  source_operation: openapi/dojo-api.json#Webhooks_GenerateSecret
+- name: Webhooks_ActivateSecret
+  description: Activate a secret
+  source_operation: openapi/dojo-api.json#Webhooks_ActivateSecret
+- name: Webhooks_DeleteSecret
+  description: Delete a secret
+  source_operation: openapi/dojo-api.json#Webhooks_DeleteSecret
+- name: Webhooks_SubscribeUpdate
+  description: Update a subscription
+  source_operation: openapi/dojo-api.json#Webhooks_SubscribeUpdate
+- name: Webhooks_DeleteSubscriptions
+  description: Delete a subscription
+  source_operation: openapi/dojo-api.json#Webhooks_DeleteSubscriptions
+- name: Customers_Create
+  description: Create a customer
+  source_operation: openapi/dojo-api.json#Customers_Create
+- name: Customers_Delete
+  description: Delete a customer
+  source_operation: openapi/dojo-api.json#Customers_Delete
+- name: Customers_Update
+  description: Update information about a customer
+  source_operation: openapi/dojo-api.json#Customers_Update
+- name: Customers_Get
+  description: Retrieve a customer
+  source_operation: openapi/dojo-api.json#Customers_Get
+- name: Customers_CreateCustomerSecret
+  description: Create a customer secret
+  source_operation: openapi/dojo-api.json#Customers_CreateCustomerSecret
+- name: Customers_GetPaymentMethods
+  description: Retrieve payment method
+  source_operation: openapi/dojo-api.json#Customers_GetPaymentMethods
+- name: Customers_DeletePaymentMethod
+  description: Remove payment method
+  source_operation: openapi/dojo-api.json#Customers_DeletePaymentMethod
+- name: Customers_Search
+  description: List all customers
+  source_operation: openapi/dojo-api.json#Customers_Search
+- name: Terminals_ListTerminals
+  description: Retrieve all terminals
+  source_operation: openapi/dojo-api.json#Terminals_ListTerminals
+- name: Terminals_GetTerminal
+  description: Retrieve a terminal
+  source_operation: openapi/dojo-api.json#Terminals_GetTerminal
+- name: TerminalSession_Create
+  description: Create a session on a terminal
+  source_operation: openapi/dojo-api.json#TerminalSession_Create
+- name: TerminalSession_Get
+  description: Retrieve a terminal session
+  source_operation: openapi/dojo-api.json#TerminalSession_Get
+- name: TerminalSession_Cancel
+  description: Request the cancellation of a terminal session
+  source_operation: openapi/dojo-api.json#TerminalSession_Cancel
+- name: TerminalSession_Signature
+  description: Respond to a signature verification request
+  source_operation: openapi/dojo-api.json#TerminalSession_Signature

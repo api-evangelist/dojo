@@ -1,0 +1,43 @@
+# Dojo Developer Documentation
+
+> Dojo provides payment APIs and SDKs for businesses to accept online and in-person payments, manage transactions, and integrate with EPOS systems.
+
+Key information for LLM agents:
+
+- **Docs base URL**: https://docs.dojo.tech/
+- **API Base URL**: https://api.dojo.tech
+- **Environment selection**: Sandbox and production both use `https://api.dojo.tech`; the API key determines which environment receives the request.
+- **Authentication**: API key via `Authorization: Basic <api_key>` header. `Basic ` is a literal prefix in this scheme; do not base64-encode `api_key:`. Obtain keys from the Dojo Developer Portal at https://developer.dojo.tech
+- **Latest Dojo API version**: 2026-02-27 (set via `version` header)
+
+## OpenAPI Specifications
+
+These machine-readable OpenAPI specs can be fetched directly for precise API integration:
+
+- [Dojo API v3 (2026-02-27) — Latest](https://docs.dojo.tech/api/v3/bundled.json): Core payment intents, setup intents, customers, refunds, and webhooks
+- [Dojo API v2 (2025-09-10)](https://docs.dojo.tech/api/v2/bundled.json): Previous API version
+- [Dojo API v1 (2024-02-05)](https://docs.dojo.tech/api/v1/bundled.json): Legacy API version
+- [Payments API](https://docs.dojo.tech/payments/bundled.json): Legacy payments integration
+- [Transactions API](https://docs.dojo.tech/transactions/bundled.json): Transaction management and reporting
+- [EPOS Data API](https://docs.dojo.tech/epos-data/bundled.json): EPOS system integration (REST)
+- [EPOS Data API — WebSocket](https://docs.dojo.tech/epos-data-asyncapi/bundled.yaml): EPOS system integration (AsyncAPI/WebSocket)
+- [Tap to Pay on iPhone API](https://docs.dojo.tech/tap-to-pay-on-iphone/bundled.json): Tap to Pay on iPhone integration
+
+## Routing guide
+
+This root file is intentionally compact. Start with the narrowest product-specific file that matches the user's task, and use llms-full.txt only when the request spans multiple product areas.
+
+- [Online Payments](https://docs.dojo.tech/llms-online.txt): Use for hosted checkout, Components, payment links, or virtual terminal flows.
+- [Payment Intents](https://docs.dojo.tech/llms-payment-intents.txt): Use for backend payment creation, captures, refunds, cancellations, saved cards, and webhook-driven payment lifecycle logic.
+- [Pay at Counter](https://docs.dojo.tech/llms-inperson-pac.txt): Use for `/terminals`, `/terminal-sessions`, and `/terminal-sessions/{terminalSessionId}/signature` plus terminal session orchestration, in-person captures or refunds, signature verification, and pre-authorisation flows.
+- [Pay at Table](https://docs.dojo.tech/llms-inperson-pat.txt): Use for the Pay at Table flow: searching payable orders, locking/unlocking, recording payments, and printable bills via the EPOS Data REST and WebSocket APIs.
+- [EPOS Integration](https://docs.dojo.tech/llms-epos.txt): Use for EPOS capability registration, Dojo/POS event contracts, and EPOS Data API integration details.
+- [Core Concepts](https://docs.dojo.tech/llms-core-concepts.txt): Use for shared entities such as orders, parties, reservations, tables, areas, terminal sessions, and event vocabulary.
+- [Order and Pay](https://docs.dojo.tech/llms-order-and-pay.txt): Use for self-service ordering and payment flows that coordinate orders, payments, and POS capabilities.
+- [Plugins](https://docs.dojo.tech/llms-plugins.txt): Use for Magento, OpenCart, PrestaShop, and WooCommerce plugin installation, activation, configuration, and release notes.
+- [Bookings](https://docs.dojo.tech/llms-bookings.txt): Use for Dojo Bookings and RMS flows involving reservations, parties, tables, areas, and POS synchronization.
+- [iOS SDK](https://docs.dojo.tech/llms-mobile-ios.txt): Use for native iOS mobile checkout and save-card integrations.
+- [Android SDK](https://docs.dojo.tech/llms-mobile-android.txt): Use for native Android mobile checkout, Google Pay, and save-card integrations.
+- [React Native SDK](https://docs.dojo.tech/llms-mobile-reactnative.txt): Use for React Native mobile checkout and save-card integrations.
+- [Tap to Pay on iPhone](https://docs.dojo.tech/llms-mobile-ttpoi.txt): Use for in-person Tap to Pay on iPhone integrations.
+- [All documentation](https://docs.dojo.tech/llms-full.txt): Use when the request spans multiple product areas or requires broader cross-product context.

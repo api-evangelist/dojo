@@ -1,0 +1,34 @@
+generated: '2026-06-20'
+method: searched
+source: https://docs.dojo.tech/development-resources/testing
+environments:
+  model: key-scoped
+  host: https://api.dojo.tech
+  note: Sandbox and production share the same base host; the API key prefix selects the environment.
+  key_prefixes:
+    sandbox: sk_sandbox_
+    production: sk_prod_
+test_cards:
+- scheme: Mastercard
+  number: 5200 0000 0000 1005
+  expiry: 12/29
+  cvv: '020'
+  three_ds: 'No'
+  result: Successful
+- scheme: Mastercard
+  number: 5200 0000 0000 1096
+  expiry: 12/29
+  cvv: '020'
+  three_ds: '2.0'
+  result: Successful
+- scheme: Visa
+  number: 4456 5300 0000 1013
+  expiry: 12/29
+  cvv: '341'
+  three_ds: 'No'
+  result: Decline
+notes:
+- Test cards are valid only in the Dojo sandbox environment and only with a sandbox (sk_sandbox_) API
+  key.
+- Any address and cardholder name may be used with the virtual test cards.
+- Dojo also issues physical point-of-sale test cards for testing in-person (terminal / Tap to Pay) integrations.

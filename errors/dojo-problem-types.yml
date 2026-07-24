@@ -1,0 +1,34 @@
+generated: '2026-06-20'
+method: derived
+format: json
+problem_json: false
+source: openapi/dojo-api.json (4xx/5xx responses)
+note: Derived from the HTTP status codes used across Dojo API operations. Responses are JSON (not application/problem+json).
+  Payment intents do not expose granular card decline codes — a declined authorization leaves the intent
+  in its prior status rather than returning a decline-code envelope.
+problems:
+- status: 400
+  title: Bad Request
+  detail: Request was malformed or failed validation.
+- status: 401
+  title: Unauthorized
+  detail: Missing or invalid API key in the Authorization header.
+- status: 403
+  title: Forbidden
+  detail: API key lacks permission for the requested resource or operation.
+- status: 404
+  title: Not Found
+  detail: The referenced resource (payment intent, customer, refund, terminal, etc.) does not exist.
+- status: 405
+  title: Method Not Allowed
+  detail: HTTP method not supported on this resource.
+- status: 409
+  title: Conflict
+  detail: Request conflicts with the current resource state (e.g. capturing/cancelling an intent in an
+    incompatible status, or a duplicate IdempotencyKey).
+- status: 422
+  title: Unprocessable Entity
+  detail: Semantically invalid request (e.g. unsupported amount, currency, or configuration).
+- status: 500
+  title: Internal Server Error
+  detail: Unexpected server-side error.

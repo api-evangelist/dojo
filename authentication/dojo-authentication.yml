@@ -1,0 +1,25 @@
+generated: '2026-07-24'
+method: searched
+source: openapi/dojo-api.json + https://docs.dojo.tech/llms.txt
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: Authorization
+  sources:
+  - openapi/dojo-api.json
+  - openapi/dojo-tap-to-pay-on-iphone-api.json
+  - openapi/dojo-transactions-api.json
+  format: 'Authorization: Basic <api_key> (literal Basic prefix, not base64-encoded)'
+docs: https://docs.dojo.tech/development-resources/api-keys
+notes:
+- 'Auth is an API key sent as Authorization: Basic <api_key>; "Basic " is a literal prefix and the key
+  is NOT base64-encoded.'
+- Sandbox keys are prefixed sk_sandbox_ and production keys sk_prod_; the same host (api.dojo.tech) is
+  used for both and the key selects the environment.
+- Obtain keys from the Dojo Developer Portal (https://developer.dojo.tech).

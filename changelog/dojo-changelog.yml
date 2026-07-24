@@ -1,0 +1,25 @@
+generated: '2026-06-20'
+method: searched
+source: https://docs.dojo.tech/changelog
+scheme: date-based
+current_version: '2026-02-27'
+note: Each Dojo API release aligns with a date; the changelog highlights the latest and breaking changes
+  per version.
+entries:
+- version: '2026-02-27'
+  breaking: false
+  highlights:
+  - Added isNotOnlineCheckout property to accept payment links without online-checkout permissions (set
+    true; default false requires full online checkout permissions).
+- version: '2025-09-10'
+  breaking: null
+  highlights:
+  - Prior Dojo API v2 release.
+- version: '2024-02-05'
+  breaking: null
+  highlights:
+  - Dojo API v1 (legacy) release.
+- version: '2022-04-07'
+  breaking: null
+  highlights:
+  - Legacy Payments API release.

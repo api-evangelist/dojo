@@ -1,0 +1,23 @@
+generated: '2026-06-20'
+method: searched
+source: https://docs.dojo.tech/changelog
+versioning:
+  scheme: date-based
+  header: version
+  current: '2026-02-27'
+  history:
+  - '2026-02-27'
+  - '2025-09-10'
+  - '2024-02-05'
+  - '2022-04-07'
+  docs: https://docs.dojo.tech/changelog
+  note: Each API release aligns with a date; older dated versions remain available and are flagged as
+    legacy in the docs version selector.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: Legacy dated versions (2024-02-05, 2022-04-07 Payments API) are marked legacy in the docs but
+    no formal Sunset/Deprecation-header policy is published; upgrades are coordinated by contacting Dojo.
+status_page: https://status.dojo.tech
+changelog: https://docs.dojo.tech/changelog
+deprecated_operations: []

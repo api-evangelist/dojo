@@ -1,0 +1,20 @@
+generated: '2026-06-20'
+method: searched
+source: https://docs.dojo.tech/payments/accept-payments/online-payments
+families:
+- name: Dojo Components
+  type: embeddable-payment-elements
+  docs: https://docs.dojo.tech/payments/accept-payments/online-payments/components
+  description: Client-side payment components to embed card entry and payment flows into your own checkout.
+- name: Prebuilt Checkout Page
+  type: hosted-checkout
+  docs: https://docs.dojo.tech/payments/accept-payments/online-payments/checkout-page
+  description: Dojo-hosted, accessible, responsive prebuilt checkout UI.
+- name: Payment Links
+  type: hosted-payment-link
+  docs: https://docs.dojo.tech/payments/accept-payments/online-payments
+  description: Shareable hosted payment links.
+- name: Mobile Drop-in UI
+  type: mobile-ui-sdk
+  docs: https://docs.dojo.tech/mobile-integration
+  description: Native drop-in checkout UI for iOS, Android, and React Native (see packages/).

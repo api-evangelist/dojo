@@ -1,0 +1,31 @@
+generated: '2026-06-20'
+method: searched
+hosts:
+- https://api.dojo.tech
+- https://docs.dojo.tech
+documents:
+- path: /.well-known/security.txt
+  host: https://api.dojo.tech
+  status: 404
+- path: /.well-known/oauth-authorization-server
+  host: https://api.dojo.tech
+  status: 404
+- path: /.well-known/openid-configuration
+  host: https://api.dojo.tech
+  status: 404
+- path: /.well-known/oauth-protected-resource
+  host: https://api.dojo.tech
+  status: 404
+- path: /.well-known/api-catalog
+  host: https://api.dojo.tech
+  status: 404
+- path: /.well-known/ai-plugin.json
+  host: https://api.dojo.tech
+  status: 404
+- path: /.well-known/security.txt
+  host: https://docs.dojo.tech
+  status: 200
+  note: Returns the Docusaurus 404 HTML shell, not a real RFC 9116 security.txt — not saved.
+note: No machine-readable /.well-known/ discovery documents are published. API key auth (no OAuth/OIDC
+  discovery). A real vulnerability-disclosure page exists at dojo.tech/vulnerability-disclosure/ (see
+  security/).

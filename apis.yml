@@ -2,19 +2,16 @@ aid: dojo
 url: https://raw.githubusercontent.com/api-evangelist/dojo/refs/heads/main/apis.yml
 name: Dojo
 kind: company
-description: Dojo is a United Kingdom payments company (Paymentsense trading as Dojo,
-  headquartered in London) that provides card acquiring and payment processing for
-  in-person, online, and omnichannel merchants. It combines Dojo card machines and
-  terminals, a payment gateway, and merchant tooling (bookings, EPOS integrations,
-  business banking-style accounts) into a single acquirer-processor stack aimed at
-  UK small and mid-market businesses and hospitality. Dojo is genuinely API-native
-  and publishes a public developer portal at docs.dojo.tech with a REST API for
-  payment intents, customers, refunds, captures, terminals,
-  and webhooks, alongside separate specs for transactions, EPOS data ingestion, and
-  Tap to Pay on iPhone. Authentication is a secret API key sent in the Authorization
-  header (sandbox sk_sandbox_ and production sk_prod_ prefixes), and the platform
-  supports webhook event subscriptions. Positioned within the UK's dense card-acquiring
-  and PSP cluster alongside players like Checkout.com and SumUp.
+description: Dojo is a United Kingdom payments company (Paymentsense trading as Dojo, headquartered in
+  London) that provides card acquiring and payment processing for in-person, online, and omnichannel merchants.
+  It combines Dojo card machines and terminals, a payment gateway, and merchant tooling (bookings, EPOS
+  integrations, business banking-style accounts) into a single acquirer-processor stack aimed at UK small
+  and mid-market businesses and hospitality. Dojo is genuinely API-native and publishes a public developer
+  portal at docs.dojo.tech with a REST API for payment intents, customers, refunds, captures, terminals,
+  and webhooks, alongside separate specs for transactions, EPOS data ingestion, and Tap to Pay on iPhone.
+  Authentication is a secret API key sent in the Authorization header (sandbox sk_sandbox_ and production
+  sk_prod_ prefixes), and the platform supports webhook event subscriptions. Positioned within the UK's
+  dense card-acquiring and PSP cluster alongside players like Checkout.com and SumUp.
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - Payments
@@ -33,10 +30,10 @@ specificationVersion: '0.19'
 apis:
 - aid: dojo:dojo-api
   name: Dojo API
-  description: Dojo's core REST payments API for accepting and managing card payments.
-    Covers payment intents, refunds, reversals, captures, customers, setup intents,
-    terminals, terminal sessions, capabilities, and webhook event subscriptions.
-    Uses an API key in the Authorization header. Version 2026-02-27 (40 paths).
+  description: Dojo's core REST payments API for accepting and managing card payments. Covers payment
+    intents, refunds, reversals, captures, customers, setup intents, terminals, terminal sessions, capabilities,
+    and webhook event subscriptions. Uses an API key in the Authorization header. Version 2026-02-27 (40
+    paths).
   humanURL: https://docs.dojo.tech/api
   baseURL: https://api.dojo.tech
   tags:
@@ -52,11 +49,16 @@ apis:
     url: https://docs.dojo.tech/docs
   - type: APIReference
     url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    name: Dojo EPOS Data WebSocket API (AsyncAPI)
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    name: Dojo webhook event subscriptions
+    url: openapi/dojo-api.json
 - aid: dojo:dojo-transactions-api
   name: Dojo Transaction API
-  description: Retrieves transaction records for a merchant. Documented REST endpoint
-    under https://api.dojo.tech for querying processed card transactions. Version
-    2023-11-12.
+  description: Retrieves transaction records for a merchant. Documented REST endpoint under https://api.dojo.tech
+    for querying processed card transactions. Version 2023-11-12.
   humanURL: https://docs.dojo.tech/transactions/api
   baseURL: https://api.dojo.tech
   tags:
@@ -71,10 +73,10 @@ apis:
     url: https://docs.dojo.tech/transactions/api
 - aid: dojo:dojo-epos-data-api
   name: Dojo EPOS Data API
-  description: A REST contract that a merchant's EPOS (point-of-sale) system implements
-    so Dojo can read orders, tables, areas, parties, and reservations for hospitality
-    integrations. The server is merchant-hosted (example server your-epos.example.com);
-    the spec defines the interface Dojo consumes. Version 1.0 (15 paths).
+  description: A REST contract that a merchant's EPOS (point-of-sale) system implements so Dojo can read
+    orders, tables, areas, parties, and reservations for hospitality integrations. The server is merchant-hosted
+    (example server your-epos.example.com); the spec defines the interface Dojo consumes. Version 1.0
+    (15 paths).
   humanURL: https://docs.dojo.tech/epos-data/api
   tags:
   - EPOS
@@ -90,8 +92,8 @@ apis:
     url: https://docs.dojo.tech/epos-data/api
 - aid: dojo:dojo-tap-to-pay-on-iphone-api
   name: Dojo Tap to Pay on iPhone API
-  description: API supporting Dojo's Tap to Pay on iPhone in-person acceptance flow,
-    documented under https://api.dojo.tech. Version 2023-12-12.
+  description: API supporting Dojo's Tap to Pay on iPhone in-person acceptance flow, documented under
+    https://api.dojo.tech. Version 2023-12-12.
   humanURL: https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
   baseURL: https://api.dojo.tech
   tags:
@@ -107,8 +109,8 @@ apis:
     url: https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
 - aid: dojo:dojo-epos-tester-tool-api
   name: Dojo EPOS Tester Tool API
-  description: A small helper API for the Dojo EPOS Tester tool, used to validate
-    an EPOS integration against Dojo's EPOS Data contract. Version 1.0.0 (2 paths).
+  description: A small helper API for the Dojo EPOS Tester tool, used to validate an EPOS integration
+    against Dojo's EPOS Data contract. Version 1.0.0 (2 paths).
   humanURL: https://docs.dojo.tech/epos-tester-tool/api
   tags:
   - EPOS
@@ -121,6 +123,14 @@ apis:
   - type: APIReference
     url: https://docs.dojo.tech/epos-tester-tool/api
 common:
+- type: AgenticAccess
+  url: agentic-access/dojo-agentic-access.yml
+- type: VulnerabilityDisclosure
+  url: security/dojo-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/dojo-domain-security.yml
+- type: Authentication
+  url: authentication/dojo-authentication.yml
 - type: Website
   url: https://dojo.tech/
 - type: DeveloperPortal
@@ -141,6 +151,56 @@ common:
   url: https://github.com/dojo-engineering
 - type: LinkedIn
   url: https://www.linkedin.com/company/dojo-tech
+- type: SDKs
+  url: packages/dojo-packages.yml
+- type: Packages
+  url: packages/dojo-packages.yml
+- type: Conventions
+  url: conventions/dojo-conventions.yml
+- type: Idempotency
+  url: conventions/dojo-conventions.yml
+- type: ErrorCatalog
+  url: errors/dojo-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/dojo-lifecycle.yml
+- type: MCPServer
+  url: mcp/dojo-mcp.yml
+- type: Overlay
+  url: overlays/dojo-api-overlay.yaml
+- type: Conformance
+  url: conformance/dojo-conformance.yml
+- type: Sandbox
+  url: sandbox/dojo-sandbox.yml
+- type: DataModel
+  url: data-model/dojo-data-model.yml
+- type: Components
+  url: components/dojo-components.yml
+- type: LLMsTxt
+  url: llms/dojo-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AsyncAPI
+  name: Dojo EPOS Data WebSocket API (AsyncAPI)
+  url: asyncapi/dojo-epos-data-asyncapi.yml
+- type: Security
+  url: security/dojo-vulnerability-disclosure.yml
+- type: ChangeLog
+  name: Dojo API changelog (structured)
+  url: changelog/dojo-changelog.yml
+- type: Blog
+  url: https://dojo.tech/blog/
+- type: Support
+  url: https://support.dojo.tech/hc/en-gb
+- type: SignUp
+  url: https://developer.dojo.tech/signup
+- type: Login
+  url: https://developer.dojo.tech/login
+- type: TermsOfService
+  url: https://docs.dojo.tech/development-resources/terms-and-conditions
+- type: PrivacyPolicy
+  url: https://dojo.tech/legal/privacy-policy/
+- type: Pricing
+  url: https://dojo.tech/pricing/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

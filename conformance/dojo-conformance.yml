@@ -1,0 +1,32 @@
+generated: '2026-06-20'
+method: derived
+source: openapi/dojo-api.json + docs.dojo.tech
+standards:
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 security scheme; API-key auth only.
+- id: oidc
+  conforms: false
+- id: apikey-auth
+  conforms: true
+  evidence: securitySchemes ApiKeyAuth (apiKey, Authorization header).
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors are plain JSON, not application/problem+json.
+- id: idempotency
+  conforms: true
+  evidence: IdempotencyKey header on mutating operations.
+- id: webhooks
+  conforms: true
+  evidence: Webhook subscription + secret management operations in the Dojo API.
+- id: asyncapi
+  conforms: true
+  evidence: Published AsyncAPI 2.0.0 for the EPOS Data WebSocket API.
+- id: pci-dss
+  conforms: null
+  evidence: Card acquirer/processor (PCI DSS applies to card acquirers) but no public certification page
+    was verified; not asserted.
+- id: fca-regulated
+  conforms: true
+  evidence: 'Footer: Paymentsense Limited authorised and regulated by the FCA (FRN 738728; e-money FRN
+    900925).'

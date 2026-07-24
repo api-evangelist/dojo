@@ -1,0 +1,2737 @@
+info:
+  title: EPOS Data API (WebSockets)
+  version: 1.0.0
+  description: |-
+    The Async Websocket API to enable Dojo integrated products.
+
+    Core modules:
+    - Tables
+    - Areas
+    - Orders
+    - Parties
+    - Reservations
+
+    API modules can generally be
+    implemented independently, with a small number of interdependent fields affected
+    by other modules (for example, if Parties are implemented & the information is
+    known, a `partyId` should be attached to an Order's `dineInDetails`).
+    All requests are made in the form of a JSONRPCRequest,
+    and data that is specific to a request is stored in its `params` field.
+    A `headers` field is also included inside every `params` field,
+    this contains details about the requestor that can be used for
+    logging purposes or EPOS business logic (such as waiter id based access to entities).
+
+    ## Connecting
+
+    The EPOS opens a single WebSocket connection to the URL listed under `servers`
+    below and keeps it open. Dojo multiplexes every JSON-RPC method invocation
+    (for example `SearchOrdersV1`, `GetOrderByIdV1`, `RecordOrderPaymentByIdV1`)
+    over that one connection.
+
+    Three handshake headers are required:
+
+    | Header | Required | Description |
+    | --- | --- | --- |
+    | `Authorization` | Yes | `Basic <api_key>` (literal `Basic ` prefix; the API key is sent as-is and is **not** base64-encoded). Use a key starting with `sk_sandbox_` or `sk_prod_`. |
+    | `software-house-id` | Yes | Identifies the EPOS company. Provided by Dojo. |
+    | `reseller-id` | Optional | Identifies the reseller. Provided by Dojo. |
+
+    Before Dojo will route any request to your EPOS, you must register the
+    capabilities you implement with `PUT /epos/integrations/ws` on the Dojo API.
+    See the EPOS Data API guide for the full registration flow.
+servers:
+  production:
+    url: eu.ws.dojo.tech/epos
+    protocol: wss
+    description: |-
+      Single endpoint for both sandbox and production. The environment is
+      determined by the API key prefix (`sk_sandbox_…` vs `sk_prod_…`) sent in
+      the `Authorization` handshake header.
+    security:
+      - basicAuth: []
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: |-
+        Pass `Authorization: Basic <api_key>` on the WebSocket handshake.
+
+        Despite the `Basic` scheme name, the API key is sent as-is — do **not**
+        base64-encode it. Use a key starting with `sk_sandbox_` (sandbox) or
+        `sk_prod_` (production). The `software-house-id` header is also required;
+        `reseller-id` is optional. See the connection guide for details.
+  schemas:
+    Headers:
+      title: Headers
+      required:
+        - headers
+      description: ''
+      type: object
+      properties:
+        headers:
+          $ref: '#/components/schemas/RequestHeaders'
+    RequestHeaders:
+      type: object
+      properties:
+        waiterId:
+          type: string
+          description: The ID of the waiter making the request, if known
+        dojoRequestingProduct:
+          type: string
+          description: The dojo product making the request, if known
+        deviceId:
+          type: string
+          description: The ID of the device making the request, if known
+        deviceType:
+          type: string
+          description: The device making the request, if known
+    Id:
+      description: ''
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          description: ''
+          type: string
+    JsonrpcRequestV1:
+      description: ''
+      required:
+        - method
+        - jsonrpc
+        - id
+      type: object
+      properties:
+        id:
+          description: ''
+          type: string
+        method:
+          description: ''
+          type: string
+        jsonrpc:
+          description: ''
+          type: string
+    JsonrpcResponseV1:
+      description: ''
+      required:
+        - method
+        - jsonrpc
+        - id
+      type: object
+      properties:
+        id:
+          description: ''
+          type: string
+        error:
+          $ref: '#/components/schemas/EPOSError'
+          description: ''
+        jsonrpc:
+          description: ''
+          type: string
+    Error:
+      description: ''
+      type: object
+    OrderResult:
+      description: ''
+      required:
+        - result
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/Order'
+          description: ''
+    OrderBillResult:
+      description: ''
+      required:
+        - result
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/OrderBill'
+          description: ''
+    ExtendOrderLockJsonrpcResponseV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcResponseV1'
+        - $ref: '#/components/schemas/EmptyResult'
+    RecordOrderPaymentJsonrpcResponseV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcResponseV1'
+        - $ref: '#/components/schemas/OrderResult'
+    OrderJsonrpcResponseV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcResponseV1'
+        - $ref: '#/components/schemas/OrderResult'
+    OrderBillJsonrpcResponseV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcResponseV1'
+        - $ref: '#/components/schemas/OrderBillResult'
+    CreateOrderWithHeaders:
+      type: object
+      description: ''
+      allOf:
+        - $ref: '#/components/schemas/CreateOrderRequest'
+        - $ref: '#/components/schemas/Headers'
+    CreateOrderParams:
+      description: ''
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/CreateOrderWithHeaders'
+          description: ''
+    CreateOrderJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/CreateOrderParams'
+    CreateOrderLockRequest:
+      type: object
+      required:
+        - orderId
+        - expiry
+        - lockId
+      properties:
+        orderId:
+          description: The EPOS order ID of the order to lock
+          type: string
+        lockId:
+          description: The unique ID of a lock generated by Dojo. Consuming this isn't strictly required as Dojo will create at most one lock per order, but it can be useful for tracking the lifecycle of any lock.
+          type: string
+        expiry:
+          description: |
+            The lock expiry time. If this time has been reached and no UnlockOrder has been received the lock can be considered stale and released.
+            This may be extended by the ExtendOrderLockRequest if registered. It is optional to consume this expiry.
+            Dojo will always attempt to release or extend the lock before this expiry is reached, it exists to avoid stale locks if there is a full loss of communication between the EPOS and Dojo.
+          type: string
+          format: date-time
+    LockOrderWithHeaders:
+      type: object
+      description: ''
+      allOf:
+        - $ref: '#/components/schemas/CreateOrderLockRequest'
+        - $ref: '#/components/schemas/Headers'
+    LockOrderParams:
+      description: ''
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/LockOrderWithHeaders'
+    LockOrderJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/LockOrderParams'
+    DeleteOrderLockRequest:
+      type: object
+      required:
+        - orderId
+        - lockId
+      properties:
+        orderId:
+          description: The EPOS order ID of the order to unlock
+          type: string
+        lockId:
+          description: The unique ID of a lock generated by Dojo. Consuming this isn't strictly required as Dojo will create at most one lock per order, but it can be useful for tracking the lifecycle of any lock.
+          type: string
+    DeleteOrderLockWithHeaders:
+      type: object
+      description: ''
+      allOf:
+        - $ref: '#/components/schemas/DeleteOrderLockRequest'
+        - $ref: '#/components/schemas/Headers'
+    DeleteOrderLockParams:
+      description: ''
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/DeleteOrderLockWithHeaders'
+    DeleteOrderLockJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/DeleteOrderLockParams'
+    ExtendOrderLockRequest:
+      type: object
+      required:
+        - orderId
+        - lockId
+        - expiry
+      properties:
+        orderId:
+          description: The EPOS order ID of the order to unlock
+          type: string
+        lockId:
+          description: The unique ID of a lock generated by Dojo. Consuming this isn't strictly required as Dojo will create at most one lock per order, but it can be useful for tracking the lifecycle of any lock.
+          type: string
+        expiry:
+          description: |
+            The lock expiry time. If this time has been reached and no UnlockOrder has been received the lock can be considered stale and released.
+            This may be extended by the ExtendOrderLockRequest if registered. It is optional to consume this expiry.
+            Dojo will always attempt to release or extend the lock before this expiry is reached, it exists to avoid stale locks if there is a full loss of communication between the EPOS and Dojo.
+          type: string
+          format: date-time
+    ExtendOrderLockWithHeaders:
+      type: object
+      description: ''
+      allOf:
+        - $ref: '#/components/schemas/ExtendOrderLockRequest'
+        - $ref: '#/components/schemas/Headers'
+    ExtendOrderLockParams:
+      description: ''
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/ExtendOrderLockWithHeaders'
+    ExtendOrderLockJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/ExtendOrderLockParams'
+    RecordOrderPaymentRequest:
+      type: object
+      required:
+        - paymentIntentId
+        - paidAmount
+        - orderId
+      properties:
+        paymentIntentId:
+          description: The UID of the payment-intent associated with this payment
+          type: string
+        paidAmount:
+          $ref: '#/components/schemas/Money'
+          description: Indicates the paid amount of this specific payment, excluding `tipsAmount` but includes eventual service charges.
+        tipsAmount:
+          $ref: '#/components/schemas/Money'
+          description: The tip amount added to this specific payment. It is not included in `paidAmount`.
+        lockId:
+          description: The unique ID of a lock generated by Dojo. Consuming this isn't strictly required as Dojo will create at most one lock per order, but it can be useful for tracking the lifecycle of any lock.
+          type: string
+        orderId:
+          type: string
+    RecordOrderPaymentWithHeaders:
+      type: object
+      description: ''
+      allOf:
+        - $ref: '#/components/schemas/RecordOrderPaymentRequest'
+        - $ref: '#/components/schemas/Headers'
+    RecordOrderPaymentParams:
+      description: ''
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/RecordOrderPaymentWithHeaders'
+    RecordOrderPaymentJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/RecordOrderPaymentParams'
+    SearchOrdersWithHeaders:
+      type: object
+      description: ''
+      allOf:
+        - $ref: '#/components/schemas/SearchOrdersRequest'
+        - $ref: '#/components/schemas/Headers'
+    SearchOrdersParams:
+      description: ''
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/SearchOrdersWithHeaders'
+          description: ''
+    SearchOrdersJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/SearchOrdersParams'
+    PagedOrdersJsonrpcResponseV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcResponseV1'
+        - $ref: '#/components/schemas/PagedOrdersResult'
+    PagedOrdersResult:
+      description: ''
+      required:
+        - result
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/PagedOrdersResponse'
+          description: ''
+    GetOrdersJsonrpcRequestV1:
+      description: ''
+      type: object
+    SearchTablesParams:
+      description: ''
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/SearchTablesWithHeaders'
+          description: ''
+    SearchTablesJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/SearchTablesParams'
+    TableId:
+      description: ''
+      required:
+        - tableId
+      type: object
+      properties:
+        tableId:
+          description: ''
+          type: string
+    TableIdParams:
+      description: ''
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/TableId'
+    ListAreasParams:
+      description: ''
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/Headers'
+    ListAreasJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/ListAreasParams'
+    AreasResult:
+      description: ''
+      required:
+        - result
+      type: object
+      properties:
+        result:
+          description: ''
+          type: array
+          items:
+            $ref: '#/components/schemas/Area'
+    HandleEventJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/HandleEventParams'
+    EventWithHeaders:
+      type: object
+      description: ''
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - $ref: '#/components/schemas/Headers'
+    HandleEventParams:
+      description: ''
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/EventWithHeaders'
+    HandleEventJsonrpcResponseV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcResponseV1'
+        - $ref: '#/components/schemas/EmptyResult'
+    Event:
+      title: Event
+      type: object
+      required:
+        - id
+        - accountId
+        - event
+        - data
+        - createdAt
+      properties:
+        id:
+          type: string
+        accountId:
+          type: string
+        event:
+          type: string
+          description: one of EventType
+        data:
+          type: object
+          anyOf:
+            - $ref: '#/components/schemas/PaymentIntentEvent'
+        createdAt:
+          type: string
+          format: date-time
+    EventType:
+      title: EventType
+      type: string
+      enum:
+        - payment_intent.created
+        - payment_intent.status_updated
+    PaymentIntentEvent:
+      type: object
+      required:
+        - paymentIntentId
+        - paymentStatus
+        - captureMode
+      properties:
+        paymentIntentId:
+          type: string
+        paymentStatus:
+          $ref: '#/components/schemas/PaymentIntentStatus'
+        captureMode:
+          $ref: '#/components/schemas/CaptureMode'
+    PaymentIntentStatus:
+      type: string
+      enum:
+        - Created
+        - Authorized
+        - Captured
+        - Reversed
+        - Refunded
+        - Canceled
+    CaptureMode:
+      type: string
+      enum:
+        - Auto
+        - Manual
+    OrderIdWithHeaders:
+      type: object
+      description: ''
+      allOf:
+        - $ref: '#/components/schemas/OrderId'
+        - $ref: '#/components/schemas/Headers'
+    OrderIdParams:
+      description: ''
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/OrderIdWithHeaders'
+          description: ''
+    OrderId:
+      description: ''
+      required:
+        - orderId
+      type: object
+      properties:
+        orderId:
+          description: ''
+          type: string
+    GetOrderByIdJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/OrderIdParams'
+    CancelOrderByIdJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/OrderIdParams'
+    JsonrpcNotification:
+      description: ''
+      required:
+        - method
+        - jsonrpc
+      type: object
+      properties:
+        method:
+          description: ''
+          type: string
+        jsonrpc:
+          description: ''
+          type: string
+    CreateOrderRequest:
+      title: CreateOrderRequest
+      description: ''
+      required:
+        - items
+        - totalAmount
+        - dojoOrderId
+        - payments
+        - details
+      type: object
+      properties:
+        items:
+          description: The line items purchased by the customer.
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        note:
+          description: Order note
+          type: string
+        customer:
+          $ref: '#/components/schemas/Customer'
+        discounts:
+          description: List of discounts applied to the order
+          type: array
+          items:
+            $ref: '#/components/schemas/Discount'
+          x-stoplight:
+            id: 8ldf6i31rv859
+        totalAmount:
+          oneOf:
+            - $ref: '#/components/schemas/Money'
+          description: The total amount of the order, after discount and taxes. Includes `serviceChargeAmount` but not `tipsAmount`.
+        taxLines:
+          description: Taxes applied to the order
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxLine'
+        serviceChargeAmount:
+          oneOf:
+            - $ref: '#/components/schemas/Money'
+        reference:
+          description: Human readable order ID
+          type: string
+        dojoOrderId:
+          description: The Dojo API order ID
+          type: string
+        payments:
+          description: ''
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+        details:
+          $ref: '#/components/schemas/OrderDetails'
+        displayName:
+          description: The display name of the order
+          type: string
+    OrderDetails:
+      description: Details about the order including the type and the details.
+      required:
+        - orderType
+      type: object
+      anyOf:
+        - title: Dine In
+          required:
+            - dineIn
+        - title: Collection
+          required:
+            - collection
+      properties:
+        dineIn:
+          $ref: '#/components/schemas/DineInDetails'
+        collection:
+          $ref: '#/components/schemas/CollectionDetails'
+        orderType:
+          $ref: '#/components/schemas/OrderType'
+    Cursor:
+      title: Cursor
+      description: A cursor for use in pagination.
+      type: object
+      properties:
+        limit:
+          description: The maximum number of results to be returned in a single page.
+          maximum: 100
+          type: integer
+          x-stoplight:
+            id: l5tzcxdo5qbt1
+        before:
+          description: A cursor for use in pagination for the previous page. before and after are mutually exclusive. Only one of these may be used.
+          type: string
+          x-stoplight:
+            id: 8vxj9sdmbby14
+        after:
+          description: A cursor for use in pagination for the next page. before and after are mutually exclusive. Only one of these may be used.
+          type: string
+          x-stoplight:
+            id: 1jsibbqp1zdti
+      x-stoplight:
+        id: m8ixmhyvzw3oo
+    Customer:
+      title: Customer
+      type: object
+      properties:
+        id:
+          description: The unique identifier of the customer.
+          type: string
+        emailAddress:
+          description: The customer's email address.
+          maxLength: 254
+          type: string
+        phoneNumber:
+          description: The customer's phone number.
+          maxLength: 50
+          type: string
+        name:
+          description: The customer's name.
+          type: string
+          x-stoplight:
+            id: rvqovaxl33c9q
+      additionalProperties: false
+      example:
+        emailAddress: support@dojo.com
+        phoneNumber: 448000443550
+    DineInDetails:
+      description: Details for an order-in order
+      type: object
+      properties:
+        tableId:
+          type: string
+        waiterId:
+          type: string
+        partyId:
+          description: ''
+          type: string
+        reservationId:
+          description: ''
+          type: string
+        readyAt:
+          format: date-time
+          description: Specify timestamp in ISO8601 UTC standard when a pre-order should be ready. Only applicable for pre-orders.
+          type: string
+      x-examples:
+        Example 1:
+          tableId: test
+          waiterId: test
+    SearchDineInDetails:
+      description: Details to search for an order-in order
+      type: object
+      properties:
+        tableId:
+          type: string
+        waiterId:
+          type: string
+        partyId:
+          description: ''
+          type: string
+        reservationId:
+          description: ''
+          type: string
+      x-examples:
+        Example 1:
+          tableId: test
+          waiterId: test
+    Discount:
+      description: ''
+      required:
+        - name
+        - amountTotal
+      type: object
+      properties:
+        name:
+          description: The name that was given to the discount.
+          type: string
+        affectedPlu:
+          description: Product plu for which the discount is applied to. Empty if discount is for the total amount
+          type: string
+        discountReference:
+          description: Discount reference that uniquely identifies the discount
+          type: string
+        code:
+          description: Discount code
+          type: string
+        amountTotal:
+          oneOf:
+            - $ref: '#/components/schemas/Money'
+        amountPercentage:
+          description: Percentage covered by the discount, which is stored with precision 2 (e.g., 25.1% ➜ 2510)
+          type: integer
+      example:
+        isPercentage: true
+        provider: Order & Pay app
+        name: Spring Sale 25% off
+        discountCode: SPRING2023
+        discountReference: '123456'
+        affectedPlu: item_123
+        value: 2500
+        amount: 500
+      x-examples:
+        Example 1:
+          type: Percentage
+          provider: provider
+          name: Spring Sale
+          channelDiscountCode: SPRING2023
+          referenceId: 123456
+          value: 1000
+          amount: 500
+    Modifier:
+      title: Modifier
+      required:
+        - amountPerModifier
+        - name
+        - plu
+        - quantity
+      type: object
+      properties:
+        name:
+          description: A human-readable name of the modifier.
+          type: string
+          x-stoplight:
+            id: dbij8ceea0jui
+        quantity:
+          description: How many times this modifier is applied to the item. Please note that this amount is per single item, so if a customer orders two burgers each with double extra cheese, the quantity should be 2, not 4.
+          type: integer
+          x-stoplight:
+            id: 0o2r5334l8vue
+        amountPerModifier:
+          description: The price of the single modifier.
+          oneOf:
+            - $ref: '#/components/schemas/Money'
+          x-stoplight:
+            id: 099x7cwdud7gp
+        plu:
+          description: ''
+          type: string
+      x-stoplight:
+        id: a8zdtsiz5l6a8
+    Money:
+      title: Money
+      required:
+        - value
+        - currencyCode
+      type: object
+      properties:
+        value:
+          format: int64
+          description: The amount in the minor unit, for example '100' for 1.00 GBP.
+          type: integer
+        currencyCode:
+          description: Three-letter currency code in ISO 4217 alpha-3 format.
+          maxLength: 10
+          minLength: 1
+          type: string
+      example:
+        value: 1000
+        currencyCode: GBP
+      x-stoplight:
+        id: c9op7zec1txu2
+    Order:
+      title: Order
+      required:
+        - status
+        - details
+      type: object
+      properties:
+        id:
+          description: Order ID
+          type: string
+        items:
+          description: The line items purchased by the customer.
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        note:
+          type: string
+          x-stoplight:
+            id: zya8zg3nxml7g
+        customer:
+          $ref: '#/components/schemas/Customer'
+        discounts:
+          description: List of discounts applied to the order
+          type: array
+          items:
+            $ref: '#/components/schemas/Discount'
+          x-stoplight:
+            id: 8ldf6i31rv859
+        taxLines:
+          description: Taxes applied to the order
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxLine'
+          x-stoplight:
+            id: xsg3y0lftsyhl
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+          description: Order status
+          default: New
+          x-stoplight:
+            id: hssxgnvst3s5l
+        createdAt:
+          format: date-time
+          description: The creation date, in ISO 8601 UTC format.
+          type: string
+          x-stoplight:
+            id: xu24ufyqm895l
+        updatedAt:
+          format: date-time
+          description: The timestamp of the update date, in ISO 8601 UTC format.
+          type: string
+          x-stoplight:
+            id: 9hvb1r8h1wgdq
+        totalAmount:
+          oneOf:
+            - $ref: '#/components/schemas/Money'
+          description: The total amount of the order, after discount and taxes. Includes `serviceChargeAmount` but not `tipsAmount`.
+        payments:
+          description: ''
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+        payable:
+          description: Flag to indicate if the order is able to be paid for.
+          type: boolean
+        paidAmount:
+          oneOf:
+            - $ref: '#/components/schemas/Money'
+          description: |-
+            Indicates the sum of all the payments made for the order, excluding `tipsAmount`.
+            When this matches `totalAmount` the order is considered fully paid."
+        serviceChargeAmount:
+          description: The amount of service charge applied.
+          oneOf:
+            - $ref: '#/components/schemas/Money'
+        reference:
+          description: Human readable order ID
+          type: string
+        tipsAmount:
+          description: The sum of all the `tipsAmount` in the payments array. This must not be included in `totalAmount` or `paidAmount`
+          oneOf:
+            - $ref: '#/components/schemas/Money'
+        details:
+          $ref: '#/components/schemas/OrderDetails'
+        displayName:
+          description: The display name of the order
+          type: string
+      x-stoplight:
+        id: 2w4jh88mce9tz
+      x-examples:
+        - {}
+      example:
+        order:
+          id: ord_12345678
+          details:
+            orderType: DineIn
+            dineIn:
+              tableId: Table 5
+              waiterId: Becky
+          items:
+            - quantity: 2
+              name: Pizza Pepperoni
+              plu: '1234'
+              amountPerItem:
+                value: 1235
+                currencyCode: GBP
+            - quantity: 2
+              name: Lager
+              plu: '1245'
+              amountPerItem:
+                value: 510
+                currencyCode: GBP
+            - quantity: 1
+              name: Water Still
+              plu: '1'
+              amountPerItem:
+                value: 50
+                currencyCode: GBP
+            - quantity: 2
+              name: Coca Cola
+              plu: '2'
+              amountPerItem:
+                value: 249
+                currencyCode: GBP
+            - quantity: 1
+              name: Burger
+              plu: '234'
+              amountPerItem:
+                value: 1090
+                currencyCode: GBP
+              modifiers:
+                - name: No Lettuce
+                  quantity: 1
+                  amountPerItem:
+                    value: 0
+                    currencyCode: GBP
+                  plu: '74983'
+            - quantity: 1
+              name: Burger
+              plu: '234'
+              amountPerItem:
+                value: 1090
+                currencyCode: GBP
+              modifiers:
+                - name: Extra Cheese
+                  quantity: 1
+                  amountPerItem:
+                    value: 0
+                    currencyCode: GBP
+                  plu: '10987'
+                - name: Bacon
+                  quantity: 1
+                  amountPerItem:
+                    value: 0
+                    currencyCode: GBP
+                  plu: '872'
+          discounts:
+            - name: 10% discount
+              amountTotal:
+                value: 621
+                currencyCode: GBP
+              amountPercentage: 1000
+          serviceChargeAmount:
+            value: 6295
+            currencyCode: GBP
+          taxLines:
+            - id: VAT
+              name: VAT
+              amountPercentage: 20
+              amountTotal:
+                value: 6295
+                currencyCode: GBP
+          status: Created
+          createdAt: '2022-03-15T20:00:00Z'
+          updatedAt: '2022-03-15T20:00:00Z'
+          totalAmount:
+            value: 6295
+            currencyCode: GBP
+          payable: true
+          paidAmount:
+            value: 0
+            currencyCode: GBP
+          reference: Table 5
+    OrderBill:
+      required:
+        - header
+        - order
+        - footer
+      type: object
+      properties:
+        header:
+          description: Header
+          type: object
+          $ref: '#/components/schemas/BillSection'
+        order:
+          description: Order
+          type: object
+          $ref: '#/components/schemas/Order'
+        footer:
+          description: Footer
+          type: object
+          $ref: '#/components/schemas/BillSection'
+      example:
+        header:
+          lines:
+            - logo:
+                svgImage: |
+                  <svg viewBox='0 0 389 100' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M146.7 100C119.754 100 97.8318 77.5807 97.8318 50.0245C97.8318 22.4682 119.754 0.0489248 146.7 0.0489248C173.645 0.0489248 195.568 22.4682 195.568 50.0245C195.568 77.5807 173.645 100 146.7 100ZM146.616 17.6737C129.155 17.6737 114.946 32.204 114.946 50.0612C114.946 67.9183 129.155 82.4486 146.616 82.4486C164.078 82.4486 178.286 67.9183 178.286 50.0612C178.286 32.204 164.078 17.6737 146.616 17.6737ZM339.182 100C312.237 100 290.314 77.5807 290.314 50.0245C290.314 22.4682 312.237 0.0489248 339.182 0.0489248C366.128 0.0489248 388.05 22.4682 388.05 50.0245C388.05 77.5807 366.128 100 339.182 100ZM339.098 17.6737C321.637 17.6737 307.429 32.204 307.429 50.0612C307.429 67.9183 321.637 82.4486 339.098 82.4486C356.56 82.4486 370.768 67.9183 370.768 50.0612C370.768 32.204 356.56 17.6737 339.098 17.6737ZM17.5212 100C7.85764 100 0 91.9643 0 82.0817V17.9795C0 8.09687 7.85764 0.0489248 17.5212 0.0489248H38.2716C65.2172 0.0489248 87.1397 22.4682 87.1397 50.0245C87.1397 77.5807 65.2172 100 38.2716 100H17.5212ZM17.4136 17.6676C17.4136 17.6709 17.4108 17.6737 17.4075 17.6738C17.2907 17.677 17.1983 17.7736 17.1983 17.8938V82.2285C17.1983 82.3508 17.294 82.4486 17.4136 82.4486H37.853C55.3742 82.4486 69.7739 68.0651 69.9414 50.3792C70.0251 41.683 66.7601 33.476 60.7682 27.275C54.7643 21.0739 46.7751 17.6615 38.2716 17.6615H17.4197C17.4163 17.6615 17.4136 17.6642 17.4136 17.6676V17.6676ZM242.917 100C252.688 100 261.885 96.0983 268.822 89.0166C275.747 81.9349 279.562 72.5171 279.562 62.5245L279.61 2.66634C279.61 1.19863 278.438 0 277.003 0H264.995C263.56 0 262.388 1.19863 262.388 2.66634L262.34 62.5245C262.34 73.4711 253.621 82.3875 242.917 82.3875H242.618C232.081 82.2285 223.494 73.1654 223.494 62.2065V51.4432C223.494 49.9755 222.322 48.7769 220.887 48.7769H208.879C207.444 48.7769 206.272 49.9755 206.272 51.4432V62.1208C206.272 82.8889 222.621 99.8777 242.702 100H242.917Z' fill='#180F06'></path></svg>
+              lineType: Logo
+            - merchantName:
+                name: Dojo
+              lineType: MerchantName
+            - merchantAddress:
+                addressLines:
+                  - Brunel Building
+                  - 1 & 2 Canalside Walk
+                postcode: London W2 1DG
+              lineType: MerchantAddress
+            - merchantEmailAddress:
+                emailAddress: dojo@dojo.tech
+              lineType: MerchantEmailAddress
+            - text:
+                value: Welcome to Our Store!
+                size: Header1
+                align: Center
+                emphasisBold: true
+              lineType: Text
+            - image:
+                svgImage: <svg viewBox='0 0 389 100' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M146.7 100C119.754 100 97.8318 77.5807 97.8318 50.0245C97.8318 22.4682 119.754 0.0489248 146.7 0.0489248C173.645 0.0489248 195.568 22.4682 195.568 50.0245C195.568 77.5807 173.645 100 146.7 100ZM146.616 17.6737C129.155 17.6737 114.946 32.204 114.946 50.0612C114.946 67.9183 129.155 82.4486 146.616 82.4486C164.078 82.4486 178.286 67.9183 178.286 50.0612C178.286 32.204 164.078 17.6737 146.616 17.6737ZM339.182 100C312.237 100 290.314 77.5807 290.314 50.0245C290.314 22.4682 312.237 0.0489248 339.182 0.0489248C366.128 0.0489248 388.05 22.4682 388.05 50.0245C388.05 77.5807 366.128 100 339.182 100ZM339.098 17.6737C321.637 17.6737 307.429 32.204 307.429 50.0612C307.429 67.9183 321.637 82.4486 339.098 82.4486C356.56 82.4486 370.768 67.9183 370.768 50.0612C370.768 32.204 356.56 17.6737 339.098 17.6737ZM17.5212 100C7.85764 100 0 91.9643 0 82.0817V17.9795C0 8.09687 7.85764 0.0489248 17.5212 0.0489248H38.2716C65.2172 0.0489248 87.1397 22.4682 87.1397 50.0245C87.1397 77.5807 65.2172 100 38.2716 100H17.5212ZM17.4136 17.6676C17.4136 17.6709 17.4108 17.6737 17.4075 17.6738C17.2907 17.677 17.1983 17.7736 17.1983 17.8938V82.2285C17.1983 82.3508 17.294 82.4486 17.4136 82.4486H37.853C55.3742 82.4486 69.7739 68.0651 69.9414 50.3792C70.0251 41.683 66.7601 33.476 60.7682 27.275C54.7643 21.0739 46.7751 17.6615 38.2716 17.6615H17.4197C17.4163 17.6615 17.4136 17.6642 17.4136 17.6676V17.6676ZM242.917 100C252.688 100 261.885 96.0983 268.822 89.0166C275.747 81.9349 279.562 72.5171 279.562 62.5245L279.61 2.66634C279.61 1.19863 278.438 0 277.003 0H264.995C263.56 0 262.388 1.19863 262.388 2.66634L262.34 62.5245C262.34 73.4711 253.621 82.3875 242.917 82.3875H242.618C232.081 82.2285 223.494 73.1654 223.494 62.2065V51.4432C223.494 49.9755 222.322 48.7769 220.887 48.7769H208.879C207.444 48.7769 206.272 49.9755 206.272 51.4432V62.1208C206.272 82.8889 222.621 99.8777 242.702 100H242.917Z' fill='#180F06'></path></svg>
+                align: Left
+              lineType: Image
+            - horizontalLine:
+                line: Single
+              lineType: HorizontalLine
+            - text:
+                value: Table 5
+                size: Header2
+                align: Left
+              lineType: Text
+            - text:
+                value: Becky       15/03/2022 20:08
+                size: Body
+                align: Center
+              lineType: Text
+            - text:
+                value: Transaction:6328
+                size: Body
+                align: Right
+              lineType: Text
+        order:
+          id: ord_12345678
+          details:
+            orderType: DineIn
+            dineIn:
+              tableId: Table 5
+              waiterId: Becky
+          items:
+            - quantity: 2
+              name: Pizza Pepperoni
+              plu: '1234'
+              amountPerItem:
+                value: 1235
+                currencyCode: GBP
+            - quantity: 2
+              name: Lager
+              plu: '1245'
+              amountPerItem:
+                value: 510
+                currencyCode: GBP
+            - quantity: 1
+              name: Water Still
+              plu: '1'
+              amountPerItem:
+                value: 50
+                currencyCode: GBP
+            - quantity: 2
+              name: Coca Cola
+              plu: '2'
+              amountPerItem:
+                value: 249
+                currencyCode: GBP
+            - quantity: 1
+              name: Burger
+              plu: '234'
+              amountPerItem:
+                value: 1090
+                currencyCode: GBP
+              modifiers:
+                - name: No Lettuce
+                  quantity: 1
+                  amountPerItem:
+                    value: 0
+                    currencyCode: GBP
+                  plu: '74983'
+            - quantity: 1
+              name: Burger
+              plu: '234'
+              amountPerItem:
+                value: 1090
+                currencyCode: GBP
+              modifiers:
+                - name: Extra Cheese
+                  quantity: 1
+                  amountPerItem:
+                    value: 0
+                    currencyCode: GBP
+                  plu: '10987'
+                - name: Bacon
+                  quantity: 1
+                  amountPerItem:
+                    value: 0
+                    currencyCode: GBP
+                  plu: '872'
+          discounts:
+            - name: 10% discount
+              amountTotal:
+                value: 621
+                currencyCode: GBP
+              amountPercentage: 1000
+          serviceChargeAmount:
+            value: 6295
+            currencyCode: GBP
+          taxLines:
+            - id: VAT
+              name: VAT
+              amountPercentage: 20
+              amountTotal:
+                value: 6295
+                currencyCode: GBP
+          status: Created
+          createdAt: '2022-03-15T20:00:00Z'
+          updatedAt: '2022-03-15T20:00:00Z'
+          totalAmount:
+            value: 6295
+            currencyCode: GBP
+          payable: true
+          paidAmount:
+            value: 0
+            currencyCode: GBP
+          reference: Table 5
+        footer:
+          lines:
+            - text:
+                value: Thank you
+                size: Header1
+                align: Center
+              lineType: Text
+            - taxNumber:
+                name: VAT
+                number: 342 6287 32
+              lineType: TaxNumber
+            - url:
+                url: https://www.website.com
+                showQR: true
+                showURL: true
+              lineType: URL
+            - text:
+                value: Thank you for your business!
+                size: Body
+                align: Center
+              lineType: Text
+    BillSection:
+      type: object
+      required:
+        - lines
+      properties:
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillLine'
+      description: An object representing either a header or footer on a BillSection
+    BillLine:
+      anyOf:
+        - title: Image
+          required:
+            - image
+        - title: Logo
+          required:
+            - logo
+        - title: Merchant Address
+          required:
+            - merchantAddress
+        - title: Merchant Email Address
+          required:
+            - merchantEmailAddress
+        - title: Merchant Name
+          required:
+            - merchantName
+        - title: Merchant Phone Number
+          required:
+            - merchantPhoneNumber
+        - title: Text
+          required:
+            - text
+        - title: URL/QR
+          required:
+            - url
+        - title: Horizontal Line
+          required:
+            - horizontalLine
+        - title: Tax Number
+          required:
+            - taxNumber
+      required:
+        - lineType
+      type: object
+      properties:
+        image:
+          $ref: '#/components/schemas/Image'
+        logo:
+          $ref: '#/components/schemas/Logo'
+        merchantAddress:
+          $ref: '#/components/schemas/MerchantAddress'
+        merchantEmailAddress:
+          $ref: '#/components/schemas/MerchantEmailAddress'
+        merchantName:
+          $ref: '#/components/schemas/MerchantName'
+        merchantPhoneNumber:
+          $ref: '#/components/schemas/MerchantPhoneNumber'
+        text:
+          $ref: '#/components/schemas/Text'
+        url:
+          $ref: '#/components/schemas/Url'
+        horizontalLine:
+          $ref: '#/components/schemas/HorizontalLineType'
+        taxNumber:
+          $ref: '#/components/schemas/TaxNumber'
+        lineType:
+          $ref: '#/components/schemas/LineType'
+    Image:
+      required:
+        - svgImage
+      type: object
+      properties:
+        svgImage:
+          title: svgImage
+          type: string
+          description: SVG representation of an image
+        align:
+          $ref: '#/components/schemas/Align'
+      description: A bill line containing an image
+    Logo:
+      required:
+        - svgImage
+      type: object
+      properties:
+        svgImage:
+          title: svgImage
+          type: string
+          description: SVG representation of an image
+      description: A predefined bill field, containing a logo. This will appear at the top of the bill
+    MerchantAddress:
+      required:
+        - addressLines
+        - postcode
+      type: object
+      properties:
+        addressLines:
+          title: addressLines
+          type: array
+          description: Lines of address
+          items:
+            type: string
+        postcode:
+          title: postcode
+          type: string
+          description: ZIP or postal code.
+      description: A predefined bill field, containing an address. This will be pre-formatted in the receipt
+    MerchantEmailAddress:
+      required:
+        - emailAddress
+      type: object
+      properties:
+        emailAddress:
+          title: emailAddress
+          type: string
+          description: The email address
+      description: A predefined bill field, containing the merchants contact email address. This will be pre-formatted in the bill
+    MerchantName:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          title: name
+          type: string
+          description: A predefined bill field, containing the merchants name. This will be pre-formatted in the bill
+      description: A predefined bill field, containing the merchants name. This will be pre-formatted in the bill
+    MerchantPhoneNumber:
+      required:
+        - phoneNumber
+      type: object
+      properties:
+        phoneNumber:
+          title: phoneNumber
+          type: string
+          description: The phone number
+      description: A predefined bill field, containing the merchants contact phone number. This will be pre-formatted in the bill
+    Text:
+      required:
+        - size
+        - value
+      type: object
+      properties:
+        value:
+          title: value
+          type: string
+          description: This is the text to be printed for this line. The maxLength of this string depends on the size options used
+        size:
+          $ref: '#/components/schemas/Size'
+        align:
+          $ref: '#/components/schemas/Align'
+        bold:
+          title: bold
+          type: boolean
+          description: Set this to true if you want the text to be bold. Compatible with all other emphasis flags
+      description: A bill line containing text, with optional conditional formatting
+    Size:
+      type: string
+      enum:
+        - Body
+        - Header1
+        - Header2
+    Align:
+      type: string
+      enum:
+        - Center
+        - Left
+        - Right
+    Url:
+      required:
+        - url
+      type: object
+      properties:
+        url:
+          title: url
+          type: string
+          description: The URL for the link
+        description:
+          title: description
+          type: string
+          description: Textual description of the URL, will be displayed if set
+        showQR:
+          title: showQR
+          type: boolean
+          description: If a QR code should be shown on the bill
+        showURL:
+          title: showURL
+          type: boolean
+          description: If the URL should be shown on the bill
+      description: A bill line containing a URL. This can be printed as a QR code on bills, or a hyperlink with the text as the description, in digital format.
+    HorizontalLineType:
+      type: object
+      properties:
+        line:
+          type: string
+          enum:
+            - Single
+            - Double
+      description: A bill line containing a horizontal line
+    TaxNumber:
+      required:
+        - name
+        - number
+      type: object
+      properties:
+        name:
+          title: name
+          type: string
+          description: The tax name
+          example: VAT
+        number:
+          title: number
+          type: string
+          description: The tax number
+      description: A predefined bill field, containing the merchants tax number. This will be pre-formatted in the bill, and shown at the bottom
+    LineType:
+      type: string
+      enum:
+        - Image
+        - Logo
+        - MerchantAddress
+        - MerchantEmailAddress
+        - MerchantName
+        - MerchantPhoneNumber
+        - Text
+        - URL
+        - HorizontalLine
+        - TaxNumber
+    OrderItem:
+      required:
+        - name
+        - amountPerItem
+        - plu
+        - quantity
+      type: object
+      properties:
+        amountPerItem:
+          description: The base price of the single item, before any modifiers, subitems or discounts are applied.
+          oneOf:
+            - $ref: '#/components/schemas/Money'
+        quantity:
+          type: integer
+        note:
+          type: string
+        name:
+          description: A human-readable name of the item.
+          type: string
+        plu:
+          type: string
+        subItems:
+          description: Sub-items applied to the item
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderSubItem'
+        modifiers:
+          description: Modifiers applied to the item
+          type: array
+          items:
+            $ref: '#/components/schemas/Modifier'
+      x-examples:
+        Example 1:
+          plu: UGG-BB-PUR-06
+          name: test
+          price: 0
+          quantity: 1073741824
+          note: string
+          modifiers: []
+          subItems: []
+    OrderSubItem:
+      required:
+        - name
+        - amountPerItem
+        - plu
+        - quantity
+      type: object
+      properties:
+        amountPerItem:
+          description: The base price of the single sub item, without its parent item, before any modifiers or discounts are applied.
+          oneOf:
+            - $ref: '#/components/schemas/Money'
+        quantity:
+          type: integer
+        note:
+          type: string
+        name:
+          description: A human-readable name of the item.
+          type: string
+        plu:
+          type: string
+        modifiers:
+          description: Modifiers applied to the subitem
+          type: array
+          items:
+            $ref: '#/components/schemas/Modifier'
+      x-examples:
+        Example 1:
+          plu: UGG-BB-PUR-06
+          name: test
+          price: 0
+          quantity: 1073741824
+          note: string
+          modifiers: []
+          subItems: []
+    SearchOrdersRequest:
+      description: ''
+      type: object
+      properties:
+        dineIn:
+          $ref: '#/components/schemas/SearchDineInDetails'
+        payableOnly:
+          description: Return only orders where payable=true
+          type: boolean
+        cursor:
+          $ref: '#/components/schemas/Cursor'
+    Table:
+      title: Root Type for Table
+      description: ''
+      required:
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          description: User friendly name to identify the table. Must be unique for an area. Will be displayed on the card machine.
+          type: string
+        maxCovers:
+          format: int32
+          description: Max number of covers at this table.
+          type: integer
+        areaId:
+          description: ID of an area
+          type: string
+        waiterIds:
+          description: An array of waiter IDs serving this table
+          type: array
+          items:
+            type: string
+      example:
+        id: tbl_12345
+        name: Table 12
+        maxCovers: 4
+        areaId: area_123
+    TaxLine:
+      title: TaxLine
+      description: The tax line object.
+      required:
+        - amountTotal
+      type: object
+      properties:
+        id:
+          description: Unique identifier for the object.
+          maxLength: 60
+          type: string
+        name:
+          description: A name of the tax.
+          maxLength: 100
+          type: string
+        affectedPlu:
+          description: Plu of a product, if it is product specific tax
+          type: string
+        amountPercentage:
+          description: Tax percentage, which is stored with precision 2 (e.g., 25.1% ➜ 2510)
+          type: integer
+        amountTotal:
+          oneOf:
+            - $ref: '#/components/schemas/Money'
+      additionalProperties: false
+    Payment:
+      description: Configuration of the payment.
+      required:
+        - paidAmount
+      type: object
+      properties:
+        paymentIntentId:
+          description: ''
+          type: string
+        paidAmount:
+          description: Indicates the paid amount of this specific payment, excluding `tipsAmount` but includes eventual service charges.
+          oneOf:
+            - $ref: '#/components/schemas/Money'
+        tipsAmount:
+          description: The tip amount added to this specific payment. It is not included in `paidAmount`.
+          oneOf:
+            - $ref: '#/components/schemas/Money'
+    Area:
+      description: A representation of a physcial area in a merchants location.
+      required:
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          description: Unique ID of the area
+          type: string
+        name:
+          description: User friendly name of the area
+          type: string
+          example: ''
+        waiterIds:
+          description: ''
+          type: array
+          items:
+            type: string
+      example:
+        id: area_1234
+        name: downstairs
+    OrderStatus:
+      description: ''
+      enum:
+        - New
+        - Submitted
+        - Confirmed
+        - Accepted
+        - Preparing
+        - Prepared
+        - Ready
+        - Finalized
+        - Canceled
+        - Failed
+      type: string
+    OrderType:
+      description: ''
+      enum:
+        - DineIn
+        - Collection
+      type: string
+    CollectionDetails:
+      title: CollectionDetails
+      description: ''
+      type: object
+      properties:
+        asap:
+          description: A boolean indicating whether order collection is as soon as possible
+          type: boolean
+        collectAt:
+          format: date-time
+          description: Order collection timestamp in ISO8601 UTC standard. Only applicable when asap is not set or false
+          type: string
+      example:
+        collectionTime: '2024-02-21T14:39:21.6050276Z'
+        asap: false
+    Party:
+      title: Party
+      description: |-
+        The representation of a customer or group of customers _currently_
+        seated at/across a set of tables. For full documentation, see the
+        synchronous API model.
+      required:
+        - id
+        - startTime
+        - status
+        - tableIds
+      type: object
+      properties:
+        id:
+          title: ID
+          type: string
+        name:
+          title: Name
+          type: string
+        covers:
+          title: Covers
+          type: integer
+        tableIds:
+          title: Table IDs
+          minItems: 1
+          type: array
+          items:
+            type: string
+        status:
+          title: Status
+          minLength: 1
+          type: string
+        startTime:
+          format: date-time
+          title: Start Time
+          type: string
+        expectedEndTime:
+          format: date-time
+          title: Expected end time
+          type: string
+        endTime:
+          format: date-time
+          title: Actual end time
+          type: string
+        hostNotes:
+          title: Host notes
+          type: string
+        guestRequests:
+          title: Guest requests
+          type: string
+        reservationId:
+          title: Reservation ID
+          type: string
+        deposit:
+          $ref: '#/components/schemas/PartyDeposit'
+    PartyDeposit:
+      title: Party Deposit
+      required:
+        - totalAmount
+        - paymentIntentIds
+      properties:
+        totalAmount:
+          $ref: '#/components/schemas/Money'
+        description:
+          type: string
+          description: |-
+            A human-readable description of the deposit. This may be used to
+            describe the reason for the deposit, or any other relevant information.
+          example: Sunday Lunch deposit - 4 covers
+        paymentIntentIds:
+          type: array
+          items:
+            type: string
+    PartyId:
+      required:
+        - partyId
+      type: object
+      properties:
+        partyId:
+          type: string
+    PartyIdWithHeaders:
+      type: object
+      description: ''
+      allOf:
+        - $ref: '#/components/schemas/PartyId'
+        - $ref: '#/components/schemas/Headers'
+    GetPartyByIdParams:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/PartyIdWithHeaders'
+    DeletePartyByIdParams:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/PartyIdWithHeaders'
+    CreatePartyRequest:
+      title: Create Party Request
+      description: |-
+        Request payload made from Dojo -> EPOS Partner to create a new party in
+        the EPOS domain. Note that Dojo will always provide _all_ known fields.
+      required:
+        - startTime
+        - tableIds
+        - dojoPartyId
+      properties:
+        name:
+          title: Name
+          type: string
+        covers:
+          title: Covers
+          type: integer
+        tableIds:
+          title: Table IDs
+          minLength: 1
+          type: array
+          items:
+            type: string
+        status:
+          title: Status
+          type: string
+        startTime:
+          format: date-time
+          title: Start time
+          description: When the party was seated. ISO8601 formatted, ms precise.
+          type: string
+        expectedEndTime:
+          format: date-time
+          title: Expected end time
+          description: When the party is expected to leave, if known. ISO8601 formatted, ms precise.
+          type: string
+        hostNotes:
+          title: Host notes
+          type: string
+        guestRequests:
+          title: Guest requests
+          type: string
+        reservationId:
+          title: The EPOS-Internal Reservation ID
+          type: string
+        deposit:
+          $ref: '#/components/schemas/PartyDeposit'
+        dojoPartyId:
+          description: For reference. The Dojo API party ID
+          type: string
+        dojoReservationId:
+          description: For reference. The Dojo API reservation ID
+          type: string
+      example:
+        name: Martin B.
+        covers: 4
+        tableIds:
+          - table-01-001
+          - table-01-002
+        startTime: '2024-08-12T09:30:00.000Z'
+        expectedEndTime: '2024-08-12T11:00:00.000Z'
+        guestRequests: nut allergy; gluten intolerance; please could we have a table next to a window?
+        hostNotes: called ahead to notify kitchen of dietary requirements - confirm upon arrival
+        reservationId: reservation-2024-08-12-0028
+        deposit:
+          totalAmount:
+            value: 5000
+            currencyCode: GBP
+    CreatePartyWithHeaders:
+      type: object
+      description: ''
+      allOf:
+        - $ref: '#/components/schemas/CreatePartyRequest'
+        - $ref: '#/components/schemas/Headers'
+    CreatePartyParams:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/CreatePartyWithHeaders'
+    UpdatePartyRequest:
+      required:
+        - id
+        - dojoPartyId
+        - startTime
+        - status
+        - tableIds
+      type: object
+      properties:
+        id:
+          type: string
+        dojoPartyId:
+          type: string
+        name:
+          type: string
+        covers:
+          type: integer
+        tableIds:
+          minItems: 1
+          type: array
+          items:
+            type: string
+        status:
+          minLength: 1
+          type: string
+        startTime:
+          format: date-time
+          type: string
+        expectedEndTime:
+          format: date-time
+          type: string
+        endTime:
+          format: date-time
+          type: string
+        hostNotes:
+          type: string
+        guestRequests:
+          type: string
+        deposit:
+          $ref: '#/components/schemas/PartyDeposit'
+    UpdatePartyWithHeaders:
+      type: object
+      description: ''
+      allOf:
+        - $ref: '#/components/schemas/UpdatePartyRequest'
+        - $ref: '#/components/schemas/Headers'
+    UpdatePartyParams:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/UpdatePartyWithHeaders'
+    EmptyResult:
+      description: ''
+      required:
+        - result
+      type: object
+      properties:
+        result:
+          type: object
+    DeletePartyJsonrpcResponseV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcResponseV1'
+        - $ref: '#/components/schemas/EmptyResult'
+    PartyResult:
+      required:
+        - result
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/Party'
+    PartyJsonrpcResponseV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcResponseV1'
+        - $ref: '#/components/schemas/PartyResult'
+    SearchPartiesJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/SearchPartiesParams'
+    GetPartyByIdJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/GetPartyByIdParams'
+    DeletePartyByIdJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/DeletePartyByIdParams'
+    CreatePartyJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/CreatePartyParams'
+    UpdatePartyJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/UpdatePartyParams'
+    Reservation:
+      title: Reservation
+      description: |-
+        A reservation describes a point in the future that a party is expected
+        to be seated at, how long for, and where. For full documentation, see
+        the synchronous API model.
+      required:
+        - id
+        - name
+        - covers
+        - startTime
+        - endTime
+        - tableIds
+      type: object
+      properties:
+        id:
+          title: ID
+          type: string
+        name:
+          title: Name
+          type: string
+        covers:
+          title: Covers
+          type: integer
+        startTime:
+          format: date-time
+          title: Start time
+          description: When the reservation is expected to arrive. ISO8601 formatted, ms precise.
+          type: string
+        endTime:
+          format: date-time
+          title: End time
+          description: When the reservation is expected to depart. ISO8601 formatted, ms precise.
+          type: string
+        tableIds:
+          title: Table IDs
+          minLength: 1
+          type: array
+          items:
+            type: string
+        hostNotes:
+          title: Host notes
+          type: string
+        guestRequests:
+          title: Guest requests
+          type: string
+    ReservationId:
+      required:
+        - reservationId
+      type: object
+      properties:
+        reservationId:
+          type: string
+    ReservationIdWithHeaders:
+      type: object
+      description: ''
+      allOf:
+        - $ref: '#/components/schemas/ReservationId'
+        - $ref: '#/components/schemas/Headers'
+    GetReservationByIdParams:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/ReservationIdWithHeaders'
+    DeleteReservationByIdParams:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/ReservationIdWithHeaders'
+    CreateReservationRequest:
+      title: Create Reservation Request
+      description: |-
+        Request payload made from Dojo -> EPOS Partner to create a new Reservation in
+        the EPOS domain. Note that Dojo will always provide _all_ known fields.
+      required:
+        - dojoReservationId
+        - name
+        - covers
+        - startTime
+        - endTime
+        - tableIds
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+        covers:
+          title: Covers
+          type: integer
+        startTime:
+          format: date-time
+          title: Start time
+          type: string
+        endTime:
+          format: date-time
+          title: End time
+          type: string
+        tableIds:
+          title: Table IDs
+          minLength: 1
+          type: array
+          items:
+            type: string
+        hostNotes:
+          title: Notes
+          type: string
+        guestRequests:
+          title: Requests
+          type: string
+        dojoReservationId:
+          title: Dojo reservation ID
+          type: string
+      example:
+        name: Martin B.
+        covers: 4
+        tableIds:
+          - table-01-001
+          - table-01-002
+        startTime: '2024-08-12T09:30:00.000Z'
+        endTime: '2024-08-12T11:00:00.000Z'
+        guestRequests: nut allergy; gluten intolerance; please could we have a table next to a window?
+        hostNotes: called ahead to notify kitchen of dietary requirements - confirm upon arrival
+        dojoReservationId: reservation-2024-08-12-0028
+    CreateReservationWithHeaders:
+      type: object
+      description: ''
+      allOf:
+        - $ref: '#/components/schemas/CreateReservationRequest'
+        - $ref: '#/components/schemas/Headers'
+    UpdateReservationRequest:
+      required:
+        - id
+        - dojoReservationId
+        - name
+        - covers
+        - startTime
+        - endTime
+        - tableIds
+      type: object
+      properties:
+        id:
+          type: string
+        dojoReservationId:
+          type: string
+        name:
+          type: string
+        covers:
+          type: integer
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        tableIds:
+          minLength: 1
+          type: array
+          items:
+            type: string
+        hostNotes:
+          type: string
+        guestRequests:
+          type: string
+    UpdateReservationWithHeaders:
+      type: object
+      description: ''
+      allOf:
+        - $ref: '#/components/schemas/UpdateReservationRequest'
+        - $ref: '#/components/schemas/Headers'
+    CreateReservationParams:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/CreateReservationWithHeaders'
+    UpdateReservationParams:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/UpdateReservationWithHeaders'
+    DeleteReservationJsonrpcResponseV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcResponseV1'
+        - $ref: '#/components/schemas/EmptyResult'
+    ReservationResult:
+      required:
+        - result
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/Reservation'
+    SearchReservationsJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/SearchReservationsParams'
+    GetReservationByIdJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/GetReservationByIdParams'
+    DeleteReservationByIdJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/DeleteReservationByIdParams'
+    CreateReservationJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/CreateReservationParams'
+    UpdateReservationJsonrpcRequestV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcRequestV1'
+        - $ref: '#/components/schemas/UpdateReservationParams'
+    SearchTablesRequest:
+      description: ''
+      type: object
+      properties:
+        areaId:
+          type: string
+        waiterId:
+          type: string
+        cursor:
+          $ref: '#/components/schemas/Cursor'
+    SearchTablesWithHeaders:
+      type: object
+      description: ''
+      allOf:
+        - $ref: '#/components/schemas/SearchTablesRequest'
+        - $ref: '#/components/schemas/Headers'
+    SearchPartiesRequest:
+      description: ''
+      type: object
+      properties:
+        tableId:
+          type: string
+        completedOnly:
+          type: boolean
+        cursor:
+          $ref: '#/components/schemas/Cursor'
+    SearchPartiesWithHeaders:
+      type: object
+      description: ''
+      allOf:
+        - $ref: '#/components/schemas/SearchPartiesRequest'
+        - $ref: '#/components/schemas/Headers'
+    SearchPartiesParams:
+      description: ''
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/SearchPartiesWithHeaders'
+          description: ''
+    SearchReservationsRequest:
+      description: ''
+      type: object
+      properties:
+        tableId:
+          type: string
+        fromTime:
+          format: date-time
+          type: string
+        toTime:
+          format: date-time
+          type: string
+        cursor:
+          $ref: '#/components/schemas/Cursor'
+    SearchReservationsWithHeaders:
+      type: object
+      description: ''
+      allOf:
+        - $ref: '#/components/schemas/SearchReservationsRequest'
+        - $ref: '#/components/schemas/Headers'
+    SearchReservationsParams:
+      description: ''
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/SearchReservationsWithHeaders'
+          description: ''
+    ReservationJsonrpcResponseV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcResponseV1'
+        - $ref: '#/components/schemas/ReservationResult'
+    PagedReservationsJsonrpcResponseV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcResponseV1'
+        - $ref: '#/components/schemas/PagedReservationsResult'
+    PagedOrdersResponse:
+      title: PagedOrders
+      required:
+        - data
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+          readOnly: false
+          x-stoplight:
+            id: ou7je7f6bizdg
+        before:
+          type: string
+          x-stoplight:
+            id: jutkpidtbhr6q
+        after:
+          type: string
+          x-stoplight:
+            id: vwlxjfle0yxqt
+      x-stoplight:
+        id: bjkxvbo62zl42
+    PagedReservationsResult:
+      description: ''
+      required:
+        - result
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/PagedReservationsResponse'
+          description: ''
+    PagedReservationsResponse:
+      title: PagedReservations
+      required:
+        - data
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reservation'
+          readOnly: false
+          x-stoplight:
+            id: ou7je7f6bizdg
+        before:
+          type: string
+          x-stoplight:
+            id: jutkpidtbhr6q
+        after:
+          type: string
+          x-stoplight:
+            id: vwlxjfle0yxqt
+      x-stoplight:
+        id: bjkxvbo62zl42
+    PagedPartiesResult:
+      required:
+        - result
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/PagedPartiesResponse'
+    PagedPartiesJsonrpcResponseV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcResponseV1'
+        - $ref: '#/components/schemas/PagedPartiesResult'
+    PagedPartiesResponse:
+      title: PagedOrders
+      required:
+        - data
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Party'
+          readOnly: false
+          x-stoplight:
+            id: ou7je7f6bizdg
+        before:
+          type: string
+          x-stoplight:
+            id: jutkpidtbhr6q
+        after:
+          type: string
+          x-stoplight:
+            id: vwlxjfle0yxqt
+      x-stoplight:
+        id: bjkxvbo62zl42
+    PagedTablesJsonrpcResponseV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcResponseV1'
+        - $ref: '#/components/schemas/PagedTablesResult'
+    PagedTablesResult:
+      description: ''
+      required:
+        - result
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/PagedTablesResponse'
+          description: ''
+    PagedTablesResponse:
+      title: PagedOrders
+      required:
+        - data
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Table'
+          readOnly: false
+          x-stoplight:
+            id: ou7je7f6bizdg
+        before:
+          type: string
+          x-stoplight:
+            id: jutkpidtbhr6q
+        after:
+          type: string
+          x-stoplight:
+            id: vwlxjfle0yxqt
+      x-stoplight:
+        id: bjkxvbo62zl42
+    ListAreasJsonrpcResponseV1:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/JsonrpcResponseV1'
+        - $ref: '#/components/schemas/AreasResult'
+    EPOSError:
+      title: EPOSError
+      required:
+        - errorType
+      type: object
+      properties:
+        debugMessage:
+          type: string
+        traceId:
+          type: string
+        errorType:
+          $ref: '#/components/schemas/EPOSErrorType'
+    EPOSErrorType:
+      title: EPOSErrorType
+      enum:
+        - NotFound
+        - UnexpectedError
+        - InvalidRequest
+        - Conflict
+      type: string
+asyncapi: 2.0.0
+channels:
+  HandleEventV1:
+    description: |
+      Handle events from Dojo. Capabilities:
+
+      - `HandleEvent:payment_intent.created`
+      - `HandleEvent:payment_intent.status_updated`
+    publish:
+      tags:
+        - name: Events
+      operationId: HandleEventV1_Response
+      message:
+        payload:
+          $ref: '#/components/schemas/HandleEventJsonrpcResponseV1'
+    subscribe:
+      tags:
+        - name: Events
+      operationId: HandleEventV1_Request
+      message:
+        payload:
+          $ref: '#/components/schemas/HandleEventJsonrpcRequestV1'
+  SearchOrdersV1:
+    description: |
+      Searches through the orders on the EPOS. Capability: `SearchOrders`
+    publish:
+      operationId: SearchOrdersV1_Response
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/PagedOrdersJsonrpcResponseV1'
+    subscribe:
+      operationId: SearchOrdersV1_Request
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/SearchOrdersJsonrpcRequestV1'
+  GetOrderByIdV1:
+    description: |
+      Retrieve details of an order using the order ID. Capability: `GetOrderById`
+    publish:
+      operationId: GetOrderByIdV1_Response
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/OrderJsonrpcResponseV1'
+    subscribe:
+      operationId: GetOrderByIdV1_Request
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/GetOrderByIdJsonrpcRequestV1'
+  CancelOrderByIdV1:
+    description: |
+      Cancels an order by ID. Capability: `CancelOrderById`
+    publish:
+      operationId: CancelOrderByIdV1_Response
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/OrderJsonrpcResponseV1'
+    subscribe:
+      operationId: CancelOrderByIdV1_Request
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/CancelOrderByIdJsonrpcRequestV1'
+  CreateOrderV1:
+    description: |
+      Create an order on the EPOS. Capability: `CreateOrder`
+    publish:
+      operationId: CreateOrderV1_Response
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/OrderJsonrpcResponseV1'
+    subscribe:
+      operationId: CreateOrderV1_Request
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/CreateOrderJsonrpcRequestV1'
+  CreateOrderLockV1:
+    description: |
+      Request a Dojo write lock on an EPOS Order, returning the latest version of the Order once locked. Capability: CreateOrderLock
+    publish:
+      operationId: CreateOrderLockV1_Response
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/OrderJsonrpcResponseV1'
+    subscribe:
+      operationId: CreateOrderLockV1_Request
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/LockOrderJsonrpcRequestV1'
+  DeleteOrderLockV1:
+    description: |
+      Request to release a Dojo write lock on an EPOS Order, returning the latest version of the Order once unlocked. Capability: `DeleteOrderLock`
+    publish:
+      operationId: DeleteOrderLockV1_Response
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/OrderJsonrpcResponseV1'
+    subscribe:
+      operationId: DeleteOrderLockV1_Request
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/DeleteOrderLockJsonrpcRequestV1'
+  ExtendOrderLockV1:
+    description: |
+      Request a Dojo write lock on an EPOS Order is extended, returning the latest version of the Order. Capability: `ExtendOrderLock`
+    publish:
+      operationId: ExtendOrderLockV1_Response
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/ExtendOrderLockJsonrpcResponseV1'
+    subscribe:
+      operationId: ExtendOrderLockV1_Request
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/ExtendOrderLockJsonrpcRequestV1'
+  GetOrderBillByIdV1:
+    description: 'Retrieve a printable version of the Order, specifying the Header and Footer sections as it should be printed on the terminal. Capability: `GetOrderBill`'
+    publish:
+      operationId: GetOrderBillByIdV1_Response
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/OrderBillJsonrpcResponseV1'
+    subscribe:
+      operationId: GetOrderBillByIdV1_Request
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/GetOrderByIdJsonrpcRequestV1'
+  RecordOrderPaymentByIdV1:
+    description: 'Request to record a payment against this order. If the payment cannot be recorded, use the error messages and Dojo will reverse/release/refund the payment. Capability: `RecordOrderPayment`'
+    publish:
+      operationId: RecordOrderPaymentByIdV1_Response
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/RecordOrderPaymentJsonrpcResponseV1'
+    subscribe:
+      operationId: RecordOrderPaymentByIdV1_Request
+      tags:
+        - name: Orders
+      message:
+        payload:
+          $ref: '#/components/schemas/RecordOrderPaymentJsonrpcRequestV1'
+  ListAreasV1:
+    description: |
+      Retrieves all areas that are being served. Capability: `ListAreas`
+    publish:
+      operationId: ListAreasV1_Response
+      tags:
+        - name: Areas
+      message:
+        payload:
+          $ref: '#/components/schemas/ListAreasJsonrpcResponseV1'
+    subscribe:
+      operationId: ListAreasV1_Request
+      tags:
+        - name: Areas
+      message:
+        payload:
+          $ref: '#/components/schemas/ListAreasJsonrpcRequestV1'
+  DeletePartyByIdV1:
+    description: |
+      Deletes a specific party. Capability: `DeletePartyById`
+    publish:
+      operationId: DeletePartyByIdV1_Response
+      tags:
+        - name: Parties
+      message:
+        payload:
+          $ref: '#/components/schemas/DeletePartyJsonrpcResponseV1'
+    subscribe:
+      operationId: DeletePartyByIdV1_Request
+      tags:
+        - name: Parties
+      message:
+        payload:
+          $ref: '#/components/schemas/DeletePartyByIdJsonrpcRequestV1'
+  CreatePartyV1:
+    description: |
+      Create a new party in the POS domain. Capability: `CreateParty`
+    publish:
+      operationId: CreatePartyV1_Response
+      tags:
+        - name: Parties
+      message:
+        payload:
+          $ref: '#/components/schemas/PartyJsonrpcResponseV1'
+    subscribe:
+      operationId: CreatePartyV1_Request
+      tags:
+        - name: Parties
+      message:
+        payload:
+          $ref: '#/components/schemas/CreatePartyJsonrpcRequestV1'
+  GetPartyByIdV1:
+    description: |
+      Retrieves a specific party. Capability: `GetPartyById`
+    publish:
+      operationId: GetPartyByIdV1_Response
+      tags:
+        - name: Parties
+      message:
+        payload:
+          $ref: '#/components/schemas/PartyJsonrpcResponseV1'
+    subscribe:
+      operationId: GetPartyByIdV1_Request
+      tags:
+        - name: Parties
+      message:
+        payload:
+          $ref: '#/components/schemas/GetPartyByIdJsonrpcRequestV1'
+  UpdatePartyV1:
+    description: |
+      Sets the party's details to those provided. Capability: `UpdatePartyById`
+    publish:
+      operationId: UpdatePartyV1_Response
+      tags:
+        - name: Parties
+      message:
+        payload:
+          $ref: '#/components/schemas/PartyJsonrpcResponseV1'
+    subscribe:
+      operationId: UpdatePartyV1_Request
+      tags:
+        - name: Parties
+      message:
+        payload:
+          $ref: '#/components/schemas/UpdatePartyJsonrpcRequestV1'
+  DeleteReservationByIdV1:
+    description: |
+      Deletes a specific reservation. Capability: `DeleteReservationById`
+    publish:
+      operationId: DeleteReservationByIdV1_Response
+      tags:
+        - name: Reservations
+      message:
+        payload:
+          $ref: '#/components/schemas/DeleteReservationJsonrpcResponseV1'
+    subscribe:
+      operationId: DeleteReservationByIdV1_Request
+      tags:
+        - name: Reservations
+      message:
+        payload:
+          $ref: '#/components/schemas/DeleteReservationByIdJsonrpcRequestV1'
+  CreateReservationV1:
+    description: |
+      Create a new reservation in the POS domain. Capability: `CreateReservation`
+    publish:
+      operationId: CreateReservationV1_Response
+      tags:
+        - name: Reservations
+      message:
+        payload:
+          $ref: '#/components/schemas/ReservationJsonrpcResponseV1'
+    subscribe:
+      operationId: CreateReservationV1_Request
+      tags:
+        - name: Reservations
+      message:
+        payload:
+          $ref: '#/components/schemas/CreateReservationJsonrpcRequestV1'
+  GetReservationByIdV1:
+    description: |
+      Retrieves a specific reservation. Capability: `GetReservationById`
+    publish:
+      operationId: GetReservationByIdV1_Response
+      tags:
+        - name: Reservations
+      message:
+        payload:
+          $ref: '#/components/schemas/ReservationJsonrpcResponseV1'
+    subscribe:
+      operationId: GetReservationByIdV1_Request
+      tags:
+        - name: Reservations
+      message:
+        payload:
+          $ref: '#/components/schemas/GetReservationByIdJsonrpcRequestV1'
+  UpdateReservationV1:
+    description: |
+      Sets the reservation's details to those provided. Capbility: `UpdateReservationById`
+    publish:
+      operationId: UpdateReservationV1_Response
+      tags:
+        - name: Reservations
+      message:
+        payload:
+          $ref: '#/components/schemas/ReservationJsonrpcResponseV1'
+    subscribe:
+      operationId: UpdateReservationV1_Request
+      tags:
+        - name: Reservations
+      message:
+        payload:
+          $ref: '#/components/schemas/UpdateReservationJsonrpcRequestV1'
+  SearchPartiesV1:
+    description: |
+      Searches through parties on the EPOS.
+      By default, this endpoint should exclude parties with `endTime` set, including them only when `completedOnly: true`.
+      Capability: `SearchParties`
+    publish:
+      operationId: SearchPartiesV1_Response
+      tags:
+        - name: Parties
+      message:
+        payload:
+          $ref: '#/components/schemas/PagedPartiesJsonrpcResponseV1'
+    subscribe:
+      operationId: SearchPartiesV1_Request
+      tags:
+        - name: Parties
+      message:
+        payload:
+          $ref: '#/components/schemas/SearchPartiesJsonrpcRequestV1'
+  SearchReservationsV1:
+    description: |
+      Search through reservations on the EPOS. Capability: `SearchReservations`
+    publish:
+      operationId: SearchReservationsV1_Response
+      tags:
+        - name: Reservations
+      message:
+        payload:
+          $ref: '#/components/schemas/PagedReservationsJsonrpcResponseV1'
+    subscribe:
+      operationId: SearchReservationsV1_Request
+      tags:
+        - name: Reservations
+      message:
+        payload:
+          $ref: '#/components/schemas/SearchReservationsJsonrpcRequestV1'
+  SearchTablesV1:
+    description: |
+      Search through tables on the EPOS. Capability: `SearchTables`
+    publish:
+      operationId: SearchTablesV1_Response
+      tags:
+        - name: Tables
+      message:
+        payload:
+          $ref: '#/components/schemas/PagedTablesJsonrpcResponseV1'
+    subscribe:
+      operationId: SearchTablesV1_Request
+      tags:
+        - name: Tables
+      message:
+        payload:
+          $ref: '#/components/schemas/SearchTablesJsonrpcRequestV1'
