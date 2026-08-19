@@ -135,3 +135,9 @@ tools:
 - name: TerminalSession_Signature
   description: Respond to a signature verification request
   source_operation: openapi/dojo-api.json#TerminalSession_Signature
+deployment:
+  mode: none
+  verified: derived
+  tools: 42
+  checked: '2026-08-12'
+  source: catalog MCP census

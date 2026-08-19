@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tap to Pay on iPhone",
+    "version": "2023-12-12"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tap to Pay on iPhone",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a terminal secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/tap/apple-terminal/secret",
+            "headers": [
+              {
+                "name": "version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates a secret value that you'll use to initialize the SDK."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,823 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "EPOS Data API (REST)",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Areas",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List areas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://your-epos.example.com/v1/areas",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ]
+          },
+          "docs": "Retrieves all areas that are being served. Capability: `ListAreas`\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://your-epos.example.com/v1/orders",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an order on the EPOS. Capability: `CreateOrder`\n"
+        },
+        {
+          "info": {
+            "name": "Get an order by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://your-epos.example.com/v1/orders/:orderId",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the order to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieve details of an order using the order ID. Capability: `GetOrderById`\n"
+        },
+        {
+          "info": {
+            "name": "Cancel an order by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://your-epos.example.com/v1/orders/:orderId",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the order to retrieve."
+              }
+            ]
+          },
+          "docs": "Cancels an order by ID. Capability: `CancelOrderById`\n"
+        },
+        {
+          "info": {
+            "name": "Search orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://your-epos.example.com/v1/orders/search",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Searches through the orders on the EPOS. Capability: `SearchOrders`\n"
+        },
+        {
+          "info": {
+            "name": "Lock an EPOS Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://your-epos.example.com/v1/orders/:orderId/lock",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the order to lock."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request a Dojo write lock on an EPOS Order, returning the latest version of the Order once locked. Capability: CreateOrderLock\n"
+        },
+        {
+          "info": {
+            "name": "Extend an EPOS Order Lock",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://your-epos.example.com/v1/orders/:orderId/locks/:lockId",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the order to unlock."
+              },
+              {
+                "name": "lockId",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of a lock generated by Dojo. Consuming this isn't strictly required as Dojo will create at most one lock per order, but it can be useful for tracking the lifecycle of any lock."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request a Dojo write lock on an EPOS Order is extended, returning the latest version of the Order. Capability: `ExtendOrderLock`\n"
+        },
+        {
+          "info": {
+            "name": "Unlock an EPOS Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://your-epos.example.com/v1/orders/:orderId/locks/:lockId",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the order to unlock."
+              },
+              {
+                "name": "lockId",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of a lock generated by Dojo. Consuming this isn't strictly required as Dojo will create at most one lock per order, but it can be useful for tracking the lifecycle of any lock."
+              }
+            ]
+          },
+          "docs": "Request to release a Dojo write lock on an EPOS Order, returning the latest version of the Order once unlocked. Capability: `DeleteOrderLock`\n"
+        },
+        {
+          "info": {
+            "name": "Get a printable bill",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://your-epos.example.com/v1/orders/:orderId/bill",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the order to get the bill for."
+              }
+            ]
+          },
+          "docs": "Retrieve a printable version of the Order, specifying the Header and Footer sections as it should be printed on the terminal. Capability: `GetOrderBill`"
+        },
+        {
+          "info": {
+            "name": "Record Payment Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://your-epos.example.com/v1/orders/:orderId/record-payment",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the order to record the payment against"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request to record a payment against this order. If the payment cannot be recorded, use the error messages and Dojo will reverse/release/refund the payment. Capability: `RecordOrderPayment`"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Parties",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create party",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://your-epos.example.com/v1/parties",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new party in the POS domain. Capability: `CreateParty`\n"
+        },
+        {
+          "info": {
+            "name": "Get party",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://your-epos.example.com/v1/parties/:partyId",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "params": [
+              {
+                "name": "partyId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the party to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves a specific party. Capability: `GetPartyById`\n"
+        },
+        {
+          "info": {
+            "name": "Update party",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://your-epos.example.com/v1/parties/:partyId",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "params": [
+              {
+                "name": "partyId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the party to retrieve."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the party's details to those provided. Capability: `UpdatePartyById`\n"
+        },
+        {
+          "info": {
+            "name": "Delete party",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://your-epos.example.com/v1/parties/:partyId",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "params": [
+              {
+                "name": "partyId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the party to retrieve."
+              }
+            ]
+          },
+          "docs": "Deletes a specific party. Capability: `DeletePartyById`\n"
+        },
+        {
+          "info": {
+            "name": "Search parties",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://your-epos.example.com/v1/parties/search",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Searches through parties on the EPOS.\nBy default, this endpoint should exclude parties with `endTime` set, including them only when `completedOnly: true`.\nCapability: `SearchParties`\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reservations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create reservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://your-epos.example.com/v1/reservations",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new reservation in the POS domain. Capability: `CreateReservation`\n"
+        },
+        {
+          "info": {
+            "name": "Get reservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://your-epos.example.com/v1/reservations/:reservationId",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "params": [
+              {
+                "name": "reservationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the reservation to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves a specific reservation. Capability: `GetReservationById`\n"
+        },
+        {
+          "info": {
+            "name": "Update reservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://your-epos.example.com/v1/reservations/:reservationId",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "params": [
+              {
+                "name": "reservationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the reservation to retrieve."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the reservation's details to those provided. Capbility: `UpdateReservationById`\n"
+        },
+        {
+          "info": {
+            "name": "Delete reservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://your-epos.example.com/v1/reservations/:reservationId",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "params": [
+              {
+                "name": "reservationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the reservation to retrieve."
+              }
+            ]
+          },
+          "docs": "Deletes a specific reservation. Capability: `DeleteReservationById`\n"
+        },
+        {
+          "info": {
+            "name": "Search reservations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://your-epos.example.com/v1/reservations/search",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Search through reservations on the EPOS. Capability: `SearchReservations`\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tables",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search tables",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://your-epos.example.com/v1/tables/search",
+            "headers": [
+              {
+                "name": "waiter-id",
+                "value": "42"
+              },
+              {
+                "name": "dojo-requesting-product",
+                "value": "Order&Pay"
+              },
+              {
+                "name": "device-id",
+                "value": "tm_sandbox_65c5fe8a104a1222b2d8b968"
+              },
+              {
+                "name": "device-type",
+                "value": "Dojo Terminal"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Search through tables on the EPOS. Capability: `SearchTables`\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1315 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dojo API",
+    "version": "2026-02-27"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payment intents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a payment intent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/payment-intents",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a payment intent."
+        },
+        {
+          "info": {
+            "name": "Retrieve a payment intent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dojo.tech/payment-intents/:paymentIntentId",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentIntentId",
+                "value": "pi_sandbox_RBMHTJ4fIkmSppDILZVCGw",
+                "type": "path",
+                "description": "The unique identifier of the payment intent.\n"
+              },
+              {
+                "name": "returnCanceled",
+                "value": "",
+                "type": "query",
+                "description": "If the value is `true`, and the payment intent being retrieved has a status of `Canceled`, the payment intent will be returned in the response. Otherwise a 404 (not found) status code will be returned."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a payment intent."
+        },
+        {
+          "info": {
+            "name": "Cancel a payment intent",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.dojo.tech/payment-intents/:paymentIntentId",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentIntentId",
+                "value": "pi_sandbox_RBMHTJ4fIkmSppDILZVCGw",
+                "type": "path",
+                "description": "The unique identifier of the payment intent.\n"
+              }
+            ]
+          },
+          "docs": "Cancels a payment intent. If a payment intent's status is `Created`, it can be canceled. After cancellation, the payment intent status will change to `Canceled` and any operations will fail with an error."
+        },
+        {
+          "info": {
+            "name": "Charge a card",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/payment-intents/:paymentIntentId/charge",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentIntentId",
+                "value": "pi_sandbox_RBMHTJ4fIkmSppDILZVCGw",
+                "type": "path",
+                "description": "The unique identifier of the payment intent.\n"
+              }
+            ]
+          },
+          "docs": "Allows you to charge a card later. This is available for merchant-initiated transactions only."
+        },
+        {
+          "info": {
+            "name": "Update a client session secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/payment-intents/:paymentIntentId/refresh-client-session-secret",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentIntentId",
+                "value": "pi_sandbox_RBMHTJ4fIkmSppDILZVCGw",
+                "type": "path",
+                "description": "The unique identifier of the payment intent.\n"
+              }
+            ]
+          },
+          "docs": "Updates a client session secret if the current secret key has been consumed or expired. These tokens are one-time use only. If you need to retry a payment, you must generate a new token."
+        },
+        {
+          "info": {
+            "name": "List all payment intents",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/payment-intents/search",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves a list of payment intents.\nResults are paginated. By default, the method returns up to 50 payment intents."
+        },
+        {
+          "info": {
+            "name": "Change tips amount",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/payment-intents/:paymentIntentId/tips-amount",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentIntentId",
+                "value": "pi_sandbox_RBMHTJ4fIkmSppDILZVCGw",
+                "type": "path",
+                "description": "The unique identifier of the payment intent.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Changes tip amount for a payment intent. Available if you enabled tipping when creating the payment intent.\n<!-- Check if tips or gratuity exists>"
+        },
+        {
+          "info": {
+            "name": "Change a payment intent amount",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/payment-intents/:paymentIntentId/amount",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentIntentId",
+                "value": "pi_sandbox_RBMHTJ4fIkmSppDILZVCGw",
+                "type": "path",
+                "description": "The unique identifier of the payment intent.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Changes the payment intent's amount. Available if you allow amount changes when creating the intent."
+        },
+        {
+          "info": {
+            "name": "Send a receipt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/payment-intents/:paymentIntentId/receipt",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentIntentId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a receipt to the email addresses you specified."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Captures",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Captures a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/payment-intents/:paymentIntentId/captures",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentIntentId",
+                "value": "pi_sandbox_RBMHTJ4fIkmSppDILZVCGw",
+                "type": "path",
+                "description": "The unique identifier of the payment intent.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Captures a payment intent that has previously been created but not yet refunded or reversed. You can capture the full amount or a partial amount."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Refunds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a refund",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/payment-intents/:paymentIntentId/refunds",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              },
+              {
+                "name": "idempotencyKey",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentIntentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the payment intent.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a refund. Refund allows you to return a payment that has previously been created as long as there have been no incremental payments or payment attempts, including unsuccessful payment attempts. You can refund the full amount or a partial amount.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve a refund",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dojo.tech/payment-intents/refunds/:refundId",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "refundId",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier for the refund. It will be used to reference this refund in all operations. It is recommended to use a UUID."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a refund that has previously been created."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reversal",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a reversal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/payment-intents/:paymentIntentId/reversal",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "paymentIntentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the payment intent.\n"
+              }
+            ]
+          },
+          "docs": "Reverses a payment intent."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Setup intents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a setup intent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/setup-intents",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a setup intent."
+        },
+        {
+          "info": {
+            "name": "Retrieve a setup intent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dojo.tech/setup-intents/:setupIntentId",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "setupIntentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the setup intent."
+              }
+            ]
+          },
+          "docs": "Get a setup intent by ID."
+        },
+        {
+          "info": {
+            "name": "Cancel a setup intent",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.dojo.tech/setup-intents/:setupIntentId",
+            "headers": [
+              {
+                "name": "version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "setupIntentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the setup intent."
+              }
+            ]
+          },
+          "docs": "Cancels a setup intent."
+        },
+        {
+          "info": {
+            "name": "Retrieve a setup intent (no auth)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dojo.tech/setup-intents/public/:setupIntentId",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "setupIntentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the setup intent."
+              }
+            ]
+          },
+          "docs": "Get a setup intent by ID."
+        },
+        {
+          "info": {
+            "name": "Update a client session secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/setup-intents/:setupIntentId/refresh-client-session-secret",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "setupIntentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the setup intent."
+              }
+            ]
+          },
+          "docs": "Updates a client session secret."
+        },
+        {
+          "info": {
+            "name": "Update a client session secret (no auth)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/setup-intents/public/:setupIntentId/refresh-client-session-secret",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "setupIntentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the setup intent."
+              }
+            ]
+          },
+          "docs": "Updates a client session secret."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dojo.tech/webhooks/events",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all events."
+        },
+        {
+          "info": {
+            "name": "List all subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dojo.tech/webhooks",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all subscriptions."
+        },
+        {
+          "info": {
+            "name": "Subscribe to an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/webhooks",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new subscription."
+        },
+        {
+          "info": {
+            "name": "List all secrets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dojo.tech/webhooks/:subscriptionId/secrets",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the subscription."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all secrets."
+        },
+        {
+          "info": {
+            "name": "Generate a secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/webhooks/:subscriptionId/secrets",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the subscription."
+              }
+            ]
+          },
+          "docs": "Generates a new secret."
+        },
+        {
+          "info": {
+            "name": "Activate a secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.dojo.tech/webhooks/:subscriptionId/secrets/:secretId/activate",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the subscription."
+              },
+              {
+                "name": "secretId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the secret."
+              }
+            ]
+          },
+          "docs": "Activates a secret."
+        },
+        {
+          "info": {
+            "name": "Delete a secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.dojo.tech/webhooks/:subscriptionId/secrets/:secretId",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the subscription."
+              },
+              {
+                "name": "secretId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the secret."
+              }
+            ]
+          },
+          "docs": "Deletes a secret."
+        },
+        {
+          "info": {
+            "name": "Update a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.dojo.tech/webhooks/:subscriptionId",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the subscription."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates your subscription details. You can change the URL or the list of events."
+        },
+        {
+          "info": {
+            "name": "Delete a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.dojo.tech/webhooks/:subscriptionId",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the subscription."
+              }
+            ]
+          },
+          "docs": "Deletes a subscription."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Customers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/customers",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new customer."
+        },
+        {
+          "info": {
+            "name": "Retrieve a customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dojo.tech/customers/:customerId",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifiers for the customers you want to get information about, separated by commas."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a customer."
+        },
+        {
+          "info": {
+            "name": "Update information about a customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.dojo.tech/customers/:customerId",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "customerId",
+                "value": "cs_qNkU6yob0vOMxUlb2oynUw",
+                "type": "path",
+                "description": "The unique identifier of the customer."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates information about a customer."
+        },
+        {
+          "info": {
+            "name": "Delete a customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.dojo.tech/customers/:customerId",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "customerId",
+                "value": "cust_qNkU6yob0vOMxUlb2oynUw",
+                "type": "path",
+                "description": "The unique identifier of the customer."
+              }
+            ]
+          },
+          "docs": "Deletes a customer."
+        },
+        {
+          "info": {
+            "name": "Create a customer secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/customers/:customerId/create-secret",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "params": [
+              {
+                "name": "customerId",
+                "value": "cust_qNkU6yob0vOMxUlb2oynUw",
+                "type": "path",
+                "description": "The unique identifier of the customer."
+              }
+            ]
+          },
+          "docs": "Creates a unique customer secret key valid within a scope of time. "
+        },
+        {
+          "info": {
+            "name": "Retrieve payment method",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dojo.tech/customers/public/:customerId/payment-methods",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              },
+              {
+                "name": "authorization",
+                "value": "Authorization: Basic cs_generated-customer-secret"
+              }
+            ],
+            "params": [
+              {
+                "name": "customerId",
+                "value": "cust_qNkU6yob0vOMxUlb2oynUw",
+                "type": "path",
+                "description": "The unique identifier of the customer."
+              }
+            ]
+          },
+          "docs": "Retrieves available payment methods for a customer."
+        },
+        {
+          "info": {
+            "name": "Remove payment method",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.dojo.tech/customers/public/:customerId/payment-methods/:paymentMethodId",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              },
+              {
+                "name": "authorization",
+                "value": "Authorization: Basic cs_generated-customer-secret"
+              }
+            ],
+            "params": [
+              {
+                "name": "customerId",
+                "value": "cust_qNkU6yob0vOMxUlb2oynUw",
+                "type": "path",
+                "description": "The unique identifier of the customer."
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "pm_otRL98WURbaAKs0sdy7_5w",
+                "type": "path",
+                "description": "The unique identifier of the customer payment method."
+              }
+            ]
+          },
+          "docs": "Delete a customer payment method.\n"
+        },
+        {
+          "info": {
+            "name": "List all customers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/customers/search",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves a list of customers.\nResults are paginated. By default, the method returns up to 50 customers."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Terminals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all terminals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dojo.tech/terminals",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              },
+              {
+                "name": "software-house-id",
+                "value": "softwareHouse1"
+              },
+              {
+                "name": "reseller-id",
+                "value": "reseller1"
+              }
+            ],
+            "params": [
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query",
+                "description": "A machine-readable value describing the state of the terminal. Terminals with any of the statuses provided in this parameter will be listed."
+              }
+            ]
+          },
+          "docs": "Allows you to retrieve details of all terminals."
+        },
+        {
+          "info": {
+            "name": "Retrieve a terminal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dojo.tech/terminals/:terminalId",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              },
+              {
+                "name": "software-house-id",
+                "value": "softwareHouse1"
+              },
+              {
+                "name": "reseller-id",
+                "value": "reseller1"
+              }
+            ],
+            "params": [
+              {
+                "name": "terminalId",
+                "value": "tm_sandbox_65c5fe8a104a12xxxxxxxxxx",
+                "type": "path",
+                "description": "The unique identifier for the terminal."
+              }
+            ]
+          },
+          "docs": "Retrieve a terminal by using its ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Terminal sessions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a session on a terminal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/terminal-sessions",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              },
+              {
+                "name": "software-house-id",
+                "value": "softwareHouse1"
+              },
+              {
+                "name": "reseller-id",
+                "value": "reseller1"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a session on a terminal"
+        },
+        {
+          "info": {
+            "name": "Retrieve a terminal session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dojo.tech/terminal-sessions/:terminalSessionId",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              },
+              {
+                "name": "software-house-id",
+                "value": "softwareHouse1"
+              },
+              {
+                "name": "reseller-id",
+                "value": "reseller1"
+              }
+            ],
+            "params": [
+              {
+                "name": "terminalSessionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the terminal session."
+              }
+            ]
+          },
+          "docs": "Retrieve a terminal session"
+        },
+        {
+          "info": {
+            "name": "Request the cancellation of a terminal session",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.dojo.tech/terminal-sessions/:terminalSessionId/cancel",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              },
+              {
+                "name": "software-house-id",
+                "value": "softwareHouse1"
+              },
+              {
+                "name": "reseller-id",
+                "value": "reseller1"
+              }
+            ],
+            "params": [
+              {
+                "name": "terminalSessionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the terminal session."
+              }
+            ]
+          },
+          "docs": "Request the cancellation of a terminal session"
+        },
+        {
+          "info": {
+            "name": "Respond to a signature verification request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.dojo.tech/terminal-sessions/:terminalSessionId/signature",
+            "headers": [
+              {
+                "name": "version",
+                "value": "2026-02-27"
+              },
+              {
+                "name": "software-house-id",
+                "value": "softwareHouse1"
+              },
+              {
+                "name": "reseller-id",
+                "value": "reseller1"
+              }
+            ],
+            "params": [
+              {
+                "name": "terminalSessionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the terminal session."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Respond to a signature verification request"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submit an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dojo.tech/epos/events",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit an event"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Capabilities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all registered integrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dojo.tech/epos/integrations"
+          },
+          "docs": "Get all registered integrations"
+        },
+        {
+          "info": {
+            "name": "Get registered REST integrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dojo.tech/epos/integrations/rest"
+          },
+          "docs": "Get registered REST integrations"
+        },
+        {
+          "info": {
+            "name": "Register a new REST integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.dojo.tech/epos/integrations/rest",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register a new REST integration"
+        },
+        {
+          "info": {
+            "name": "Get registered WebSocket integrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dojo.tech/epos/integrations/ws"
+          },
+          "docs": "Get registered WebSocket integrations"
+        },
+        {
+          "info": {
+            "name": "Register a new WebSocket integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.dojo.tech/epos/integrations/ws",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register a new WebSocket integration"
+        },
+        {
+          "info": {
+            "name": "GET /epos/integrations/dojo",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dojo.tech/epos/integrations/dojo"
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
