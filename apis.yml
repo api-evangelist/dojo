@@ -22,6 +22,17 @@ tags:
 - Card Payments
 - In-Person Payments
 - Terminals
+- Point-of-Sale
+- Webhook
+tags_raw:
+- Payments
+- United Kingdom
+- Payment Gateway
+- Payment Processing
+- Acquiring
+- Card Payments
+- In-Person Payments
+- Terminals
 - Point of Sale
 - Webhooks
 created: '2026-07-24'
@@ -37,6 +48,12 @@ apis:
   humanURL: https://docs.dojo.tech/api
   baseURL: https://api.dojo.tech
   tags:
+  - Payments
+  - Payment Intents
+  - Customers
+  - Terminals
+  - Webhook
+  tags_raw:
   - Payments
   - Payment Intents
   - Customers
@@ -62,6 +79,9 @@ apis:
   humanURL: https://docs.dojo.tech/transactions/api
   baseURL: https://api.dojo.tech
   tags:
+  - Transaction
+  - Reporting
+  tags_raw:
   - Transactions
   - Reporting
   properties:
@@ -79,6 +99,11 @@ apis:
     (15 paths).
   humanURL: https://docs.dojo.tech/epos-data/api
   tags:
+  - EPOS
+  - Point-of-Sale
+  - Hospitality
+  - Order
+  tags_raw:
   - EPOS
   - Point of Sale
   - Hospitality
