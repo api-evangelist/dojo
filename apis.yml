@@ -39,110 +39,713 @@ created: '2026-07-24'
 modified: '2026-07-24'
 specificationVersion: '0.23'
 apis:
-- aid: dojo:dojo-api
-  name: Dojo API
-  description: Dojo's core REST payments API for accepting and managing card payments. Covers payment
-    intents, refunds, reversals, captures, customers, setup intents, terminals, terminal sessions, capabilities,
-    and webhook event subscriptions. Uses an API key in the Authorization header. Version 2026-02-27 (40
-    paths).
+- aid: dojo:dojo-areas-api
+  name: Dojo Areas API
+  description: The Areas API from Dojo — 1 operation(s) for areas.
   humanURL: https://docs.dojo.tech/api
   baseURL: https://api.dojo.tech
   tags:
-  - Payments
-  - Payment Intents
-  - Customers
-  - Terminals
-  - Webhook
-  tags_raw:
-  - Payments
-  - Payment Intents
-  - Customers
-  - Terminals
-  - Webhooks
+  - Areas
   properties:
   - type: OpenAPI
-    url: openapi/dojo-api.json
+    url: openapi/dojo-areas-api-openapi.yml
   - type: Documentation
     url: https://docs.dojo.tech/docs
   - type: APIReference
     url: https://docs.dojo.tech/api
   - type: AsyncAPI
-    name: Dojo EPOS Data WebSocket API (AsyncAPI)
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    name: Dojo webhook event subscriptions
     url: openapi/dojo-api.json
-- aid: dojo:dojo-transactions-api
-  name: Dojo Transaction API
-  description: Retrieves transaction records for a merchant. Documented REST endpoint under https://api.dojo.tech
-    for querying processed card transactions. Version 2023-11-12.
-  humanURL: https://docs.dojo.tech/transactions/api
-  baseURL: https://api.dojo.tech
-  tags:
-  - Transaction
-  - Reporting
-  tags_raw:
-  - Transactions
-  - Reporting
-  properties:
-  - type: OpenAPI
-    url: openapi/dojo-transactions-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
     url: https://docs.dojo.tech/transactions/api
-- aid: dojo:dojo-epos-data-api
-  name: Dojo EPOS Data API
-  description: A REST contract that a merchant's EPOS (point-of-sale) system implements so Dojo can read
-    orders, tables, areas, parties, and reservations for hospitality integrations. The server is merchant-hosted
-    (example server your-epos.example.com); the spec defines the interface Dojo consumes. Version 1.0
-    (15 paths).
-  humanURL: https://docs.dojo.tech/epos-data/api
-  tags:
-  - EPOS
-  - Point-of-Sale
-  - Hospitality
-  - Order
-  tags_raw:
-  - EPOS
-  - Point of Sale
-  - Hospitality
-  - Orders
-  properties:
-  - type: OpenAPI
-    url: openapi/dojo-epos-data-api.json
   - type: Documentation
     url: https://docs.dojo.tech/api-hosting/epos-data
   - type: APIReference
     url: https://docs.dojo.tech/epos-data/api
-- aid: dojo:dojo-tap-to-pay-on-iphone-api
-  name: Dojo Tap to Pay on iPhone API
-  description: API supporting Dojo's Tap to Pay on iPhone in-person acceptance flow, documented under
-    https://api.dojo.tech. Version 2023-12-12.
-  humanURL: https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-capabilities-api
+  name: Dojo Capabilities API
+  description: Register your REST and WebSockets endpoints.
+  humanURL: https://docs.dojo.tech/api
   baseURL: https://api.dojo.tech
   tags:
-  - Tap to Pay
-  - In-Person Payments
-  - iPhone
+  - Capabilities
   properties:
   - type: OpenAPI
-    url: openapi/dojo-tap-to-pay-on-iphone-api.json
+    url: openapi/dojo-capabilities-api-openapi.yml
   - type: Documentation
-    url: https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+    url: https://docs.dojo.tech/docs
   - type: APIReference
-    url: https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
-- aid: dojo:dojo-epos-tester-tool-api
-  name: Dojo EPOS Tester Tool API
-  description: A small helper API for the Dojo EPOS Tester tool, used to validate an EPOS integration
-    against Dojo's EPOS Data contract. Version 1.0.0 (2 paths).
-  humanURL: https://docs.dojo.tech/epos-tester-tool/api
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-captures-api
+  name: Dojo Captures API
+  description: >-
+    Allows you to capture the full payment amount or part of the amount.
+
+
+    **Documentation**: [Captures](../../payments/manage-payments/capture)
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
   tags:
-  - EPOS
-  - Testing
+  - Captures
   properties:
   - type: OpenAPI
-    url: openapi/dojo-epos-tester-tool-api.json
+    url: openapi/dojo-captures-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-customers-api
+  name: Dojo Customers API
+  description: Allows to create and manage a customer of your business.
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-customers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-events-api
+  name: Dojo Events API
+  description: The Events API from Dojo — 1 operation(s) for events.
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-events-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-flows-api
+  name: Dojo Flows API
+  description: The Flows API from Dojo — 2 operation(s) for flows.
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Flows
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-flows-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-orders-api
+  name: Dojo Orders API
+  description: The Orders API from Dojo — 7 operation(s) for orders.
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-orders-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-parties-api
+  name: Dojo Parties API
+  description: The Parties API from Dojo — 3 operation(s) for parties.
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Parties
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-parties-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-payment-intents-api
+  name: Dojo Payment intents API
+  description: >-
+    Allows you to take and manage payments.
+
+
+    **Documentation**: [Payment intents](../../payments/manage-payments/payment-intent)
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Payment intents
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-payment-intents-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-refunds-api
+  name: Dojo Refunds API
+  description: >-
+    Allows you to create a refund for a captured payment.
+
+
+      **Documentation**: [Refunds](/payments/manage-payments/cancelling-payments/refund)
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Refunds
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-refunds-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-reservations-api
+  name: Dojo Reservations API
+  description: The Reservations API from Dojo — 3 operation(s) for reservations.
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Reservations
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-reservations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-reversal-api
+  name: Dojo Reversal API
+  description: >-
+    Allows you to create a reversal for payments.
+
+
+    **Documentation**: [Reversal](../../payments/manage-payments/cancelling-payments/reversal)
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Reversal
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-reversal-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-setup-intents-api
+  name: Dojo Setup intents API
+  description: >-
+    Allows you to setup a card for future payments.
+
+
+    **Documentation**: [Setup intent](../payments/manage-payments/setup-intent)
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Setup intents
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-setup-intents-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-tables-api
+  name: Dojo Tables API
+  description: The Tables API from Dojo — 1 operation(s) for tables.
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Tables
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-tables-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-tap-to-pay-on-iphone-api
+  name: Dojo Tap to Pay on iPhone API
+  description: Allows you to create a terminal secret value.
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Tap to Pay on iPhone
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-tap-to-pay-on-iphone-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-terminal-sessions-api
+  name: Dojo Terminal sessions API
+  description: Allows you to manage sessions on the terminal.
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Terminal sessions
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-terminal-sessions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-terminals-api
+  name: Dojo Terminals API
+  description: >-
+    Allows you to manage payments on the terminal.
+
+    **Documentation**: [Terminals](../payments/accept-payments/in-person-payments/pay-at-counter/terminals)
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Terminals
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-terminals-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-transactions-api
+  name: Dojo Transactions API
+  description: Allows you to take and manage payments.
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
+  - type: Documentation
+    url: https://docs.dojo.tech/epos-tester-tool
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-tester-tool/api
+- aid: dojo:dojo-webhooks-api
+  name: Dojo Webhooks API
+  description: >-
+    Webhooks notify you when a specific event has occurred.
+
+
+    **Documentation**: [Webhooks](../../development-resources/webhooks)
+  humanURL: https://docs.dojo.tech/api
+  baseURL: https://api.dojo.tech
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/dojo-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.dojo.tech/docs
+  - type: APIReference
+    url: https://docs.dojo.tech/api
+  - type: AsyncAPI
+    url: asyncapi/dojo-epos-data-asyncapi.yml
+  - type: Webhooks
+    url: openapi/dojo-api.json
+  - type: Documentation
+    url: https://docs.dojo.tech/transactions
+  - type: APIReference
+    url: https://docs.dojo.tech/transactions/api
+  - type: Documentation
+    url: https://docs.dojo.tech/api-hosting/epos-data
+  - type: APIReference
+    url: https://docs.dojo.tech/epos-data/api
+  - type: Documentation
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone
+  - type: APIReference
+    url: >-
+      https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api
   - type: Documentation
     url: https://docs.dojo.tech/epos-tester-tool
   - type: APIReference
