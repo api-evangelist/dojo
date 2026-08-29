@@ -12,6 +12,18 @@ description: Dojo is a United Kingdom payments company (Paymentsense trading as 
   Authentication is a secret API key sent in the Authorization header (sandbox sk_sandbox_ and production
   sk_prod_ prefixes), and the platform supports webhook event subscriptions. Positioned within the UK's
   dense card-acquiring and PSP cluster alongside players like Checkout.com and SumUp.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - Payments
