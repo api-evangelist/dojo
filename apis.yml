@@ -133,6 +133,8 @@ apis:
   humanURL: https://docs.dojo.tech/api
   baseURL: https://api.dojo.tech
   tags:
+  - Capture
+  tags_raw:
   - Captures
   properties:
   - type: OpenAPI
@@ -205,6 +207,8 @@ apis:
   humanURL: https://docs.dojo.tech/api
   baseURL: https://api.dojo.tech
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -277,6 +281,8 @@ apis:
   humanURL: https://docs.dojo.tech/api
   baseURL: https://api.dojo.tech
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -353,6 +359,8 @@ apis:
   humanURL: https://docs.dojo.tech/api
   baseURL: https://api.dojo.tech
   tags:
+  - Payment Intents
+  tags_raw:
   - Payment intents
   properties:
   - type: OpenAPI
@@ -509,6 +517,8 @@ apis:
   humanURL: https://docs.dojo.tech/api
   baseURL: https://api.dojo.tech
   tags:
+  - Setup Intents
+  tags_raw:
   - Setup intents
   properties:
   - type: OpenAPI
@@ -692,6 +702,8 @@ apis:
   humanURL: https://docs.dojo.tech/api
   baseURL: https://api.dojo.tech
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
@@ -732,6 +744,8 @@ apis:
   humanURL: https://docs.dojo.tech/api
   baseURL: https://api.dojo.tech
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
