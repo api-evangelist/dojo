@@ -1,0 +1,528 @@
+openapi: 3.2.0
+info:
+  title: EPOS Data API (REST) Reservations API
+  version: '1.0'
+  description: 'REST contract that an external POS/EPOS system implements so Dojo products can
+
+    fetch and update commerce entities (Orders, Tables, Areas, Parties, Reservations)
+
+    and record payments. Use this when the EPOS exposes its own publicly reachable
+
+    HTTP endpoints; for on-premise EPOSes that cannot accept inbound HTTP, use the
+
+    [WebSocket variant](/epos-data-asyncapi/bundled.yaml) of the same contract.
+
+
+    Core modules:
+
+    - Tables
+
+    - Areas
+
+    - Orders
+
+    - Parties
+
+    - Reservations
+
+
+    API modules can generally be
+
+    implemented independently, with a small number of interdependent fields affected
+
+    by other modules (for example, if Parties are implemented & the information is
+
+    known, a `partyId` should be attached to an Order''s `dineInDetails`).
+
+
+    All requests also contain special headers within the REST headers,
+
+    containing details about the requestor that can be used for logging purposes or EPOS business logic
+
+    (such as waiter id based access to entities).
+
+
+    Before any of these endpoints will be invoked by Dojo, register the capabilities you implement with `PUT /epos/integrations/rest`. See the EPOS Data API guide for the full registration flow.'
+servers:
+- url: https://your-epos.example.com
+  description: 'The EPOS Data REST API has no shared base URL: each EPOS provider hosts the
+
+    endpoints on their own domain and registers them against that base via
+
+    `PUT /epos/integrations/rest`. The placeholder `https://your-epos.example.com`
+
+    is illustrative — replace with your own publicly reachable HTTPS URL.'
+tags:
+- name: Reservations
+paths:
+  /v1/reservations:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReservationRequest'
+      tags:
+      - Reservations
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+          description: Reservation successfully created.
+        4XX:
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EPOSError'
+        5XX:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EPOSError'
+      operationId: v1-post-reservations
+      summary: Create reservation
+      description: 'Create a new reservation in the POS domain. Capability: `CreateReservation`
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/WaiterId'
+      - $ref: '#/components/parameters/DojoRequestingProduct'
+      - $ref: '#/components/parameters/DeviceId'
+      - $ref: '#/components/parameters/DeviceType'
+  /v1/reservations/{reservationId}:
+    parameters:
+    - name: reservationId
+      description: The ID of the reservation to retrieve.
+      schema:
+        type: string
+      in: path
+      required: true
+    - $ref: '#/components/parameters/WaiterId'
+    - $ref: '#/components/parameters/DojoRequestingProduct'
+    - $ref: '#/components/parameters/DeviceId'
+    - $ref: '#/components/parameters/DeviceType'
+    get:
+      tags:
+      - Reservations
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+          description: Ok
+        4XX:
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EPOSError'
+        5XX:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EPOSError'
+      operationId: v1-get-reservations-reservationId
+      summary: Get reservation
+      description: 'Retrieves a specific reservation. Capability: `GetReservationById`
+
+        '
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateReservationRequest'
+      tags:
+      - Reservations
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+          description: Reservation successfully updated.
+        4XX:
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EPOSError'
+        5XX:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EPOSError'
+      operationId: v1-put-reservations-reservationId
+      summary: Update reservation
+      description: 'Sets the reservation''s details to those provided. Capbility: `UpdateReservationById`
+
+        '
+    delete:
+      tags:
+      - Reservations
+      responses:
+        '200':
+          description: .
+        4XX:
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EPOSError'
+        5XX:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EPOSError'
+      operationId: v1-delete-reservations-reservationId
+      summary: Delete reservation
+      description: 'Deletes a specific reservation. Capability: `DeleteReservationById`
+
+        '
+  /v1/reservations/search:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchReservationsRequest'
+        required: true
+      tags:
+      - Reservations
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedReservationsResponse'
+          description: Ok
+        4XX:
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EPOSError'
+        5XX:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EPOSError'
+      operationId: v1-search-reservations
+      summary: Search reservations
+      description: 'Search through reservations on the EPOS. Capability: `SearchReservations`
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/WaiterId'
+      - $ref: '#/components/parameters/DojoRequestingProduct'
+      - $ref: '#/components/parameters/DeviceId'
+      - $ref: '#/components/parameters/DeviceType'
+components:
+  schemas:
+    EPOSError:
+      title: EPOSError
+      type: object
+      required:
+      - errorType
+      properties:
+        debugMessage:
+          type: string
+        traceId:
+          type: string
+        errorType:
+          $ref: '#/components/schemas/EPOSErrorType'
+    Reservation:
+      title: Reservation
+      description: 'A reservation describes a point in the future that a party is expected
+
+        to be seated at, how long for, and where.'
+      required:
+      - id
+      - name
+      - covers
+      - startTime
+      - endTime
+      - tableIds
+      type: object
+      properties:
+        id:
+          title: ID
+          description: The globally unique (within the EPOS) ID for the reservation.
+          type: string
+        name:
+          title: Name
+          description: The name of the guest who the reservation is for.
+          type: string
+        covers:
+          title: Covers
+          description: The number of covers the reservation is expected to occupy.
+          type: integer
+        startTime:
+          format: date-time
+          title: Start time
+          description: 'The time the reservation is expected to begin. ISO8601 formatted,
+
+            millisecond precision.'
+          type: string
+        endTime:
+          format: date-time
+          title: End time
+          description: 'The time the reservation is expected to finish. ISO8601 formatted,
+
+            millisecond precision.'
+          type: string
+        tableIds:
+          title: Table IDs
+          description: The tables the reservation is expected to occupy.
+          minLength: 1
+          type: array
+          items:
+            type: string
+        hostNotes:
+          title: Host notes
+          description: Host-written notes about the reservation. Not exposed to guests.
+          type: string
+        guestRequests:
+          title: Guest requests
+          description: 'Guest-written requests for the reservation. Shown to & editable by
+
+            guests. May not be edited by the EPOS partner, as this may contain
+
+            dietary requirements set by the Guest.'
+          type: string
+      example:
+        id: reservation-2024-08-12-0065
+        name: Sasha J.
+        covers: 3
+        startTime: '2024-08-12T13:00:00.000Z'
+        endTime: '2024-08-12T15:00:00.000Z'
+        tableIds:
+        - table-02-003
+        - table-02-004
+    SearchReservationsRequest:
+      description: ''
+      type: object
+      properties:
+        cursor:
+          $ref: '#/components/schemas/Cursor'
+        tableId:
+          type: string
+          description: ''
+        fromTime:
+          format: date-time
+          description: ''
+          type: string
+        toTime:
+          format: date-time
+          description: ''
+          type: string
+    EPOSErrorType:
+      type: string
+      enum:
+      - NotFound
+      - UnexpectedError
+      - InvalidRequest
+      - Conflict
+    PagedReservationsResponse:
+      title: PagedOrder
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reservation'
+          readOnly: false
+          x-stoplight:
+            id: ou7je7f6bizdg
+        before:
+          type: string
+          x-stoplight:
+            id: jutkpidtbhr6q
+        after:
+          type: string
+          x-stoplight:
+            id: vwlxjfle0yxqt
+      x-stoplight:
+        id: bjkxvbo62zl42
+    Cursor:
+      title: Cursor
+      description: A cursor for use in pagination.
+      type: object
+      properties:
+        limit:
+          description: The maximum number of results to be returned in a single page.
+          maximum: 100
+          type: integer
+          x-stoplight:
+            id: l5tzcxdo5qbt1
+        before:
+          description: A cursor for use in pagination for the previous page. before and after are mutually exclusive. Only one of these may be used.
+          type: string
+          x-stoplight:
+            id: 8vxj9sdmbby14
+        after:
+          description: A cursor for use in pagination for the next page. before and after are mutually exclusive. Only one of these may be used.
+          type: string
+          x-stoplight:
+            id: 1jsibbqp1zdti
+      x-stoplight:
+        id: m8ixmhyvzw3oo
+    CreateReservationRequest:
+      properties:
+        dojoReservationId:
+          title: DojoReservationID
+          type: string
+        name:
+          title: Name
+          type: string
+        covers:
+          title: Covers
+          type: integer
+        startTime:
+          title: Start time
+          type: string
+          format: date-time
+          description: When the reservation is expected to arrive. ISO8601 formatted, ms precise.
+        endTime:
+          title: End time
+          type: string
+          format: date-time
+          description: When the reservation is expected to depart. ISO8601 formatted, ms precise.
+        tableIds:
+          title: Table IDs
+          type: array
+          items:
+            type: string
+          minLength: 1
+        hostNotes:
+          title: Notes
+          type: string
+        guestRequests:
+          title: Requests
+          type: string
+      required:
+      - dojoReservationId
+      - name
+      - covers
+      - startTime
+      - endTime
+      - tableIds
+      example:
+        dojoReservationId: dojo-res-210345
+        name: Sasha J.
+        covers: 3
+        startTime: '2024-08-12T13:00:00.000Z'
+        endTime: '2024-08-12T15:00:00.000Z'
+        tableIds:
+        - table-02-003
+        - table-02-004
+        guestRequests: we'll be bringing our dog
+        hostNotes: dog may be given little snacks
+    UpdateReservationRequest:
+      title: Update Reservation Request
+      description: 'A reservation describes a point in the future that a party is expected
+
+        to be seated at, how long for, and where.'
+      required:
+      - dojoReservationId
+      - name
+      - covers
+      - startTime
+      - endTime
+      - tableIds
+      type: object
+      properties:
+        dojoReservationId:
+          description: The Dojo API reservation ID
+          type: string
+        name:
+          title: Name
+          description: The name of the guest who the reservation is for.
+          type: string
+        covers:
+          title: Covers
+          description: The number of covers the reservation is expected to occupy.
+          type: integer
+        startTime:
+          format: date-time
+          title: Start time
+          description: 'The time the reservation is expected to begin. ISO8601 formatted,
+
+            millisecond precision.'
+          type: string
+        endTime:
+          format: date-time
+          title: End time
+          description: 'The time the reservation is expected to finish. ISO8601 formatted,
+
+            millisecond precision.'
+          type: string
+        tableIds:
+          title: Table IDs
+          description: The tables the reservation is expected to occupy.
+          minLength: 1
+          type: array
+          items:
+            type: string
+        hostNotes:
+          title: Host notes
+          description: Host-written notes about the reservation. Not exposed to guests.
+          type: string
+        guestRequests:
+          title: Guest requests
+          description: 'Guest-written requests for the reservation. Shown to & editable by
+
+            guests. May not be edited by the EPOS partner, as this may contain
+
+            dietary requirements set by the Guest.'
+          type: string
+      example:
+        name: Sasha J.
+        covers: 3
+        startTime: '2024-08-12T13:00:00.000Z'
+        endTime: '2024-08-12T15:00:00.000Z'
+        tableIds:
+        - table-02-003
+        - table-02-004
+  parameters:
+    DeviceType:
+      in: header
+      name: device-type
+      required: false
+      schema:
+        type: string
+      example: Dojo Terminal
+      description: The device making the request, if known
+    DeviceId:
+      name: device-id
+      in: header
+      required: false
+      schema:
+        type: string
+      example: tm_sandbox_65c5fe8a104a1222b2d8b968
+      description: The ID of the device making the request, if known
+    WaiterId:
+      in: header
+      name: waiter-id
+      required: false
+      schema:
+        type: string
+      example: '42'
+      description: The ID of the waiter making the request, if known
+    DojoRequestingProduct:
+      name: dojo-requesting-product
+      in: header
+      required: false
+      schema:
+        type: string
+      example: Order&Pay
+      description: The dojo product making the request, if known.

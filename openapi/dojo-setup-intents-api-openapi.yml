@@ -1,0 +1,1171 @@
+openapi: 3.2.0
+info:
+  title: Dojo Setup intents API
+  version: '2026-02-27'
+  description: "# Introduction\n\nThe Dojo API is a REST API, using HTTP response codes to convey status, including successful responses and errors. Additionally, it accepts and returns JSON in the HTTP body.\nFor information on the latest development progress, visit the [changelog](../changelog).\n\n## Base URLs\n\nUse the following base URL when making requests to the API:  https://api.dojo.tech/\n\n## Authentication\n\nThe Dojo API uses [Basic HTTP authentication](https://en.wikipedia.org/wiki/Basic_access_authentication). You can generate API keys in the [Developer Portal](https://developer.dojo.tech).\nSecret keys for the test environment use the prefix `sk_sandbox_`. Production keys use the prefix `sk_prod_`.\n\nYou must include your secret API key in the header of all requests, for example:\n\n```curl\n  --header 'content-type: application/json' \\\n  --header 'Authorization: Basic sk_prod_your_key' \\\n```\n\nAPI requests without authentication will fail.\n\n## Additional Required Headers\n\nThe following headers are required on Terminal and Terminal Sessions API requests, requests without them will fail.\n\n- `reseller-id` - Identifies the reseller who sells software on behalf of the EPOS company. This value will be unique and provided by Dojo to each reseller.\n- `software-house-id` - Identifies the EPOS company whose software is generating the request. This value shouldn't be configurable, as it will remain the same for all customers using particular EPOS software. This value will be provided by Dojo.\n\n## HTTP Responses\n\nThe API returns standard HTTP response codes [RFC 7231](https://tools.ietf.org/html/rfc7231#section-6) on each request to indicate the success or otherwise of API requests. Summaries for each HTTP code are listed below:\n\n* `200 OK`—The request was successful.\n\n* `201 Created`—The request was successful, and a new resource was created as a result.\n\n* `204 No Content`—The request was successful, but there is no content to send.\n\n* `400 Bad Request`—Bad request, probably due to a syntax error.\n\n* `401 Unauthorized`—Authentication required.\n\n* `403 Forbidden`—The API key doesn't have permissions.\n\n* `404 Not Found`—The resource doesn't exist.\n\n* `405 Method Not Allowed`—The request method is known by the server but isn't supported by the target resource.\n\n* `409 Conflict`—The request couldn't be completed because it conflicted with another request or the server's configuration.\n\n* `500`, `502`, `503`, `504` `Server Errors`—An error occurred with our API.\n\n## Errors\n\nDojo follows the error response format proposed in [RFC 7807](https://tools.ietf.org/html/rfc7807), also known as Problem Details for HTTP APIs. All errors are returned in the form of JSON.\n\n### Error Schema\n\nIn case of an error, the response object contains the following fields:\n\n* `errors` [object]—A human-readable explanation of errors.\n\n* `type` [string]—\nA URI reference RFC 3986 that identifies the problem type.\n\n* `title` [string]—A short, human-readable summary of the error.\n\n* `status` [integer]—The HTTP status code.\n\n* `detail` [string]—A human-readable message giving more details about the error. Not always present.\n\n* `traceId` [string]—The unique identifier of the failing request.\n\nThe following example shows a possible error response:\n\n```json\n{\n    \"errors\": {\n        \"Reference\": [\n            \"The Reference field is required.\"\n        ]\n    },\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"traceId\": \"00-a405f077df056a498323ffbcec05923f-aa63e6f4dbbc734a-01\",\n}\n```\n\n## Versioning\n\nDojo APIs use the yyyy-mm-dd API version-naming scheme. You have to pass the version as the `version` header in all API calls, for example:\n\n``` curl\n  --header 'content-type: application/json' \\\n  --header 'Authorization: Basic sk_prod_your_key' \\\n  --header 'version: 2026-02-27' \\\n```\n\nWhen we make [breaking changes](../development-resources/versioning-overview#breaking-changes) to the API, we release new dated versions.\n\nThe current version is `2026-02-27`.\n\n## SDKs\nUse our PHP, .NET, and mobile [client libraries](/development-resources/sdk) to build your integration.\n\n## Code Samples\n\nGet help in building your integration with our [code samples](/development-resources/code-samples).\n"
+  termsOfService: https://dojo.tech/legal/
+  contact:
+    name: Dojo Developer Experience Team
+servers:
+- url: https://api.dojo.tech
+security:
+- ApiKeyAuth: []
+tags:
+- name: Setup intents
+  description: 'Allows you to setup a card for future payments.
+
+
+    **Documentation**: [Setup intent](../payments/manage-payments/setup-intent)'
+paths:
+  /setup-intents:
+    post:
+      tags:
+      - Setup intents
+      operationId: SetupIntents_Create
+      summary: Create a setup intent
+      parameters:
+      - $ref: '#/components/parameters/Version'
+      description: Creates a setup intent.
+      requestBody:
+        x-name: createSetupIntentRequest
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSetupIntentRequest'
+            example:
+              reference: Dojo Cafe | Booking request for Table 4
+              merchantInitiatedTransactionType: NoShow
+              terms: In case of no-show, the customer authorizes us to charge their card with table booking fee.
+              intendedAmount:
+                value: '1000'
+                currencyCode: GBP
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetupIntentResponse'
+              example:
+                setupEvents: []
+                id: si_sandbox_c9RbgPcWbkGcUIbsFSzHcA
+                clientSessionSecret: SSd_gFOCjTlpbMyE7A6Pl2MaosE2HObXhC-HnRpIMUR_kdOPsGDaVi_1QMpsl60edYxLtxBmHQZ88SxsabWg5KiNrU-kiZ9Zjdloht_8TWy_rrTF8FqXJwXTil6rgqCSG2dczrQhMpuuTmo2O20sVCaZ119WWA==
+                clientSessionSecretExpirationDate: '2024-02-13T12:37:31Z'
+                status: Created
+                paymentMethods:
+                - Card
+                createdAt: '2024-02-13T12:07:31.4793099Z'
+                updatedAt: '2024-02-13T12:07:31.47931Z'
+                reference: Dojo Cafe | Booking request for Table 4
+                merchantConfig:
+                  supportedPaymentMethods:
+                    cardSchemes:
+                    - VISA
+                    - MASTERCARD
+                    - MAESTRO
+                    - DISCOVER
+                    - DCI
+                    wallets: []
+                config:
+                  branding:
+                    logoUrl: https://cdn.dojo.tech/payments/branding/logos/acc_wrr9HHrH10KHXtVxfWNPHw/file_y-_CuT9RLkKK2vvvLaGeUw/90395f2a-029e-4f23-afdb-258bdbb1002b.png
+                    faviconUrl: https://cdn.dojo.tech/payments/branding/favicons/acc_wrr9HHrH10KHXtVxfWNPHw/file_v7EuxUbMmkCUMm7lP9PIgg/dojo.png
+                  tradingName: Dojo Cafe (Paymentsense)
+                metadata:
+                  location-id: '771402011592305'
+                intendedAmount:
+                  value: 1000
+                  currencyCode: GBP
+                merchantInitiatedTransactionType: NoShow
+                terms: In case of no-show, the customer authorizes us to charge their card with table booking fee.
+                paymentSource: api
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /setup-intents/{setupIntentId}:
+    get:
+      tags:
+      - Setup intents
+      operationId: SetupIntents_GetById
+      summary: Retrieve a setup intent
+      parameters:
+      - name: setupIntentId
+        in: path
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+        description: The unique identifier for the setup intent.
+        x-position: 3
+      - $ref: '#/components/parameters/Version'
+      description: Get a setup intent by ID.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetupIntentResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+      - Setup intents
+      summary: Cancel a setup intent
+      operationId: SetupIntents_Delete
+      parameters:
+      - name: setupIntentId
+        in: path
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+        description: The unique identifier for the setup intent.
+      - name: version
+        in: header
+        required: true
+        schema:
+          type: string
+          format: date
+        description: The API version with format yyyy-mm-dd. The current version is `2026-02-27`.
+      description: Cancels a setup intent.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetupIntentResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Internal server error
+  /setup-intents/public/{setupIntentId}:
+    get:
+      tags:
+      - Setup intents
+      operationId: SetupIntents_GetPublicById
+      summary: Retrieve a setup intent (no auth)
+      parameters:
+      - name: setupIntentId
+        in: path
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+        description: The unique identifier for the setup intent.
+        x-position: 1
+      - $ref: '#/components/parameters/Version'
+      description: Get a setup intent by ID.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetupIntentPublicResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /setup-intents/{setupIntentId}/refresh-client-session-secret:
+    post:
+      tags:
+      - Setup intents
+      operationId: SetupIntents_RefreshPaymentIntentToken
+      summary: Update a client session secret
+      parameters:
+      - name: setupIntentId
+        in: path
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+        description: The unique identifier for the setup intent.
+      - $ref: '#/components/parameters/Version'
+      description: Updates a client session secret.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetupIntentResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /setup-intents/public/{setupIntentId}/refresh-client-session-secret:
+    post:
+      tags:
+      - Setup intents
+      operationId: SetupIntents_RefreshSetupIntentTokenPublic
+      summary: Update a client session secret (no auth)
+      parameters:
+      - name: setupIntentId
+        in: path
+        required: true
+        schema:
+          type:
+          - string
+          - 'null'
+        description: The unique identifier for the setup intent.
+        x-position: 1
+      - $ref: '#/components/parameters/Version'
+      description: Updates a client session secret.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetupIntentPublicResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    SetupIntentPublicResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier for the setup intent.
+        clientSessionSecret:
+          type:
+          - string
+          - 'null'
+          description: The client secret.
+        clientSessionSecretExpirationDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The expiration date of `clientSessionSecret`.
+        status:
+          $ref: '#/components/schemas/SetupIntentStatus'
+        paymentMethods:
+          type:
+          - array
+          - 'null'
+          description: 'The payment methods that customers can use to pay.
+
+            (Card, Wallet, SavedCard)'
+          items:
+            $ref: '#/components/schemas/PaymentMethod'
+        customer:
+          oneOf:
+          - $ref: '#/components/schemas/Customer'
+          description: Details about the customer.
+        requestSecurity:
+          oneOf:
+          - $ref: '#/components/schemas/RequestSecurity'
+          description: Customer's device information.
+        billingAddress:
+          oneOf:
+          - $ref: '#/components/schemas/Address'
+          description: The recipient's invoicing address.
+        shippingDetails:
+          oneOf:
+          - $ref: '#/components/schemas/ShippingDetails'
+          description: The recipient's shipping address.
+        createdAt:
+          type: string
+          format: date-time
+          description: 'The creation date, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
+
+            '
+        updatedAt:
+          type: string
+          format: date-time
+          description: The timestamp of the update date, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
+        expireAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The timestamp and date of when a setup intent will be voided, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format. This occurs when a setup intent is created and not yet authorized.
+        reference:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for the payment. For example, `Order 236`.
+        description:
+          type:
+          - string
+          - 'null'
+          description: The payment description.
+        merchantConfig:
+          oneOf:
+          - $ref: '#/components/schemas/MerchantConfig'
+          description: Details about payment intent merchant configuration.
+        config:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentIntentConfigResponse'
+          description: Details about the payment intent configuration.
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+          description: A set of key-value pairs that you can use to store additional information.
+        paymentDetails:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentDetails'
+        intendedAmount:
+          description: The amount intended to be collected by this setup intent.
+          oneOf:
+          - $ref: '#/components/schemas/Money'
+        merchantInitiatedTransactionType:
+          $ref: '#/components/schemas/MerchantInitiatedTransactionType'
+        terms:
+          type:
+          - string
+          - 'null'
+          description: The terms that customers are required to review before adding a card to the setup intent.
+        paymentSource:
+          type:
+          - string
+          - 'null'
+          description: Information about a single payment source type. Invalid if used along with `paymentSources` parameter.
+    PaymentMethod:
+      type: string
+      description: 'The payment methods that customers can use to pay.
+
+        (Card, Wallet, SavedCard)'
+    PaymentIntentConfigShippingDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        collectionRequired:
+          type: boolean
+          description: 'Set to `true` if the object requires collection.
+
+            '
+    PaymentIntentConfigCustomerEmail:
+      type: object
+      additionalProperties: false
+      description: Include a configurable customer email address as part of the payment intent. Configurable fields can be altered later by [updating](./payments/manage-payments/change-amount) the payment intent.
+      properties:
+        collectionRequired:
+          type: boolean
+          description: 'Set to `true` if the object requires collection.
+
+            '
+          default: false
+    CardFundingType:
+      type: string
+      description: 'The main funding types are credit, debit, pre-paid, and charge. '
+    PaymentIntentConfigBillingAddress:
+      type: object
+      additionalProperties: false
+      properties:
+        collectionRequired:
+          type: boolean
+          description: 'Set to `true` if the object requires collection.
+
+            '
+    Address:
+      type: object
+      additionalProperties: false
+      example:
+        address1: The Brunel Building
+        address2: 2 Canalside Walk
+        city: London
+        postcode: W2 1DG
+        countryCode: GB
+        county: UK
+      description: Details about the address.
+      properties:
+        address1:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: Address line 1 (for example, company name).
+        address2:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: Address line 2 (for example, street, apartment, or suite).
+        address3:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: Address line 3.
+        address4:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: Address line 4.
+        city:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: City, town, district, suburb, or village.
+          example: London
+        state:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: State, province, or region.
+        postcode:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+          description: ZIP or postal code.
+        countryCode:
+          type: string
+          maxLength: 10
+          description: 'Two-letter country code in [ISO 3166–1-alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format.
+
+            '
+          example: GB
+        locality:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: Locality, can use in addition to city.
+        county:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: County or zone.
+      required:
+      - countryCode
+    PaymentDetails:
+      type: object
+      additionalProperties: false
+      description: The payment details object.
+      properties:
+        transactionId:
+          type:
+          - string
+          - 'null'
+          description: 'The unique identifier of the transaction.
+
+            '
+        transactionDateTime:
+          type:
+          - string
+          - 'null'
+          description: The date and time of the payment in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
+        message:
+          type:
+          - string
+          - 'null'
+          description: The description of the operation.
+        paymentMethodId:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier of the customer payment method.
+        authCode:
+          type:
+          - string
+          - 'null'
+          description: The acquirer's authorization code. This code is returned on a successful transaction.
+        card:
+          oneOf:
+          - $ref: '#/components/schemas/Card'
+          description: Card details, including card number, scheme, and expiry date.
+        avsResult:
+          type:
+          - string
+          - 'null'
+          description: 'The result of the Address Verification Service (AVS) check.
+
+            '
+    WalletPaymentOption:
+      type: string
+      description: Wallet payment options (e.g., Apple Pay, Google Pay).
+    RequestSecurity:
+      type: object
+      additionalProperties: false
+      description: Customer's device information.
+      properties:
+        userAgent:
+          type:
+          - string
+          - 'null'
+          maxLength: 300
+          description: The customer's browser agent.
+        ipAddress:
+          maxLength: 70
+          type:
+          - string
+          - 'null'
+          description: The customer's device IP address.
+        device:
+          maxLength: 120
+          type:
+          - string
+          - 'null'
+          description: The customer's device type.
+      example:
+        userAgent: null
+        ipAddress: null
+        device: null
+    Money:
+      description: 'The amount intended to be collected by this payment intent excluding `tipsAmount` `serviceChargeAmount` and `cashbackAmount`.
+
+        '
+      type: object
+      additionalProperties: false
+      required:
+      - value
+      - currencyCode
+      properties:
+        value:
+          description: The amount in [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) minor units, for example, "100" for 1.00 GBP.
+          type: integer
+          format: int64
+        currencyCode:
+          description: Three-letter currency code in [ISO 4217 alpha-3](https://www.iso.org/iso-4217-currency-codes.html) format. Accepts `GBP` and `EUR`.
+          type: string
+          maxLength: 10
+          minLength: 1
+    ProblemDetails:
+      type: object
+      description: Dojo follows the error response format proposed in [RFC 7807](https://datatracker.ietf.org/doc/html/rfc7807), also known as Problem Details for HTTP APIs.
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+          description: A URI reference [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986) that identifies the problem type.
+        title:
+          type:
+          - string
+          - 'null'
+          description: A short, human-readable summary of the error.
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The [HTTP status code](#section/Introduction/HTTP-Responses).
+        detail:
+          type:
+          - string
+          - 'null'
+          description: An optional, human-readable message giving more details about the error.
+        instance:
+          type:
+          - string
+          - 'null'
+          description: The URI reference of the problem.
+        extensions:
+          type: object
+          description: This field names any extension methods that have been configured to help handle errors handling functionality.
+          additionalProperties: {}
+    MerchantInitiatedTransactionType:
+      type: string
+      description: Details about the merchant-initiated transaction type (NoShow, Unscheduled)
+    PaymentIntentConfigResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: The [checkout page’s title](../payments/accept-payments/checkout-page/configuration#add-information-about-your-company).
+        redirectUrl:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The URL that a customer will be directed to after payment.
+        cancelUrl:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The URL that a customer will be directed to when canceling a payment.
+        customerEmail:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentIntentConfigCustomerEmail'
+          description: The customer's email address.
+        details:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentIntentConfigDetails'
+          description: 'The following configuration details of the payment intent. See [detailed information about the order and taxes](../payments/accept-payments/checkout-page/configuration#show-detailed-information-about-the-order-and-taxes).
+
+
+            - The total order amount including tax.
+
+            - The order reference ID.
+
+            '
+        billingAddress:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentIntentConfigBillingAddress'
+          description: Configuration of the billing address.
+        shippingDetails:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentIntentConfigShippingDetails'
+          description: 'Configuration of the shipping details.
+
+            '
+        payment:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentConfigDetails'
+          description: Configuration of the payment.
+    SetupIntentResponse:
+      allOf:
+      - $ref: '#/components/schemas/SetupIntentPublicResponse'
+      - type: object
+        additionalProperties: false
+        properties:
+          setupEvents:
+            type:
+            - array
+            - 'null'
+            description: Updates related to the setup intent's status.
+            items:
+              $ref: '#/components/schemas/PaymentStatusResponse'
+    PaymentStatusResponse:
+      type: object
+      additionalProperties: false
+      title: PaymentStatusResponse
+      description: The current status of the payment.
+      properties:
+        transactionId:
+          type:
+          - string
+          - 'null'
+          description: 'The unique identifier of the transaction.
+
+            '
+        transactionDateTime:
+          type:
+          - string
+          - 'null'
+          description: The date and time of the payment in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
+        eventType:
+          $ref: '#/components/schemas/paymentEventType'
+        authCode:
+          type:
+          - string
+          - 'null'
+          description: The acquirer's authorization code. This code is returned on a successful transaction.
+        cardNumber:
+          type:
+          - string
+          - 'null'
+          description: The card number.
+        expiryDate:
+          type:
+          - string
+          - 'null'
+          description: If available, the expiry date of the card in the format 'MM/YY'.
+        cardType:
+          type:
+          - string
+          - 'null'
+          description: The card scheme.
+          example: VISA
+        cardholderName:
+          type:
+          - string
+          - 'null'
+          description: The name of the cardholder.
+        paymentMethodId:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier of the customer payment method.
+    SupportedPaymentMethods:
+      type: object
+      additionalProperties: false
+      properties:
+        cardSchemes:
+          type:
+          - array
+          - 'null'
+          description: Supported card schemes.
+          items:
+            $ref: '#/components/schemas/CardScheme'
+        wallets:
+          type:
+          - array
+          - 'null'
+          description: List of supported payment wallets.
+          items:
+            $ref: '#/components/schemas/WalletPaymentOption'
+    CreateSetupIntentRequest:
+      type: object
+      description: The setup intent request object.
+      additionalProperties: false
+      required:
+      - reference
+      - merchantInitiatedTransactionType
+      - terms
+      properties:
+        reference:
+          type: string
+          minLength: 1
+          maxLength: 60
+          description: A unique identifier for the payment. For example, `Order 236`.
+        description:
+          type:
+          - string
+          - 'null'
+          maxLength: 4096
+          description: The payment description.
+        customer:
+          oneOf:
+          - $ref: '#/components/schemas/Customer'
+          description: Details about the customer.
+        captureMode:
+          $ref: '#/components/schemas/CaptureMode'
+        paymentMethods:
+          type:
+          - array
+          - 'null'
+          description: 'The payment methods that customers can use to pay.
+
+            (Card, Wallet, SavedCard)'
+          items:
+            $ref: '#/components/schemas/PaymentMethod'
+        billingAddress:
+          oneOf:
+          - $ref: '#/components/schemas/Address'
+          description: The recipient's invoicing address.
+        shippingDetails:
+          oneOf:
+          - $ref: '#/components/schemas/ShippingDetails'
+          description: The recipient's shipping address.
+        config:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentIntentConfigRequest'
+          description: Details about the payment intent configuration.
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+          description: A set of key-value pairs that you can use to store additional information.
+        intendedAmount:
+          description: The amount intended to be collected by this setup intent.
+          oneOf:
+          - $ref: '#/components/schemas/Money'
+        merchantInitiatedTransactionType:
+          $ref: '#/components/schemas/MerchantInitiatedTransactionType'
+        terms:
+          description: The terms that customers are required to review before adding a card to the setup intent.
+          type: string
+          maxLength: 10240
+          minLength: 1
+        orderDetails:
+          oneOf:
+          - $ref: '#/components/schemas/OrderDetails'
+          description: Details about the order including the type and the details.
+        expireAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The timestamp and date of when a setup intent will be voided, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format. This occurs when a setup intent is created and not yet authorized.
+    CardScheme:
+      description: Supported card schemes (VISA, MASTERCARD, MAESTRO, DISCOVER, DCI, AMEX)
+      type: string
+    MerchantConfig:
+      type: object
+      additionalProperties: false
+      description: Details about the merchant configuration.
+      properties:
+        supportedPaymentMethods:
+          oneOf:
+          - $ref: '#/components/schemas/SupportedPaymentMethods'
+          description: Supported payment methods.
+    PaymentConfigDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        customAmountAllowed:
+          type: boolean
+          description: 'If set to `true` the amount of the payment intent can be changed.
+
+            '
+        tipsAllowed:
+          type: boolean
+          description: 'If set to `true`, tip is allowed.
+
+            '
+    OrderDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        availabilityDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The payment description.
+        isUpdate:
+          type:
+          - boolean
+          - 'null'
+          description: An optional true/false field.
+        id:
+          type:
+          - string
+          - 'null'
+          description: 'The unique identifier of the order in Dojo.
+
+            '
+        externalId:
+          type:
+          - string
+          - 'null'
+          description: 'The unique identifier of the order in external systems, such as EPOS.
+
+            '
+    PaymentIntentConfigDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        showTotal:
+          type: boolean
+          description: If has the value `true`, the total order amount will be showed.
+        showReference:
+          type: boolean
+          description: If the value is `true`, the order reference ID will be shown.
+    Customer:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier of the customer.
+        emailAddress:
+          type:
+          - string
+          - 'null'
+          maxLength: 254
+          description: The customer's email address.
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+          description: The customer's phone number.
+      description: Details about the customer.
+      example:
+        emailAddress: support@dojo.com
+        phoneNumber: '+448000443550'
+    ShippingDetails:
+      type: object
+      additionalProperties: false
+      description: Details about the shipping.
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: The name of the customer.
+        deliveryNotes:
+          maxLength: 1024
+          type:
+          - string
+          - 'null'
+          description: The delivery notes.
+        address:
+          oneOf:
+          - $ref: '#/components/schemas/Address'
+          description: Details about the address.
+    TerminalSessionPaymentVerificationMode:
+      type: string
+      description: 'Method used to verify that the person presenting the card is the
+
+        legitimate cardholder. The most common verification methods are PIN and signature.
+
+        (Pin, Signature, Device, None)'
+    CaptureMode:
+      description: 'The type of capture for the payment, where:
+
+        - `Auto` payments are captured automatically, once authorization is complete.
+
+        - `Manual` payments are captured only when a capture request is made.'
+      default: Auto
+      enum:
+      - Auto
+      - Manual
+      type: string
+      x-enumNames:
+      - Auto
+      - Manual
+    PaymentIntentConfigRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: The [checkout page’s title](../payments/accept-payments/checkout-page/configuration#add-information-about-your-company).
+        redirectUrl:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The URL that a customer will be directed to after payment.
+        cancelUrl:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The URL that a customer will be directed to when canceling a payment.
+        customerEmail:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentIntentConfigCustomerEmail'
+          description: The customer's email address.
+        details:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentIntentConfigDetails'
+          description: 'The following configuration details of the payment intent. See [detailed information about the order and taxes](../payments/accept-payments/checkout-page/configuration#show-detailed-information-about-the-order-and-taxes).
+
+
+            - The total order amount including tax.
+
+            - The order reference ID.
+
+            '
+        billingAddress:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentIntentConfigBillingAddress'
+          description: Configuration of the billing address.
+        shippingDetails:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentIntentConfigShippingDetails'
+          description: 'Configuration of the shipping details.
+
+            '
+        payment:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentConfigDetails'
+          description: Configuration of the payment.
+    paymentEventType:
+      type: string
+      description: The current state of the payment.
+      x-enumNames:
+      - Created
+      - Authorized
+      - Captured
+      - Reversed
+      - Refunded
+      - Canceled
+      - AuthChallenged
+      - Declined
+      - ManualAuthReady
+      - Error
+      - Unknown
+      enum:
+      - Created
+      - Authorized
+      - Captured
+      - Reversed
+      - Refunded
+      - Canceled
+      - AuthChallenged
+      - Declined
+      - ManualAuthReady
+      - Error
+      - Unknown
+    TerminalSessionPaymentEntryMode:
+      type: string
+      description: 'Entry mode of the payment.
+
+        (Contactless, ContactChip, Magstripe, ManualEntry, Unknown)'
+    Card:
+      type: object
+      additionalProperties: false
+      properties:
+        cardNumber:
+          type:
+          - string
+          - 'null'
+          description: The card number.
+        cardName:
+          type:
+          - string
+          - 'null'
+          description: The name of the cardholder.
+        expiryDate:
+          type:
+          - string
+          - 'null'
+          description: If available, the expiry date of the card in the format 'MM/YY'.
+        cardType:
+          type:
+          - string
+          - 'null'
+          description: The card scheme.
+        cardFundingType:
+          $ref: '#/components/schemas/CardFundingType'
+        last4PAN:
+          type:
+          - string
+          - 'null'
+          description: The last four digits of the Primary Account Number. For Visa and Mastercard, this will be the four numbers at the end of the sixteen-digit card number.
+        entryMode:
+          $ref: '#/components/schemas/TerminalSessionPaymentEntryMode'
+        verificationMethod:
+          $ref: '#/components/schemas/TerminalSessionPaymentVerificationMode'
+    SetupIntentStatus:
+      type: string
+      description: Current status of the setup intent.
+      x-enumNames:
+      - Created
+      - Authorized
+      - Canceled
+      - Completed
+      - Expired
+      - CardExpired
+      - Closed
+      enum:
+      - Created
+      - Authorized
+      - Canceled
+      - Completed
+      - Expired
+      - CardExpired
+      - Closed
+  parameters:
+    Version:
+      name: version
+      in: header
+      required: true
+      schema:
+        type: string
+        format: date
+      example: '2026-02-27'
+      description: The API version with format yyyy-mm-dd. The current version is `2026-02-27`.
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+x-tagGroups:
+- name: Core payments
+  tags:
+  - Payment intents
+  - Refunds
+  - Reversal
+  - Captures
+  - Webhooks
+  - Customers
+  - Setup intents
+- name: In-person payments
+  tags:
+  - Terminals
+  - Terminal sessions
+- name: Capabilities
+  tags:
+  - Capabilities
+  - Events

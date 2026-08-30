@@ -1,0 +1,156 @@
+openapi: 3.2.0
+info:
+  title: EPOS Tester Flows API
+  version: 1.0.0
+tags:
+- name: Flows
+paths:
+  /flows:
+    get:
+      tags:
+      - Flows
+      responses:
+        '200':
+          description: All the available flows to be started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowDescription'
+    post:
+      tags:
+      - Flows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunFlowRequest'
+      responses:
+        '200':
+          description: The flow ID of the started flow
+          content:
+            application/json:
+              schema:
+                pattern: ^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$
+                type: string
+                description: UUID uniquely identifying a flow
+                format: uuid
+  /flows/{flowId}:
+    get:
+      tags:
+      - Flows
+      parameters:
+      - name: flowId
+        in: path
+        required: true
+        schema:
+          pattern: ^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$
+          type: string
+          description: UUID uniquely identifying a flow
+          format: uuid
+      responses:
+        '200':
+          description: The result of the flow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowResult'
+components:
+  schemas:
+    FlowDescription:
+      type: object
+      properties:
+        name:
+          type: string
+        params:
+          type: array
+          items:
+            $ref: '#/components/schemas/Param'
+      required:
+      - name
+    Param:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        required:
+          type: boolean
+        description:
+          type: string
+        default:
+          type: string
+      required:
+      - name
+      - type
+      - required
+      - description
+    RunFlowRequest:
+      type: object
+      properties:
+        flow:
+          type: string
+          description: the name of the flow as returned by the /flows endpoint
+        params:
+          type: object
+      required:
+      - flow
+    StepResult:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/Status'
+        additionalInformation:
+          type: array
+          items:
+            type: string
+        startedAt:
+          format: date-time
+          type: string
+          example: '2024-03-30T12:00:00Z'
+        finishedAt:
+          format: date-time
+          type: string
+          example: '2024-03-30T12:00:00Z'
+      required:
+      - name
+      - status
+      - startedAt
+    FlowResult:
+      type: object
+      properties:
+        flowID:
+          pattern: ^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$
+          type: string
+          description: UUID uniquely identifying a flow
+          format: uuid
+        flowName:
+          type: string
+        status:
+          $ref: '#/components/schemas/Status'
+        startedAt:
+          format: date-time
+          type: string
+          example: '2024-03-30T12:00:00Z'
+        finishedAt:
+          format: date-time
+          type: string
+          example: '2024-03-30T12:00:00Z'
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/StepResult'
+      required:
+      - flowID
+      - flowName
+      - status
+      - startedAt
+    Status:
+      type: string
+      enum:
+      - SUCCESS
+      - FAILURE
+      - TIMED_OUT
+      - IN_PROGRESS

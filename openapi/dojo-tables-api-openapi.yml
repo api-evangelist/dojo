@@ -1,0 +1,238 @@
+openapi: 3.2.0
+info:
+  title: EPOS Data API (REST) Tables API
+  version: '1.0'
+  description: 'REST contract that an external POS/EPOS system implements so Dojo products can
+
+    fetch and update commerce entities (Orders, Tables, Areas, Parties, Reservations)
+
+    and record payments. Use this when the EPOS exposes its own publicly reachable
+
+    HTTP endpoints; for on-premise EPOSes that cannot accept inbound HTTP, use the
+
+    [WebSocket variant](/epos-data-asyncapi/bundled.yaml) of the same contract.
+
+
+    Core modules:
+
+    - Tables
+
+    - Areas
+
+    - Orders
+
+    - Parties
+
+    - Reservations
+
+
+    API modules can generally be
+
+    implemented independently, with a small number of interdependent fields affected
+
+    by other modules (for example, if Parties are implemented & the information is
+
+    known, a `partyId` should be attached to an Order''s `dineInDetails`).
+
+
+    All requests also contain special headers within the REST headers,
+
+    containing details about the requestor that can be used for logging purposes or EPOS business logic
+
+    (such as waiter id based access to entities).
+
+
+    Before any of these endpoints will be invoked by Dojo, register the capabilities you implement with `PUT /epos/integrations/rest`. See the EPOS Data API guide for the full registration flow.'
+servers:
+- url: https://your-epos.example.com
+  description: 'The EPOS Data REST API has no shared base URL: each EPOS provider hosts the
+
+    endpoints on their own domain and registers them against that base via
+
+    `PUT /epos/integrations/rest`. The placeholder `https://your-epos.example.com`
+
+    is illustrative — replace with your own publicly reachable HTTPS URL.'
+tags:
+- name: Tables
+paths:
+  /v1/tables/search:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchTablesRequest'
+        required: true
+      tags:
+      - Tables
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PagedTablesResponse'
+          description: Ok
+        4XX:
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EPOSError'
+        5XX:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EPOSError'
+      operationId: v1-search-tables
+      summary: Search tables
+      description: 'Search through tables on the EPOS. Capability: `SearchTables`
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/WaiterId'
+      - $ref: '#/components/parameters/DojoRequestingProduct'
+      - $ref: '#/components/parameters/DeviceId'
+      - $ref: '#/components/parameters/DeviceType'
+components:
+  schemas:
+    Table:
+      title: Root Type for Table
+      description: ''
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          description: User friendly name to identify the table. Must be unique for an area. Will be displayed on the card machine.
+          type: string
+        maxCovers:
+          format: int32
+          description: Max number of covers at this table.
+          type: integer
+        areaId:
+          description: ID of an area
+          type: string
+        waiterIds:
+          description: An array of waiter IDs serving this table
+          type: array
+          items:
+            type: string
+      example:
+        id: tbl_12345
+        name: Table 12
+        maxCovers: 4
+        areaId: area_123
+    EPOSError:
+      title: EPOSError
+      type: object
+      required:
+      - errorType
+      properties:
+        debugMessage:
+          type: string
+        traceId:
+          type: string
+        errorType:
+          $ref: '#/components/schemas/EPOSErrorType'
+    EPOSErrorType:
+      type: string
+      enum:
+      - NotFound
+      - UnexpectedError
+      - InvalidRequest
+      - Conflict
+    Cursor:
+      title: Cursor
+      description: A cursor for use in pagination.
+      type: object
+      properties:
+        limit:
+          description: The maximum number of results to be returned in a single page.
+          maximum: 100
+          type: integer
+          x-stoplight:
+            id: l5tzcxdo5qbt1
+        before:
+          description: A cursor for use in pagination for the previous page. before and after are mutually exclusive. Only one of these may be used.
+          type: string
+          x-stoplight:
+            id: 8vxj9sdmbby14
+        after:
+          description: A cursor for use in pagination for the next page. before and after are mutually exclusive. Only one of these may be used.
+          type: string
+          x-stoplight:
+            id: 1jsibbqp1zdti
+      x-stoplight:
+        id: m8ixmhyvzw3oo
+    PagedTablesResponse:
+      title: PagedOrder
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Table'
+          readOnly: false
+          x-stoplight:
+            id: ou7je7f6bizdg
+        before:
+          type: string
+          x-stoplight:
+            id: jutkpidtbhr6q
+        after:
+          type: string
+          x-stoplight:
+            id: vwlxjfle0yxqt
+      x-stoplight:
+        id: bjkxvbo62zl42
+    SearchTablesRequest:
+      description: ''
+      type: object
+      properties:
+        cursor:
+          $ref: '#/components/schemas/Cursor'
+        areaId:
+          description: ''
+          type: string
+        waiterId:
+          description: ''
+          type: string
+  parameters:
+    DeviceType:
+      in: header
+      name: device-type
+      required: false
+      schema:
+        type: string
+      example: Dojo Terminal
+      description: The device making the request, if known
+    DeviceId:
+      name: device-id
+      in: header
+      required: false
+      schema:
+        type: string
+      example: tm_sandbox_65c5fe8a104a1222b2d8b968
+      description: The ID of the device making the request, if known
+    WaiterId:
+      in: header
+      name: waiter-id
+      required: false
+      schema:
+        type: string
+      example: '42'
+      description: The ID of the waiter making the request, if known
+    DojoRequestingProduct:
+      name: dojo-requesting-product
+      in: header
+      required: false
+      schema:
+        type: string
+      example: Order&Pay
+      description: The dojo product making the request, if known.
