@@ -82,7 +82,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -118,7 +118,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -160,7 +160,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -196,7 +196,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -234,7 +234,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -270,7 +270,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -308,7 +308,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -344,7 +344,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -386,7 +386,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -426,7 +426,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -462,7 +462,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -502,7 +502,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -544,7 +544,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -580,7 +580,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -616,7 +616,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -652,7 +652,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -691,7 +691,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -729,7 +729,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
@@ -771,7 +771,7 @@ apis:
   - type: AsyncAPI
     url: asyncapi/dojo-epos-data-asyncapi.yml
   - type: Webhooks
-    url: openapi/dojo-api.json
+    url: openapi/_original/dojo-api.json
   - type: Documentation
     url: https://docs.dojo.tech/transactions
   - type: APIReference
