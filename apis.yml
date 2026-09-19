@@ -47,7 +47,7 @@ tags:
 - Acquiring
 - Card Payments
 - In-Person Payments
-- Terminals
+- Terminal
 - Point-of-Sale
 - Webhook
 tags_raw:
@@ -259,6 +259,8 @@ apis:
   humanURL: https://docs.dojo.tech/api
   baseURL: https://api.dojo.tech
   tags:
+  - Flow
+  tags_raw:
   - Flows
   properties:
   - type: OpenAPI
@@ -680,6 +682,8 @@ apis:
   humanURL: https://docs.dojo.tech/api
   baseURL: https://api.dojo.tech
   tags:
+  - Terminal
+  tags_raw:
   - Terminals
   properties:
   - type: OpenAPI
