@@ -6,43 +6,7 @@ info:
 
     fetch and update commerce entities (Orders, Tables, Areas, Parties, Reservations)
 
-    and record payments. Use this when the EPOS exposes its own publicly reachable
-
-    HTTP endpoints; for on-premise EPOSes that cannot accept inbound HTTP, use the
-
-    [WebSocket variant](/epos-data-asyncapi/bundled.yaml) of the same contract.
-
-
-    Core modules:
-
-    - Tables
-
-    - Areas
-
-    - Orders
-
-    - Parties
-
-    - Reservations
-
-
-    API modules can generally be
-
-    implemented independently, with a small number of interdependent fields affected
-
-    by other modules (for example, if Parties are implemented & the information is
-
-    known, a `partyId` should be attached to an Order''s `dineInDetails`).
-
-
-    All requests also contain special headers within the REST headers,
-
-    containing details about the requestor that can be used for logging purposes or EPOS business logic
-
-    (such as waiter id based access to entities).
-
-
-    Before any of these endpoints will be invoked by Dojo, register the capabilities you implement with `PUT /epos/integrations/rest`. See the EPOS Data API guide for the full registration flow.'
+    and record payments.'
 servers:
 - url: https://your-epos.example.com
   description: 'The EPOS Data REST API has no shared base URL: each EPOS provider hosts the
@@ -82,15 +46,46 @@ paths:
                 $ref: '#/components/schemas/EPOSError'
       operationId: v1-list-areas
       summary: List areas
-      description: 'Retrieves all areas that are being served. Capability: `ListAreas`
-
-        '
+      description: 'Retrieves all areas that are being served. Capability: `ListAreas`'
       parameters:
       - $ref: '#/components/parameters/WaiterId'
       - $ref: '#/components/parameters/DojoRequestingProduct'
       - $ref: '#/components/parameters/DeviceId'
       - $ref: '#/components/parameters/DeviceType'
 components:
+  parameters:
+    WaiterId:
+      in: header
+      name: waiter-id
+      required: false
+      schema:
+        type: string
+      example: '42'
+      description: The ID of the waiter making the request, if known
+    DeviceType:
+      in: header
+      name: device-type
+      required: false
+      schema:
+        type: string
+      example: Dojo Terminal
+      description: The device making the request, if known
+    DojoRequestingProduct:
+      name: dojo-requesting-product
+      in: header
+      required: false
+      schema:
+        type: string
+      example: Order&Pay
+      description: The dojo product making the request, if known.
+    DeviceId:
+      name: device-id
+      in: header
+      required: false
+      schema:
+        type: string
+      example: tm_sandbox_65c5fe8a104a1222b2d8b968
+      description: The ID of the device making the request, if known
   schemas:
     EPOSError:
       title: EPOSError
@@ -104,13 +99,6 @@ components:
           type: string
         errorType:
           $ref: '#/components/schemas/EPOSErrorType'
-    EPOSErrorType:
-      type: string
-      enum:
-      - NotFound
-      - UnexpectedError
-      - InvalidRequest
-      - Conflict
     Area:
       description: A representation of a physical area in a merchant's location.
       required:
@@ -133,36 +121,10 @@ components:
       example:
         id: area_1234
         name: downstairs
-  parameters:
-    DeviceType:
-      in: header
-      name: device-type
-      required: false
-      schema:
-        type: string
-      example: Dojo Terminal
-      description: The device making the request, if known
-    DeviceId:
-      name: device-id
-      in: header
-      required: false
-      schema:
-        type: string
-      example: tm_sandbox_65c5fe8a104a1222b2d8b968
-      description: The ID of the device making the request, if known
-    WaiterId:
-      in: header
-      name: waiter-id
-      required: false
-      schema:
-        type: string
-      example: '42'
-      description: The ID of the waiter making the request, if known
-    DojoRequestingProduct:
-      name: dojo-requesting-product
-      in: header
-      required: false
-      schema:
-        type: string
-      example: Order&Pay
-      description: The dojo product making the request, if known.
+    EPOSErrorType:
+      type: string
+      enum:
+      - NotFound
+      - UnexpectedError
+      - InvalidRequest
+      - Conflict

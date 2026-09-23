@@ -16,6 +16,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FlowDescription'
+      summary: Get flows
+      x-summary-source: derived
+      operationId: getFlows
+      x-operation-id-source: derived
     post:
       tags:
       - Flows
@@ -34,6 +38,10 @@ paths:
                 type: string
                 description: UUID uniquely identifying a flow
                 format: uuid
+      summary: Create flows
+      x-summary-source: derived
+      operationId: postFlows
+      x-operation-id-source: derived
   /flows/{flowId}:
     get:
       tags:
@@ -54,19 +62,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FlowResult'
+      summary: Get flows by flow id
+      x-summary-source: derived
+      operationId: getFlowsByFlowId
+      x-operation-id-source: derived
 components:
   schemas:
-    FlowDescription:
-      type: object
-      properties:
-        name:
-          type: string
-        params:
-          type: array
-          items:
-            $ref: '#/components/schemas/Param'
-      required:
-      - name
     Param:
       type: object
       properties:
@@ -85,16 +86,6 @@ components:
       - type
       - required
       - description
-    RunFlowRequest:
-      type: object
-      properties:
-        flow:
-          type: string
-          description: the name of the flow as returned by the /flows endpoint
-        params:
-          type: object
-      required:
-      - flow
     StepResult:
       type: object
       properties:
@@ -118,6 +109,16 @@ components:
       - name
       - status
       - startedAt
+    RunFlowRequest:
+      type: object
+      properties:
+        flow:
+          type: string
+          description: the name of the flow as returned by the /flows endpoint
+        params:
+          type: object
+      required:
+      - flow
     FlowResult:
       type: object
       properties:
@@ -147,6 +148,17 @@ components:
       - flowName
       - status
       - startedAt
+    FlowDescription:
+      type: object
+      properties:
+        name:
+          type: string
+        params:
+          type: array
+          items:
+            $ref: '#/components/schemas/Param'
+      required:
+      - name
     Status:
       type: string
       enum:

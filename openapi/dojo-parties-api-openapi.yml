@@ -6,43 +6,7 @@ info:
 
     fetch and update commerce entities (Orders, Tables, Areas, Parties, Reservations)
 
-    and record payments. Use this when the EPOS exposes its own publicly reachable
-
-    HTTP endpoints; for on-premise EPOSes that cannot accept inbound HTTP, use the
-
-    [WebSocket variant](/epos-data-asyncapi/bundled.yaml) of the same contract.
-
-
-    Core modules:
-
-    - Tables
-
-    - Areas
-
-    - Orders
-
-    - Parties
-
-    - Reservations
-
-
-    API modules can generally be
-
-    implemented independently, with a small number of interdependent fields affected
-
-    by other modules (for example, if Parties are implemented & the information is
-
-    known, a `partyId` should be attached to an Order''s `dineInDetails`).
-
-
-    All requests also contain special headers within the REST headers,
-
-    containing details about the requestor that can be used for logging purposes or EPOS business logic
-
-    (such as waiter id based access to entities).
-
-
-    Before any of these endpoints will be invoked by Dojo, register the capabilities you implement with `PUT /epos/integrations/rest`. See the EPOS Data API guide for the full registration flow.'
+    and record payments.'
 servers:
 - url: https://your-epos.example.com
   description: 'The EPOS Data REST API has no shared base URL: each EPOS provider hosts the
@@ -85,9 +49,7 @@ paths:
                 $ref: '#/components/schemas/EPOSError'
       operationId: v1-post-parties
       summary: Create party
-      description: 'Create a new party in the POS domain. Capability: `CreateParty`
-
-        '
+      description: 'Create a new party in the POS domain. Capability: `CreateParty`'
       parameters:
       - $ref: '#/components/parameters/WaiterId'
       - $ref: '#/components/parameters/DojoRequestingProduct'
@@ -129,9 +91,7 @@ paths:
                 $ref: '#/components/schemas/EPOSError'
       operationId: v1-get-parties-partyId
       summary: Get party
-      description: 'Retrieves a specific party. Capability: `GetPartyById`
-
-        '
+      description: 'Retrieves a specific party. Capability: `GetPartyById`'
     put:
       requestBody:
         content:
@@ -161,9 +121,7 @@ paths:
                 $ref: '#/components/schemas/EPOSError'
       operationId: v1-put-parties-partyId
       summary: Update party
-      description: 'Sets the party''s details to those provided. Capability: `UpdatePartyById`
-
-        '
+      description: 'Sets the party''s details to those provided. Capability: `UpdatePartyById`'
     delete:
       tags:
       - Parties
@@ -184,9 +142,7 @@ paths:
                 $ref: '#/components/schemas/EPOSError'
       operationId: v1-delete-parties-partyId
       summary: Delete party
-      description: 'Deletes a specific party. Capability: `DeletePartyById`
-
-        '
+      description: 'Deletes a specific party. Capability: `DeletePartyById`'
   /v1/parties/search:
     post:
       requestBody:
@@ -222,16 +178,68 @@ paths:
 
         By default, this endpoint should exclude parties with `endTime` set, including them only when `completedOnly: true`.
 
-        Capability: `SearchParties`
-
-        '
+        Capability: `SearchParties`'
       parameters:
       - $ref: '#/components/parameters/WaiterId'
       - $ref: '#/components/parameters/DojoRequestingProduct'
       - $ref: '#/components/parameters/DeviceId'
       - $ref: '#/components/parameters/DeviceType'
 components:
+  parameters:
+    WaiterId:
+      in: header
+      name: waiter-id
+      required: false
+      schema:
+        type: string
+      example: '42'
+      description: The ID of the waiter making the request, if known
+    DeviceType:
+      in: header
+      name: device-type
+      required: false
+      schema:
+        type: string
+      example: Dojo Terminal
+      description: The device making the request, if known
+    DojoRequestingProduct:
+      name: dojo-requesting-product
+      in: header
+      required: false
+      schema:
+        type: string
+      example: Order&Pay
+      description: The dojo product making the request, if known.
+    DeviceId:
+      name: device-id
+      in: header
+      required: false
+      schema:
+        type: string
+      example: tm_sandbox_65c5fe8a104a1222b2d8b968
+      description: The ID of the device making the request, if known
   schemas:
+    PagedPartiesResponse:
+      title: PagedOrder
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Party'
+          readOnly: false
+          x-stoplight:
+            id: ou7je7f6bizdg
+        before:
+          type: string
+          x-stoplight:
+            id: jutkpidtbhr6q
+        after:
+          type: string
+          x-stoplight:
+            id: vwlxjfle0yxqt
+      x-stoplight:
+        id: bjkxvbo62zl42
     EPOSError:
       title: EPOSError
       type: object
@@ -244,6 +252,94 @@ components:
           type: string
         errorType:
           $ref: '#/components/schemas/EPOSErrorType'
+    Cursor:
+      title: Cursor
+      description: A cursor for use in pagination.
+      type: object
+      properties:
+        limit:
+          description: The maximum number of results to be returned in a single page.
+          maximum: 100
+          type: integer
+          x-stoplight:
+            id: l5tzcxdo5qbt1
+        before:
+          description: A cursor for use in pagination for the previous page. before and after are mutually exclusive. Only one of these may be used.
+          type: string
+          x-stoplight:
+            id: 8vxj9sdmbby14
+        after:
+          description: A cursor for use in pagination for the next page. before and after are mutually exclusive. Only one of these may be used.
+          type: string
+          x-stoplight:
+            id: 1jsibbqp1zdti
+      x-stoplight:
+        id: m8ixmhyvzw3oo
+    CreatePartyRequest:
+      title: Create Party Request
+      description: Request payload made from Dojo -> EPOS Partner to create a new party in the EPOS domain. Note that Dojo will always provide _all_ known fields.
+      properties:
+        name:
+          title: Name
+          type: string
+        covers:
+          title: Covers
+          type: integer
+        tableIds:
+          title: Table IDs
+          type: array
+          items:
+            type: string
+          minLength: 1
+        status:
+          title: Status
+          type: string
+        startTime:
+          title: Start time
+          type: string
+          format: date-time
+          description: When the party was seated. ISO8601 formatted, ms precise.
+        expectedEndTime:
+          title: Expected end time
+          type: string
+          format: date-time
+          description: When the party is expected to leave, if known. ISO8601 formatted, ms precise.
+        hostNotes:
+          title: Host notes
+          type: string
+        guestRequests:
+          title: Guest requests
+          type: string
+        reservationId:
+          title: Reservation ID
+          type: string
+        deposit:
+          $ref: '#/components/schemas/PartyDeposit'
+        dojoPartyId:
+          title: For reference. The Dojo API party ID.
+          type: string
+        dojoReservationId:
+          title: For reference. The Dojo API reservation ID.
+          type: string
+      required:
+      - startTime
+      - tableIds
+      - dojoPartyId
+      example:
+        name: Martin B.
+        covers: 4
+        tableIds:
+        - table-01-001
+        - table-01-002
+        startTime: '2024-08-12T09:30:00.000Z'
+        expectedEndTime: '2024-08-12T11:00:00.000Z'
+        guestRequests: nut allergy; gluten intolerance; please could we have a table next to a window?
+        hostNotes: called ahead to notify kitchen of dietary requirements - confirm upon arrival
+        reservationId: reservation-2024-08-12-0028
+        deposit:
+          totalAmount:
+            value: 5000
+            currencyCode: GBP
     PartyDeposit:
       title: Party Deposit
       description: Information about payments captured pre-arrival to secure the reservation.
@@ -297,6 +393,78 @@ components:
         currencyCode: GBP
       x-stoplight:
         id: c9op7zec1txu2
+    UpdatePartyRequest:
+      title: Update Party Request
+      description: 'The representation of a customer or group of customers _currently_
+
+        seated at/across a set of tables.'
+      required:
+      - dojoPartyId
+      - startTime
+      - status
+      - tableIds
+      type: object
+      properties:
+        dojoPartyId:
+          description: The Dojo API party ID
+          type: string
+        name:
+          title: Name
+          description: The human-readable name, typically the name of the lead guest.
+          type: string
+        covers:
+          title: Covers
+          description: The number of covers this party occupies.
+          type: integer
+        tableIds:
+          title: Table IDs
+          description: The set of tables this party is currently sat across.
+          minItems: 1
+          type: array
+          items:
+            type: string
+        status:
+          title: Status
+          description: "An arbitrary description of the party's current status - typically \nused to show where in their journey the party is, such as \n\"partially arrived\", \"ordered\" or \"paying\"/\"paid\"."
+          minLength: 1
+          type: string
+        startTime:
+          format: date-time
+          title: Start time
+          description: 'The time the party was seated. ISO8601 formatted, millisecond
+
+            precision.'
+          type: string
+        expectedEndTime:
+          format: date-time
+          title: Expected end time
+          description: 'The time the party is expected to depart, if known. ISO8601
+
+            formatted, millisecond precision.'
+          type: string
+        endTime:
+          format: date-time
+          title: Actual end time
+          description: 'The time the party actually departed. ISO8601 formatted, millisecond
+
+            precision.'
+          type: string
+        hostNotes:
+          title: Host notes
+          description: Host-written notes about the party. Not surfaced to the Guest(s).
+          type: string
+        guestRequests:
+          title: Guest requests
+          description: "Guest-written requests for the party. Surfaced to & editable by the \nGuest(s). May not be edited by the EPOS partner, as this may contain\ndietary requirements set by the Guest."
+          type: string
+        deposit:
+          $ref: '#/components/schemas/PartyDeposit'
+      example:
+        startTime: '2024-08-12T09:30:00.000Z'
+        status: Ordered
+        tableIds:
+        - table-01-001
+        - table-01-002
     EPOSErrorType:
       type: string
       enum:
@@ -316,50 +484,6 @@ components:
         tableId:
           description: ''
           type: string
-    Cursor:
-      title: Cursor
-      description: A cursor for use in pagination.
-      type: object
-      properties:
-        limit:
-          description: The maximum number of results to be returned in a single page.
-          maximum: 100
-          type: integer
-          x-stoplight:
-            id: l5tzcxdo5qbt1
-        before:
-          description: A cursor for use in pagination for the previous page. before and after are mutually exclusive. Only one of these may be used.
-          type: string
-          x-stoplight:
-            id: 8vxj9sdmbby14
-        after:
-          description: A cursor for use in pagination for the next page. before and after are mutually exclusive. Only one of these may be used.
-          type: string
-          x-stoplight:
-            id: 1jsibbqp1zdti
-      x-stoplight:
-        id: m8ixmhyvzw3oo
-    PagedPartiesResponse:
-      title: PagedOrder
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Party'
-          readOnly: false
-          x-stoplight:
-            id: ou7je7f6bizdg
-        before:
-          type: string
-          x-stoplight:
-            id: jutkpidtbhr6q
-        after:
-          type: string
-          x-stoplight:
-            id: vwlxjfle0yxqt
-      x-stoplight:
-        id: bjkxvbo62zl42
     Party:
       title: Party
       description: 'The representation of a customer or group of customers _currently_
@@ -438,173 +562,3 @@ components:
         tableIds:
         - table-01-001
         - table-01-002
-    CreatePartyRequest:
-      title: Create Party Request
-      description: Request payload made from Dojo -> EPOS Partner to create a new party in the EPOS domain. Note that Dojo will always provide _all_ known fields.
-      properties:
-        name:
-          title: Name
-          type: string
-        covers:
-          title: Covers
-          type: integer
-        tableIds:
-          title: Table IDs
-          type: array
-          items:
-            type: string
-          minLength: 1
-        status:
-          title: Status
-          type: string
-        startTime:
-          title: Start time
-          type: string
-          format: date-time
-          description: When the party was seated. ISO8601 formatted, ms precise.
-        expectedEndTime:
-          title: Expected end time
-          type: string
-          format: date-time
-          description: When the party is expected to leave, if known. ISO8601 formatted, ms precise.
-        hostNotes:
-          title: Host notes
-          type: string
-        guestRequests:
-          title: Guest requests
-          type: string
-        reservationId:
-          title: Reservation ID
-          type: string
-        deposit:
-          $ref: '#/components/schemas/PartyDeposit'
-        dojoPartyId:
-          title: For reference. The Dojo API party ID.
-          type: string
-        dojoReservationId:
-          title: For reference. The Dojo API reservation ID.
-          type: string
-      required:
-      - startTime
-      - tableIds
-      - dojoPartyId
-      example:
-        name: Martin B.
-        covers: 4
-        tableIds:
-        - table-01-001
-        - table-01-002
-        startTime: '2024-08-12T09:30:00.000Z'
-        expectedEndTime: '2024-08-12T11:00:00.000Z'
-        guestRequests: nut allergy; gluten intolerance; please could we have a table next to a window?
-        hostNotes: called ahead to notify kitchen of dietary requirements - confirm upon arrival
-        reservationId: reservation-2024-08-12-0028
-        deposit:
-          totalAmount:
-            value: 5000
-            currencyCode: GBP
-    UpdatePartyRequest:
-      title: Update Party Request
-      description: 'The representation of a customer or group of customers _currently_
-
-        seated at/across a set of tables.'
-      required:
-      - dojoPartyId
-      - startTime
-      - status
-      - tableIds
-      type: object
-      properties:
-        dojoPartyId:
-          description: The Dojo API party ID
-          type: string
-        name:
-          title: Name
-          description: The human-readable name, typically the name of the lead guest.
-          type: string
-        covers:
-          title: Covers
-          description: The number of covers this party occupies.
-          type: integer
-        tableIds:
-          title: Table IDs
-          description: The set of tables this party is currently sat across.
-          minItems: 1
-          type: array
-          items:
-            type: string
-        status:
-          title: Status
-          description: "An arbitrary description of the party's current status - typically \nused to show where in their journey the party is, such as \n\"partially arrived\", \"ordered\" or \"paying\"/\"paid\"."
-          minLength: 1
-          type: string
-        startTime:
-          format: date-time
-          title: Start time
-          description: 'The time the party was seated. ISO8601 formatted, millisecond
-
-            precision.'
-          type: string
-        expectedEndTime:
-          format: date-time
-          title: Expected end time
-          description: 'The time the party is expected to depart, if known. ISO8601
-
-            formatted, millisecond precision.'
-          type: string
-        endTime:
-          format: date-time
-          title: Actual end time
-          description: 'The time the party actually departed. ISO8601 formatted, millisecond
-
-            precision.'
-          type: string
-        hostNotes:
-          title: Host notes
-          description: Host-written notes about the party. Not surfaced to the Guest(s).
-          type: string
-        guestRequests:
-          title: Guest requests
-          description: "Guest-written requests for the party. Surfaced to & editable by the \nGuest(s). May not be edited by the EPOS partner, as this may contain\ndietary requirements set by the Guest."
-          type: string
-        deposit:
-          $ref: '#/components/schemas/PartyDeposit'
-      example:
-        startTime: '2024-08-12T09:30:00.000Z'
-        status: Ordered
-        tableIds:
-        - table-01-001
-        - table-01-002
-  parameters:
-    DeviceType:
-      in: header
-      name: device-type
-      required: false
-      schema:
-        type: string
-      example: Dojo Terminal
-      description: The device making the request, if known
-    DeviceId:
-      name: device-id
-      in: header
-      required: false
-      schema:
-        type: string
-      example: tm_sandbox_65c5fe8a104a1222b2d8b968
-      description: The ID of the device making the request, if known
-    WaiterId:
-      in: header
-      name: waiter-id
-      required: false
-      schema:
-        type: string
-      example: '42'
-      description: The ID of the waiter making the request, if known
-    DojoRequestingProduct:
-      name: dojo-requesting-product
-      in: header
-      required: false
-      schema:
-        type: string
-      example: Order&Pay
-      description: The dojo product making the request, if known.

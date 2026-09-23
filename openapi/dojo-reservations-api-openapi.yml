@@ -6,43 +6,7 @@ info:
 
     fetch and update commerce entities (Orders, Tables, Areas, Parties, Reservations)
 
-    and record payments. Use this when the EPOS exposes its own publicly reachable
-
-    HTTP endpoints; for on-premise EPOSes that cannot accept inbound HTTP, use the
-
-    [WebSocket variant](/epos-data-asyncapi/bundled.yaml) of the same contract.
-
-
-    Core modules:
-
-    - Tables
-
-    - Areas
-
-    - Orders
-
-    - Parties
-
-    - Reservations
-
-
-    API modules can generally be
-
-    implemented independently, with a small number of interdependent fields affected
-
-    by other modules (for example, if Parties are implemented & the information is
-
-    known, a `partyId` should be attached to an Order''s `dineInDetails`).
-
-
-    All requests also contain special headers within the REST headers,
-
-    containing details about the requestor that can be used for logging purposes or EPOS business logic
-
-    (such as waiter id based access to entities).
-
-
-    Before any of these endpoints will be invoked by Dojo, register the capabilities you implement with `PUT /epos/integrations/rest`. See the EPOS Data API guide for the full registration flow.'
+    and record payments.'
 servers:
 - url: https://your-epos.example.com
   description: 'The EPOS Data REST API has no shared base URL: each EPOS provider hosts the
@@ -85,9 +49,7 @@ paths:
                 $ref: '#/components/schemas/EPOSError'
       operationId: v1-post-reservations
       summary: Create reservation
-      description: 'Create a new reservation in the POS domain. Capability: `CreateReservation`
-
-        '
+      description: 'Create a new reservation in the POS domain. Capability: `CreateReservation`'
       parameters:
       - $ref: '#/components/parameters/WaiterId'
       - $ref: '#/components/parameters/DojoRequestingProduct'
@@ -129,9 +91,7 @@ paths:
                 $ref: '#/components/schemas/EPOSError'
       operationId: v1-get-reservations-reservationId
       summary: Get reservation
-      description: 'Retrieves a specific reservation. Capability: `GetReservationById`
-
-        '
+      description: 'Retrieves a specific reservation. Capability: `GetReservationById`'
     put:
       requestBody:
         content:
@@ -161,9 +121,7 @@ paths:
                 $ref: '#/components/schemas/EPOSError'
       operationId: v1-put-reservations-reservationId
       summary: Update reservation
-      description: 'Sets the reservation''s details to those provided. Capbility: `UpdateReservationById`
-
-        '
+      description: 'Sets the reservation''s details to those provided. Capbility: `UpdateReservationById`'
     delete:
       tags:
       - Reservations
@@ -184,9 +142,7 @@ paths:
                 $ref: '#/components/schemas/EPOSError'
       operationId: v1-delete-reservations-reservationId
       summary: Delete reservation
-      description: 'Deletes a specific reservation. Capability: `DeleteReservationById`
-
-        '
+      description: 'Deletes a specific reservation. Capability: `DeleteReservationById`'
   /v1/reservations/search:
     post:
       requestBody:
@@ -218,9 +174,7 @@ paths:
                 $ref: '#/components/schemas/EPOSError'
       operationId: v1-search-reservations
       summary: Search reservations
-      description: 'Search through reservations on the EPOS. Capability: `SearchReservations`
-
-        '
+      description: 'Search through reservations on the EPOS. Capability: `SearchReservations`'
       parameters:
       - $ref: '#/components/parameters/WaiterId'
       - $ref: '#/components/parameters/DojoRequestingProduct'
@@ -228,18 +182,6 @@ paths:
       - $ref: '#/components/parameters/DeviceType'
 components:
   schemas:
-    EPOSError:
-      title: EPOSError
-      type: object
-      required:
-      - errorType
-      properties:
-        debugMessage:
-          type: string
-        traceId:
-          type: string
-        errorType:
-          $ref: '#/components/schemas/EPOSErrorType'
     Reservation:
       title: Reservation
       description: 'A reservation describes a point in the future that a party is expected
@@ -308,51 +250,18 @@ components:
         tableIds:
         - table-02-003
         - table-02-004
-    SearchReservationsRequest:
-      description: ''
+    EPOSError:
+      title: EPOSError
       type: object
+      required:
+      - errorType
       properties:
-        cursor:
-          $ref: '#/components/schemas/Cursor'
-        tableId:
+        debugMessage:
           type: string
-          description: ''
-        fromTime:
-          format: date-time
-          description: ''
+        traceId:
           type: string
-        toTime:
-          format: date-time
-          description: ''
-          type: string
-    EPOSErrorType:
-      type: string
-      enum:
-      - NotFound
-      - UnexpectedError
-      - InvalidRequest
-      - Conflict
-    PagedReservationsResponse:
-      title: PagedOrder
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Reservation'
-          readOnly: false
-          x-stoplight:
-            id: ou7je7f6bizdg
-        before:
-          type: string
-          x-stoplight:
-            id: jutkpidtbhr6q
-        after:
-          type: string
-          x-stoplight:
-            id: vwlxjfle0yxqt
-      x-stoplight:
-        id: bjkxvbo62zl42
+        errorType:
+          $ref: '#/components/schemas/EPOSErrorType'
     Cursor:
       title: Cursor
       description: A cursor for use in pagination.
@@ -376,57 +285,23 @@ components:
             id: 1jsibbqp1zdti
       x-stoplight:
         id: m8ixmhyvzw3oo
-    CreateReservationRequest:
+    SearchReservationsRequest:
+      description: ''
+      type: object
       properties:
-        dojoReservationId:
-          title: DojoReservationID
+        cursor:
+          $ref: '#/components/schemas/Cursor'
+        tableId:
           type: string
-        name:
-          title: Name
-          type: string
-        covers:
-          title: Covers
-          type: integer
-        startTime:
-          title: Start time
-          type: string
+          description: ''
+        fromTime:
           format: date-time
-          description: When the reservation is expected to arrive. ISO8601 formatted, ms precise.
-        endTime:
-          title: End time
+          description: ''
           type: string
+        toTime:
           format: date-time
-          description: When the reservation is expected to depart. ISO8601 formatted, ms precise.
-        tableIds:
-          title: Table IDs
-          type: array
-          items:
-            type: string
-          minLength: 1
-        hostNotes:
-          title: Notes
+          description: ''
           type: string
-        guestRequests:
-          title: Requests
-          type: string
-      required:
-      - dojoReservationId
-      - name
-      - covers
-      - startTime
-      - endTime
-      - tableIds
-      example:
-        dojoReservationId: dojo-res-210345
-        name: Sasha J.
-        covers: 3
-        startTime: '2024-08-12T13:00:00.000Z'
-        endTime: '2024-08-12T15:00:00.000Z'
-        tableIds:
-        - table-02-003
-        - table-02-004
-        guestRequests: we'll be bringing our dog
-        hostNotes: dog may be given little snacks
     UpdateReservationRequest:
       title: Update Reservation Request
       description: 'A reservation describes a point in the future that a party is expected
@@ -493,23 +368,86 @@ components:
         tableIds:
         - table-02-003
         - table-02-004
+    PagedReservationsResponse:
+      title: PagedOrder
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reservation'
+          readOnly: false
+          x-stoplight:
+            id: ou7je7f6bizdg
+        before:
+          type: string
+          x-stoplight:
+            id: jutkpidtbhr6q
+        after:
+          type: string
+          x-stoplight:
+            id: vwlxjfle0yxqt
+      x-stoplight:
+        id: bjkxvbo62zl42
+    EPOSErrorType:
+      type: string
+      enum:
+      - NotFound
+      - UnexpectedError
+      - InvalidRequest
+      - Conflict
+    CreateReservationRequest:
+      properties:
+        dojoReservationId:
+          title: DojoReservationID
+          type: string
+        name:
+          title: Name
+          type: string
+        covers:
+          title: Covers
+          type: integer
+        startTime:
+          title: Start time
+          type: string
+          format: date-time
+          description: When the reservation is expected to arrive. ISO8601 formatted, ms precise.
+        endTime:
+          title: End time
+          type: string
+          format: date-time
+          description: When the reservation is expected to depart. ISO8601 formatted, ms precise.
+        tableIds:
+          title: Table IDs
+          type: array
+          items:
+            type: string
+          minLength: 1
+        hostNotes:
+          title: Notes
+          type: string
+        guestRequests:
+          title: Requests
+          type: string
+      required:
+      - dojoReservationId
+      - name
+      - covers
+      - startTime
+      - endTime
+      - tableIds
+      example:
+        dojoReservationId: dojo-res-210345
+        name: Sasha J.
+        covers: 3
+        startTime: '2024-08-12T13:00:00.000Z'
+        endTime: '2024-08-12T15:00:00.000Z'
+        tableIds:
+        - table-02-003
+        - table-02-004
+        guestRequests: we'll be bringing our dog
+        hostNotes: dog may be given little snacks
   parameters:
-    DeviceType:
-      in: header
-      name: device-type
-      required: false
-      schema:
-        type: string
-      example: Dojo Terminal
-      description: The device making the request, if known
-    DeviceId:
-      name: device-id
-      in: header
-      required: false
-      schema:
-        type: string
-      example: tm_sandbox_65c5fe8a104a1222b2d8b968
-      description: The ID of the device making the request, if known
     WaiterId:
       in: header
       name: waiter-id
@@ -518,6 +456,14 @@ components:
         type: string
       example: '42'
       description: The ID of the waiter making the request, if known
+    DeviceType:
+      in: header
+      name: device-type
+      required: false
+      schema:
+        type: string
+      example: Dojo Terminal
+      description: The device making the request, if known
     DojoRequestingProduct:
       name: dojo-requesting-product
       in: header
@@ -526,3 +472,11 @@ components:
         type: string
       example: Order&Pay
       description: The dojo product making the request, if known.
+    DeviceId:
+      name: device-id
+      in: header
+      required: false
+      schema:
+        type: string
+      example: tm_sandbox_65c5fe8a104a1222b2d8b968
+      description: The ID of the device making the request, if known
