@@ -182,126 +182,6 @@ paths:
       - $ref: '#/components/parameters/DeviceType'
 components:
   schemas:
-    Reservation:
-      title: Reservation
-      description: 'A reservation describes a point in the future that a party is expected
-
-        to be seated at, how long for, and where.'
-      required:
-      - id
-      - name
-      - covers
-      - startTime
-      - endTime
-      - tableIds
-      type: object
-      properties:
-        id:
-          title: ID
-          description: The globally unique (within the EPOS) ID for the reservation.
-          type: string
-        name:
-          title: Name
-          description: The name of the guest who the reservation is for.
-          type: string
-        covers:
-          title: Covers
-          description: The number of covers the reservation is expected to occupy.
-          type: integer
-        startTime:
-          format: date-time
-          title: Start time
-          description: 'The time the reservation is expected to begin. ISO8601 formatted,
-
-            millisecond precision.'
-          type: string
-        endTime:
-          format: date-time
-          title: End time
-          description: 'The time the reservation is expected to finish. ISO8601 formatted,
-
-            millisecond precision.'
-          type: string
-        tableIds:
-          title: Table IDs
-          description: The tables the reservation is expected to occupy.
-          minLength: 1
-          type: array
-          items:
-            type: string
-        hostNotes:
-          title: Host notes
-          description: Host-written notes about the reservation. Not exposed to guests.
-          type: string
-        guestRequests:
-          title: Guest requests
-          description: 'Guest-written requests for the reservation. Shown to & editable by
-
-            guests. May not be edited by the EPOS partner, as this may contain
-
-            dietary requirements set by the Guest.'
-          type: string
-      example:
-        id: reservation-2024-08-12-0065
-        name: Sasha J.
-        covers: 3
-        startTime: '2024-08-12T13:00:00.000Z'
-        endTime: '2024-08-12T15:00:00.000Z'
-        tableIds:
-        - table-02-003
-        - table-02-004
-    EPOSError:
-      title: EPOSError
-      type: object
-      required:
-      - errorType
-      properties:
-        debugMessage:
-          type: string
-        traceId:
-          type: string
-        errorType:
-          $ref: '#/components/schemas/EPOSErrorType'
-    Cursor:
-      title: Cursor
-      description: A cursor for use in pagination.
-      type: object
-      properties:
-        limit:
-          description: The maximum number of results to be returned in a single page.
-          maximum: 100
-          type: integer
-          x-stoplight:
-            id: l5tzcxdo5qbt1
-        before:
-          description: A cursor for use in pagination for the previous page. before and after are mutually exclusive. Only one of these may be used.
-          type: string
-          x-stoplight:
-            id: 8vxj9sdmbby14
-        after:
-          description: A cursor for use in pagination for the next page. before and after are mutually exclusive. Only one of these may be used.
-          type: string
-          x-stoplight:
-            id: 1jsibbqp1zdti
-      x-stoplight:
-        id: m8ixmhyvzw3oo
-    SearchReservationsRequest:
-      description: ''
-      type: object
-      properties:
-        cursor:
-          $ref: '#/components/schemas/Cursor'
-        tableId:
-          type: string
-          description: ''
-        fromTime:
-          format: date-time
-          description: ''
-          type: string
-        toTime:
-          format: date-time
-          description: ''
-          type: string
     UpdateReservationRequest:
       title: Update Reservation Request
       description: 'A reservation describes a point in the future that a party is expected
@@ -389,13 +269,18 @@ components:
             id: vwlxjfle0yxqt
       x-stoplight:
         id: bjkxvbo62zl42
-    EPOSErrorType:
-      type: string
-      enum:
-      - NotFound
-      - UnexpectedError
-      - InvalidRequest
-      - Conflict
+    EPOSError:
+      title: EPOSError
+      type: object
+      required:
+      - errorType
+      properties:
+        debugMessage:
+          type: string
+        traceId:
+          type: string
+        errorType:
+          $ref: '#/components/schemas/EPOSErrorType'
     CreateReservationRequest:
       properties:
         dojoReservationId:
@@ -447,15 +332,122 @@ components:
         - table-02-004
         guestRequests: we'll be bringing our dog
         hostNotes: dog may be given little snacks
+    EPOSErrorType:
+      type: string
+      enum:
+      - NotFound
+      - UnexpectedError
+      - InvalidRequest
+      - Conflict
+    SearchReservationsRequest:
+      description: ''
+      type: object
+      properties:
+        cursor:
+          $ref: '#/components/schemas/Cursor'
+        tableId:
+          type: string
+          description: ''
+        fromTime:
+          format: date-time
+          description: ''
+          type: string
+        toTime:
+          format: date-time
+          description: ''
+          type: string
+    Reservation:
+      title: Reservation
+      description: 'A reservation describes a point in the future that a party is expected
+
+        to be seated at, how long for, and where.'
+      required:
+      - id
+      - name
+      - covers
+      - startTime
+      - endTime
+      - tableIds
+      type: object
+      properties:
+        id:
+          title: ID
+          description: The globally unique (within the EPOS) ID for the reservation.
+          type: string
+        name:
+          title: Name
+          description: The name of the guest who the reservation is for.
+          type: string
+        covers:
+          title: Covers
+          description: The number of covers the reservation is expected to occupy.
+          type: integer
+        startTime:
+          format: date-time
+          title: Start time
+          description: 'The time the reservation is expected to begin. ISO8601 formatted,
+
+            millisecond precision.'
+          type: string
+        endTime:
+          format: date-time
+          title: End time
+          description: 'The time the reservation is expected to finish. ISO8601 formatted,
+
+            millisecond precision.'
+          type: string
+        tableIds:
+          title: Table IDs
+          description: The tables the reservation is expected to occupy.
+          minLength: 1
+          type: array
+          items:
+            type: string
+        hostNotes:
+          title: Host notes
+          description: Host-written notes about the reservation. Not exposed to guests.
+          type: string
+        guestRequests:
+          title: Guest requests
+          description: 'Guest-written requests for the reservation. Shown to & editable by
+
+            guests. May not be edited by the EPOS partner, as this may contain
+
+            dietary requirements set by the Guest.'
+          type: string
+      example:
+        id: reservation-2024-08-12-0065
+        name: Sasha J.
+        covers: 3
+        startTime: '2024-08-12T13:00:00.000Z'
+        endTime: '2024-08-12T15:00:00.000Z'
+        tableIds:
+        - table-02-003
+        - table-02-004
+    Cursor:
+      title: Cursor
+      description: A cursor for use in pagination.
+      type: object
+      properties:
+        limit:
+          description: The maximum number of results to be returned in a single page.
+          maximum: 100
+          type: integer
+          x-stoplight:
+            id: l5tzcxdo5qbt1
+        before:
+          description: A cursor for use in pagination for the previous page. before and after are mutually exclusive. Only one of these may be used.
+          type: string
+          x-stoplight:
+            id: 8vxj9sdmbby14
+        after:
+          description: A cursor for use in pagination for the next page. before and after are mutually exclusive. Only one of these may be used.
+          type: string
+          x-stoplight:
+            id: 1jsibbqp1zdti
+      x-stoplight:
+        id: m8ixmhyvzw3oo
   parameters:
-    WaiterId:
-      in: header
-      name: waiter-id
-      required: false
-      schema:
-        type: string
-      example: '42'
-      description: The ID of the waiter making the request, if known
     DeviceType:
       in: header
       name: device-type
@@ -472,6 +464,14 @@ components:
         type: string
       example: Order&Pay
       description: The dojo product making the request, if known.
+    WaiterId:
+      in: header
+      name: waiter-id
+      required: false
+      schema:
+        type: string
+      example: '42'
+      description: The ID of the waiter making the request, if known
     DeviceId:
       name: device-id
       in: header

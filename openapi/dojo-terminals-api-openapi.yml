@@ -125,33 +125,19 @@ components:
           description: An 8-digit identifier printed on receipts.
           type: string
           example: '12345678'
+    TerminalStatus:
+      title: TerminalStatus
+      description: A machine-readable value describing the state of the terminal.
+      enum:
+      - Available
+      - Offline
+      - InUse
+      type: string
     ErrorCode:
       description: 'Machine-usable code describing an error.
 
         (INTERNAL_ERROR, TERMINAL_UNAVAILABLE, INVALID_REQUEST)'
       type: string
-    Terminal:
-      title: Terminal
-      description: The terminal object.
-      required:
-      - id
-      - properties
-      - status
-      - updatedAt
-      type: object
-      properties:
-        id:
-          description: The unique identifier for the terminal.
-          type: string
-          example: tm_sandbox_amxm22C23
-        properties:
-          $ref: '#/components/schemas/TerminalProperties'
-        status:
-          $ref: '#/components/schemas/TerminalStatus'
-        updatedAt:
-          format: date-time
-          description: The timestamp of the update date, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
-          type: string
     Error:
       description: An object containing information about an error that occurred as part of an API request.
       required:
@@ -197,23 +183,29 @@ components:
             type: array
             items:
               type: string
-    TerminalStatus:
-      title: TerminalStatus
-      description: A machine-readable value describing the state of the terminal.
-      enum:
-      - Available
-      - Offline
-      - InUse
-      type: string
+    Terminal:
+      title: Terminal
+      description: The terminal object.
+      required:
+      - id
+      - properties
+      - status
+      - updatedAt
+      type: object
+      properties:
+        id:
+          description: The unique identifier for the terminal.
+          type: string
+          example: tm_sandbox_amxm22C23
+        properties:
+          $ref: '#/components/schemas/TerminalProperties'
+        status:
+          $ref: '#/components/schemas/TerminalStatus'
+        updatedAt:
+          format: date-time
+          description: The timestamp of the update date, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
+          type: string
   parameters:
-    SoftwareHouseId:
-      name: software-house-id
-      description: This field shows the EPOS company whose software is generating the request. This value should not be configurable as it will remain the same for all customers using particular EPOS software.
-      schema:
-        type: string
-      example: softwareHouse1
-      in: header
-      required: true
     ResellerId:
       name: reseller-id
       description: This identifies the reseller of the EPOS. This may be the same as the `software-house-id` if they are also the seller.
@@ -231,6 +223,14 @@ components:
         format: date
       example: '2026-02-27'
       description: The API version with format yyyy-mm-dd. The current version is `2026-02-27`.
+    SoftwareHouseId:
+      name: software-house-id
+      description: This field shows the EPOS company whose software is generating the request. This value should not be configurable as it will remain the same for all customers using particular EPOS software.
+      schema:
+        type: string
+      example: softwareHouse1
+      in: header
+      required: true
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

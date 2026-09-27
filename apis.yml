@@ -39,6 +39,9 @@ accessModel:
   generated: '2026-09-03'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+x-docs-platform: docusaurus
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-25
 tags:
 - Payments
 - United Kingdom
@@ -50,6 +53,7 @@ tags:
 - Terminal
 - Point-of-Sale
 - Webhook
+- Real-Time
 tags_raw:
 - Payments
 - United Kingdom
@@ -61,6 +65,7 @@ tags_raw:
 - Terminals
 - Point of Sale
 - Webhooks
+- Real-Time
 created: '2026-07-24'
 modified: '2026-07-24'
 specificationVersion: '0.23'

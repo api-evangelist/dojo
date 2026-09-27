@@ -38,21 +38,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    OrderEvent:
-      required:
-      - orderId
-      type: object
-      properties:
-        orderId:
-          type: string
-    ReservationEvent:
-      type: object
-      properties:
-        reservationId:
-          description: The EPOS-internal ID of the updated Reservation.
-          type: string
-      required:
-      - reservationId
     EventRequest:
       description: ''
       required:
@@ -67,9 +52,21 @@ components:
           - $ref: '#/components/schemas/OrderEvent'
           - $ref: '#/components/schemas/PartyEvent'
           - $ref: '#/components/schemas/ReservationEvent'
-    EventType:
-      description: OrderUpdated, PartyUpdated, ReservationUpdated
-      type: string
+    ReservationEvent:
+      type: object
+      properties:
+        reservationId:
+          description: The EPOS-internal ID of the updated Reservation.
+          type: string
+      required:
+      - reservationId
+    OrderEvent:
+      required:
+      - orderId
+      type: object
+      properties:
+        orderId:
+          type: string
     PartyEvent:
       type: object
       properties:
@@ -78,6 +75,9 @@ components:
           type: string
       required:
       - partyId
+    EventType:
+      description: OrderUpdated, PartyUpdated, ReservationUpdated
+      type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

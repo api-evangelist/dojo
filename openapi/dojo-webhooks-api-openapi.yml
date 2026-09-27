@@ -491,6 +491,18 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    SecretsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the subscription.
+        secrets:
+          type: array
+          description: The list of secrets associated with the subscription. Used to generate signatures.
+          items:
+            $ref: '#/components/schemas/SubscriptionSecret'
     SubscriptionSecret:
       type: object
       additionalProperties: false
@@ -508,39 +520,33 @@ components:
         isActive:
           type: boolean
           description: The status of the secret. It can be activated or deactivated.
-    ErrorResponse:
+    SubscriptionUpdateRequest:
       type: object
+      example:
+        events:
+        - payment_intent.created
+        - order.created
       additionalProperties: false
       properties:
-        errors:
+        events:
           type:
-          - object
+          - array
           - 'null'
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        type:
-          type:
-          - string
-          - 'null'
-        title:
+          description: The list of events.
+          items:
+            type: string
+        url:
           type:
           - string
           - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        traceId:
+          description: The URL of the Webhook endpoint.
+          format: uri
+          pattern: ^https://*.+
+        description:
           type:
           - string
           - 'null'
-        detail:
-          type:
-          - string
-          - 'null'
+          description: The subscription description.
     Subscription:
       type: object
       additionalProperties: false
@@ -625,45 +631,39 @@ components:
           - string
           - 'null'
           description: The subscription description.
-    SecretsResponse:
+    ErrorResponse:
       type: object
       additionalProperties: false
       properties:
-        id:
-          type: string
-          description: The unique identifier for the subscription.
-        secrets:
-          type: array
-          description: The list of secrets associated with the subscription. Used to generate signatures.
-          items:
-            $ref: '#/components/schemas/SubscriptionSecret'
-    SubscriptionUpdateRequest:
-      type: object
-      example:
-        events:
-        - payment_intent.created
-        - order.created
-      additionalProperties: false
-      properties:
-        events:
+        errors:
           type:
-          - array
+          - object
           - 'null'
-          description: The list of events.
-          items:
-            type: string
-        url:
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        type:
           type:
           - string
           - 'null'
-          description: The URL of the Webhook endpoint.
-          format: uri
-          pattern: ^https://*.+
-        description:
+        title:
           type:
           - string
           - 'null'
-          description: The subscription description.
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        traceId:
+          type:
+          - string
+          - 'null'
+        detail:
+          type:
+          - string
+          - 'null'
   parameters:
     Version:
       name: version

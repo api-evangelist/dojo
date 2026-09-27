@@ -374,23 +374,56 @@ paths:
       - $ref: '#/components/parameters/DeviceType'
 components:
   schemas:
-    Payment:
-      description: ''
+    BillImage:
+      title: BillImage
       required:
-      - paidAmount
-      - paymentIntentId
+      - svgImage
       type: object
       properties:
-        paymentIntentId:
+        svgImage:
+          title: svgImage
+          type: string
+          description: SVG representation of an image
+        align:
+          $ref: '#/components/schemas/Align'
+      description: A bill line containing an image
+      example:
+        svgImage: <svg viewBox='0 0 389 100' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M146.7 100C119.754 100 97.8318 77.5807 97.8318 50.0245C97.8318 22.4682 119.754 0.0489248 146.7 0.0489248C173.645 0.0489248 195.568 22.4682 195.568 50.0245C195.568 77.5807 173.645 100 146.7 100ZM146.616 17.6737C129.155 17.6737 114.946 32.204 114.946 50.0612C114.946 67.9183 129.155 82.4486 146.616 82.4486C164.078 82.4486 178.286 67.9183 178.286 50.0612C178.286 32.204 164.078 17.6737 146.616 17.6737ZM339.182 100C312.237 100 290.314 77.5807 290.314 50.0245C290.314 22.4682 312.237 0.0489248 339.182 0.0489248C366.128 0.0489248 388.05 22.4682 388.05 50.0245C388.05 77.5807 366.128 100 339.182 100ZM339.098 17.6737C321.637 17.6737 307.429 32.204 307.429 50.0612C307.429 67.9183 321.637 82.4486 339.098 82.4486C356.56 82.4486 370.768 67.9183 370.768 50.0612C370.768 32.204 356.56 17.6737 339.098 17.6737ZM17.5212 100C7.85764 100 0 91.9643 0 82.0817V17.9795C0 8.09687 7.85764 0.0489248 17.5212 0.0489248H38.2716C65.2172 0.0489248 87.1397 22.4682 87.1397 50.0245C87.1397 77.5807 65.2172 100 38.2716 100H17.5212ZM17.4136 17.6676C17.4136 17.6709 17.4108 17.6737 17.4075 17.6738C17.2907 17.677 17.1983 17.7736 17.1983 17.8938V82.2285C17.1983 82.3508 17.294 82.4486 17.4136 82.4486H37.853C55.3742 82.4486 69.7739 68.0651 69.9414 50.3792C70.0251 41.683 66.7601 33.476 60.7682 27.275C54.7643 21.0739 46.7751 17.6615 38.2716 17.6615H17.4197C17.4163 17.6615 17.4136 17.6642 17.4136 17.6676V17.6676ZM242.917 100C252.688 100 261.885 96.0983 268.822 89.0166C275.747 81.9349 279.562 72.5171 279.562 62.5245L279.61 2.66634C279.61 1.19863 278.438 0 277.003 0H264.995C263.56 0 262.388 1.19863 262.388 2.66634L262.34 62.5245C262.34 73.4711 253.621 82.3875 242.917 82.3875H242.618C232.081 82.2285 223.494 73.1654 223.494 62.2065V51.4432C223.494 49.9755 222.322 48.7769 220.887 48.7769H208.879C207.444 48.7769 206.272 49.9755 206.272 51.4432V62.1208C206.272 82.8889 222.621 99.8777 242.702 100H242.917Z' fill='#180F06'></path></svg>
+    Modifier:
+      title: Modifier
+      required:
+      - amountPerModifier
+      - name
+      - plu
+      - quantity
+      type: object
+      properties:
+        name:
+          description: A human-readable name of the modifier.
+          type: string
+          x-stoplight:
+            id: dbij8ceea0jui
+        quantity:
+          description: How many times this modifier is applied to the item. Please note that this amount is per single item, so if a customer orders two burgers each with double extra cheese, the quantity should be 2, not 4.
+          type: integer
+          x-stoplight:
+            id: 0o2r5334l8vue
+        amountPerModifier:
+          $ref: '#/components/schemas/Money'
+          description: The price of the single modifier.
+        plu:
           description: ''
           type: string
-        paidAmount:
-          $ref: '#/components/schemas/Money'
-          description: Indicates the paid amount of this specific payment, excluding `tipsAmount` but includes eventual service charges.
-        tipsAmount:
-          $ref: '#/components/schemas/Money'
-          description: The tip amount added to this specific payment. It is not included in `paidAmount`.
-    OrderSubItem:
+      x-stoplight:
+        id: a8zdtsiz5l6a8
+    Size:
+      title: Size
+      type: string
+      enum:
+      - Body
+      - Header1
+      - Header2
+    OrderItem:
       required:
       - name
       - amountPerItem
@@ -399,7 +432,7 @@ components:
       type: object
       properties:
         amountPerItem:
-          description: The base price of the single sub item, without its parent item, before any modifiers or discounts are applied.
+          description: The base price of the single item, before any modifiers, subitems or discounts are applied.
           $ref: '#/components/schemas/Money'
         quantity:
           type: integer
@@ -410,8 +443,13 @@ components:
           type: string
         plu:
           type: string
+        subItems:
+          description: Sub-items applied to the item
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderSubItem'
         modifiers:
-          description: Modifiers applied to the subitem
+          description: Modifiers applied to the item
           type: array
           items:
             $ref: '#/components/schemas/Modifier'
@@ -424,18 +462,116 @@ components:
           note: string
           modifiers: []
           subItems: []
-    EPOSError:
-      title: EPOSError
+    BillSection:
+      title: BillSection
       type: object
       required:
-      - errorType
+      - lines
       properties:
-        debugMessage:
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillLine'
+      description: An object representing either a header or footer on a BillSection
+    EPOSErrorType:
+      type: string
+      enum:
+      - NotFound
+      - UnexpectedError
+      - InvalidRequest
+      - Conflict
+    Money:
+      title: Money
+      required:
+      - value
+      - currencyCode
+      type: object
+      properties:
+        value:
+          format: int64
+          description: The amount in the minor unit, for example '100' for 1.00 GBP.
+          type: integer
+        currencyCode:
+          description: Three-letter currency code in ISO 4217 alpha-3 format. Currently this accepts `GBP` and `EUR`.
+          maxLength: 10
+          minLength: 1
           type: string
-        traceId:
+      example:
+        value: 1000
+        currencyCode: GBP
+      x-stoplight:
+        id: c9op7zec1txu2
+    PagedOrdersResponse:
+      title: PagedOrder
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+          readOnly: false
+          x-stoplight:
+            id: ou7je7f6bizdg
+        before:
           type: string
-        errorType:
-          $ref: '#/components/schemas/EPOSErrorType'
+          x-stoplight:
+            id: jutkpidtbhr6q
+        after:
+          type: string
+          x-stoplight:
+            id: vwlxjfle0yxqt
+      x-stoplight:
+        id: bjkxvbo62zl42
+    OrderStatus:
+      description: ''
+      enum:
+      - New
+      - Submitted
+      - Confirmed
+      - Accepted
+      - Preparing
+      - Prepared
+      - Ready
+      - Finalized
+      - Canceled
+      - Failed
+      type: string
+    BillMerchantAddress:
+      title: BillMerchantAddress
+      required:
+      - addressLines
+      - postcode
+      type: object
+      properties:
+        addressLines:
+          title: addressLines
+          type: array
+          description: Lines of address
+          items:
+            type: string
+        postcode:
+          title: postcode
+          type: string
+          description: ZIP or postal code.
+      description: A predefined bill field, containing an address. This will be pre-formatted in the receipt
+      example:
+        addressLines:
+        - Brunel Building
+        - 1 & 2 Canalside Walk
+        postcode: W2 1DG
+    BillMerchantEmailAddress:
+      title: BillMerchantEmailAddress
+      required:
+      - emailAddress
+      type: object
+      properties:
+        emailAddress:
+          title: emailAddress
+          type: string
+          description: The email address
+      description: A predefined bill field, containing the merchants contact email address. This will be pre-formatted in the bill
+      example:
+        emailAddress: dojo@dojo.tech
     PaymentWithLockId:
       description: ''
       required:
@@ -455,6 +591,88 @@ components:
         lockId:
           description: The unique ID of a lock generated by Dojo. Consuming this isn't strictly required as Dojo will create at most one lock per order, but it can be useful for tracking the lifecycle of any lock.
           type: string
+    BillMerchantPhoneNumber:
+      title: BillMerchantPhoneNumber
+      required:
+      - phoneNumber
+      type: object
+      properties:
+        phoneNumber:
+          title: phoneNumber
+          type: string
+          description: The phone number
+      description: A predefined bill field, containing the merchants contact phone number. This will be pre-formatted in the bill
+      example:
+        phoneNumber: 01234 567890
+    BillURL:
+      title: BillURL
+      required:
+      - url
+      type: object
+      properties:
+        url:
+          title: url
+          type: string
+          description: The URL for the link
+        description:
+          title: description
+          type: string
+          description: Textual description of the URL, will be displayed if set
+        showQr:
+          title: showQR
+          type: boolean
+          description: If a QR code should be shown on the bill
+        showUrl:
+          title: showURL
+          type: boolean
+          description: If the URL should be shown on the bill
+      description: A bill line containing a URL. This can be printed as a QR code on bills, or a hyperlink with the text as the description, in digital format.
+      example:
+        url: https://www.website.com
+        showQR: true
+        showURL: true
+        description: Check out our website!
+    CreateOrderLockRequest:
+      type: object
+      description: Request a write lock on an Order, guaranteeing only Dojo can write changes to the order, until receiving the corresponding UnlockOrder request.
+      additionalProperties: false
+      title: CreateOrderLockRequest
+      required:
+      - lockId
+      - expiry
+      properties:
+        lockId:
+          description: The unique ID of a lock generated by Dojo. Consuming this isn't strictly required as Dojo will create at most one lock per order, but it can be useful for tracking the lifecycle of any lock.
+          type: string
+        expiry:
+          description: 'The lock expiry time. If this time has been reached and no UnlockOrder has been received the lock can be considered stale and released.
+
+            This may be extended by the ExtendOrderLockRequest if registered. It is optional to consume this expiry.
+
+            Dojo will always attempt to release or extend the lock before this expiry is reached, it exists to avoid stale locks if there is a full loss of communication between the EPOS and Dojo.
+
+            '
+          type: string
+          format: date-time
+    OrderDetails:
+      anyOf:
+      - title: Dine In
+        required:
+        - dineIn
+      - title: Collection
+        required:
+        - collection
+      description: Details about the order including the type and the details.
+      required:
+      - orderType
+      type: object
+      properties:
+        dineIn:
+          $ref: '#/components/schemas/DineInDetails'
+        collection:
+          $ref: '#/components/schemas/CollectionDetails'
+        orderType:
+          $ref: '#/components/schemas/OrderType'
     Cursor:
       title: Cursor
       description: A cursor for use in pagination.
@@ -478,39 +696,18 @@ components:
             id: 1jsibbqp1zdti
       x-stoplight:
         id: m8ixmhyvzw3oo
-    Customer:
-      title: Customer
+    EPOSError:
+      title: EPOSError
       type: object
+      required:
+      - errorType
       properties:
-        id:
-          description: The unique identifier of the customer.
+        debugMessage:
           type: string
-        emailAddress:
-          description: The customer's email address.
-          maxLength: 254
+        traceId:
           type: string
-        phoneNumber:
-          description: The customer's phone number.
-          maxLength: 50
-          type: string
-        name:
-          description: The customer's name.
-          type: string
-          x-stoplight:
-            id: rvqovaxl33c9q
-      additionalProperties: false
-      example:
-        emailAddress: support@dojo.com
-        phoneNumber: 448000443550
-    Align:
-      title: Align
-      type: string
-      enum:
-      - Center
-      - Left
-      - Right
-      example:
-      - Center
+        errorType:
+          $ref: '#/components/schemas/EPOSErrorType'
     Order:
       title: Order
       required:
@@ -686,6 +883,35 @@ components:
           value: 0
           currencyCode: GBP
         reference: Table 5
+    CollectionDetails:
+      title: CollectionDetails
+      description: ''
+      type: object
+      properties:
+        asap:
+          description: A boolean indicating whether order collection is as soon as possible
+          type: boolean
+        collectAt:
+          format: date-time
+          description: Order collection timestamp in ISO8601 UTC standard. Only applicable when asap is not set or false
+          type: string
+      example:
+        collectionTime: '2024-02-21T14:39:21.6050276Z'
+        asap: false
+    BillLineType:
+      title: BillLineType
+      type: string
+      enum:
+      - Image
+      - Logo
+      - MerchantAddress
+      - MerchantEmailAddress
+      - MerchantName
+      - MerchantPhoneNumber
+      - Text
+      - URL
+      - HorizontalLine
+      - TaxNumber
     SearchOrdersRequest:
       description: ''
       type: object
@@ -697,51 +923,157 @@ components:
           type: boolean
         cursor:
           $ref: '#/components/schemas/Cursor'
-    BillTaxNumber:
-      title: BillTaxNumber
+    ExtendOrderLockRequest:
+      type: object
+      description: Request an extension to the write lock on an Order.
+      additionalProperties: false
+      title: ExtendOrderLockRequest
+      required:
+      - expiry
+      properties:
+        expiry:
+          description: 'The lock expiry time. If this time has been reached and no UnlockOrder has been received the lock can be considered stale and released.
+
+            This may be extended by the ExtendOrderLockRequest if registered. It is optional to consume this expiry.
+
+            Dojo will always attempt to release or extend the lock before this expiry is reached, it exists to avoid stale locks if there is a full loss of communication between the EPOS and Dojo.
+
+            '
+          type: string
+          format: date-time
+    Discount:
+      description: ''
       required:
       - name
-      - number
+      - amountTotal
       type: object
       properties:
         name:
-          title: name
+          description: The name that was given to the discount.
           type: string
-          description: The tax name
-          example: VAT
-        number:
-          title: number
+        affectedPlu:
+          description: Product plu for which the discount is applied to. Empty if discount is for the total amount
           type: string
-          description: The tax number
-      description: A predefined bill field, containing the merchants tax number. This will be pre-formatted in the bill, and shown at the bottom
+        discountReference:
+          description: Discount reference that uniquely identifies the discount
+          type: string
+        code:
+          description: Discount code
+          type: string
+        amountTotal:
+          $ref: '#/components/schemas/Money'
+        amountPercentage:
+          description: Percentage covered by the discount, which is stored with precision 2 (e.g., 25.1% ➜ 2510)
+          type: integer
       example:
-        name: VAT
-        number: '12345678'
-    OrderDetails:
-      anyOf:
-      - title: Dine In
-        required:
-        - dineIn
-      - title: Collection
-        required:
-        - collection
-      description: Details about the order including the type and the details.
+        isPercentage: true
+        provider: Order & Pay app
+        name: Spring Sale 25% off
+        discountCode: SPRING2023
+        discountReference: '123456'
+        affectedPlu: item_123
+        value: 2500
+        amount: 500
+      x-examples:
+        Example 1:
+          type: Percentage
+          provider: provider
+          name: Spring Sale
+          channelDiscountCode: SPRING2023
+          referenceId: 123456
+          value: 1000
+          amount: 500
+    OrderSubItem:
       required:
-      - orderType
+      - name
+      - amountPerItem
+      - plu
+      - quantity
       type: object
       properties:
-        dineIn:
-          $ref: '#/components/schemas/DineInDetails'
-        collection:
-          $ref: '#/components/schemas/CollectionDetails'
-        orderType:
-          $ref: '#/components/schemas/OrderType'
-    OrderType:
-      description: ''
-      enum:
-      - DineIn
-      - Collection
-      type: string
+        amountPerItem:
+          description: The base price of the single sub item, without its parent item, before any modifiers or discounts are applied.
+          $ref: '#/components/schemas/Money'
+        quantity:
+          type: integer
+        note:
+          type: string
+        name:
+          description: A human-readable name of the item.
+          type: string
+        plu:
+          type: string
+        modifiers:
+          description: Modifiers applied to the subitem
+          type: array
+          items:
+            $ref: '#/components/schemas/Modifier'
+      x-examples:
+        Example 1:
+          plu: UGG-BB-PUR-06
+          name: test
+          price: 0
+          quantity: 1073741824
+          note: string
+          modifiers: []
+          subItems: []
+    DineInDetails:
+      description: Details for an order-in order
+      type: object
+      properties:
+        tableId:
+          type: string
+        waiterId:
+          type: string
+        partyId:
+          description: The ID of the party that made this order, if known.
+          type: string
+        reservationId:
+          description: If this order is a pre-order for a reservation, the ID of that reservation.
+          type: string
+        readyAt:
+          format: date-time
+          description: Specify timestamp in ISO8601 UTC standard when a pre-order should be ready. Only applicable for pre-orders.
+          type: string
+      x-examples:
+        Example 1:
+          tableId: test
+          waiterId: test
+    TaxLine:
+      title: TaxLine
+      description: The tax line object.
+      required:
+      - amountTotal
+      type: object
+      properties:
+        id:
+          description: Unique identifier for the object.
+          maxLength: 60
+          type: string
+        name:
+          description: A name of the tax.
+          maxLength: 100
+          type: string
+        affectedPlu:
+          description: Plu of a product, if it is product specific tax
+          type: string
+        amountPercentage:
+          description: Tax percentage, which is stored with precision 2 (e.g., 25.1% ➜ 2510)
+          type: integer
+        amountTotal:
+          $ref: '#/components/schemas/Money'
+      additionalProperties: false
+    BillHorizontalLine:
+      title: HorizontalLineType
+      type: object
+      properties:
+        line:
+          type: string
+          enum:
+          - Single
+          - Double
+      description: A bill line containing a horizontal line
+      example: Single
     BillText:
       title: BillText
       required:
@@ -767,156 +1099,78 @@ components:
         size: Header1
         align: Center
         bold: true
-    OrderItem:
+    BillMerchantName:
+      title: BillMerchantName
       required:
       - name
-      - amountPerItem
-      - plu
-      - quantity
       type: object
       properties:
-        amountPerItem:
-          description: The base price of the single item, before any modifiers, subitems or discounts are applied.
-          $ref: '#/components/schemas/Money'
-        quantity:
-          type: integer
-        note:
-          type: string
         name:
-          description: A human-readable name of the item.
+          title: name
           type: string
-        plu:
-          type: string
-        subItems:
-          description: Sub-items applied to the item
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderSubItem'
-        modifiers:
-          description: Modifiers applied to the item
-          type: array
-          items:
-            $ref: '#/components/schemas/Modifier'
-      x-examples:
-        Example 1:
-          plu: UGG-BB-PUR-06
-          name: test
-          price: 0
-          quantity: 1073741824
-          note: string
-          modifiers: []
-          subItems: []
-    BillLineType:
-      title: BillLineType
-      type: string
-      enum:
-      - Image
-      - Logo
-      - MerchantAddress
-      - MerchantEmailAddress
-      - MerchantName
-      - MerchantPhoneNumber
-      - Text
-      - URL
-      - HorizontalLine
-      - TaxNumber
-    OrderStatus:
-      description: ''
-      enum:
-      - New
-      - Submitted
-      - Confirmed
-      - Accepted
-      - Preparing
-      - Prepared
-      - Ready
-      - Finalized
-      - Canceled
-      - Failed
-      type: string
-    BillSection:
-      title: BillSection
-      type: object
-      required:
-      - lines
-      properties:
-        lines:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillLine'
-      description: An object representing either a header or footer on a BillSection
-    DineInDetails:
-      description: Details for an order-in order
-      type: object
-      properties:
-        tableId:
-          type: string
-        waiterId:
-          type: string
-        partyId:
-          description: The ID of the party that made this order, if known.
-          type: string
-        reservationId:
-          description: If this order is a pre-order for a reservation, the ID of that reservation.
-          type: string
-        readyAt:
-          format: date-time
-          description: Specify timestamp in ISO8601 UTC standard when a pre-order should be ready. Only applicable for pre-orders.
-          type: string
-      x-examples:
-        Example 1:
-          tableId: test
-          waiterId: test
-    CreateOrderLockRequest:
-      type: object
-      description: Request a write lock on an Order, guaranteeing only Dojo can write changes to the order, until receiving the corresponding UnlockOrder request.
-      additionalProperties: false
-      title: CreateOrderLockRequest
-      required:
-      - lockId
-      - expiry
-      properties:
-        lockId:
-          description: The unique ID of a lock generated by Dojo. Consuming this isn't strictly required as Dojo will create at most one lock per order, but it can be useful for tracking the lifecycle of any lock.
-          type: string
-        expiry:
-          description: 'The lock expiry time. If this time has been reached and no UnlockOrder has been received the lock can be considered stale and released.
-
-            This may be extended by the ExtendOrderLockRequest if registered. It is optional to consume this expiry.
-
-            Dojo will always attempt to release or extend the lock before this expiry is reached, it exists to avoid stale locks if there is a full loss of communication between the EPOS and Dojo.
-
-            '
-          type: string
-          format: date-time
-    BillURL:
-      title: BillURL
-      required:
-      - url
-      type: object
-      properties:
-        url:
-          title: url
-          type: string
-          description: The URL for the link
-        description:
-          title: description
-          type: string
-          description: Textual description of the URL, will be displayed if set
-        showQr:
-          title: showQR
-          type: boolean
-          description: If a QR code should be shown on the bill
-        showUrl:
-          title: showURL
-          type: boolean
-          description: If the URL should be shown on the bill
-      description: A bill line containing a URL. This can be printed as a QR code on bills, or a hyperlink with the text as the description, in digital format.
+          description: A predefined bill field, containing the merchants name. This will be pre-formatted in the bill
+      description: A predefined bill field, containing the merchants name. This will be pre-formatted in the bill
       example:
-        url: https://www.website.com
-        showQR: true
-        showURL: true
-        description: Check out our website!
+        name: Dojo
+    BillLine:
+      title: BillLine
+      anyOf:
+      - title: Image
+        required:
+        - image
+      - title: Logo
+        required:
+        - logo
+      - title: Merchant Address
+        required:
+        - merchantAddress
+      - title: Merchant Email Address
+        required:
+        - merchantEmailAddress
+      - title: Merchant Name
+        required:
+        - merchantName
+      - title: Merchant Phone Number
+        required:
+        - merchantPhoneNumber
+      - title: Text
+        required:
+        - text
+      - title: URL/QR
+        required:
+        - url
+      - title: Horizontal Line
+        required:
+        - horizontalLine
+      - title: Tax Number
+        required:
+        - taxNumber
+      required:
+      - lineType
+      type: object
+      properties:
+        image:
+          $ref: '#/components/schemas/BillImage'
+        logo:
+          $ref: '#/components/schemas/BillLogo'
+        merchantAddress:
+          $ref: '#/components/schemas/BillMerchantAddress'
+        merchantEmailAddress:
+          $ref: '#/components/schemas/BillMerchantEmailAddress'
+        merchantName:
+          $ref: '#/components/schemas/BillMerchantName'
+        merchantPhoneNumber:
+          $ref: '#/components/schemas/BillMerchantPhoneNumber'
+        text:
+          $ref: '#/components/schemas/BillText'
+        url:
+          $ref: '#/components/schemas/BillURL'
+        horizontalLine:
+          $ref: '#/components/schemas/BillHorizontalLine'
+        taxNumber:
+          $ref: '#/components/schemas/BillTaxNumber'
+        lineType:
+          $ref: '#/components/schemas/BillLineType'
     CreateOrderRequest:
       title: CreateOrderRequest
       description: ''
@@ -990,78 +1244,35 @@ components:
         Example 1:
           tableId: test
           waiterId: test
-    BillLine:
-      title: BillLine
-      anyOf:
-      - title: Image
-        required:
-        - image
-      - title: Logo
-        required:
-        - logo
-      - title: Merchant Address
-        required:
-        - merchantAddress
-      - title: Merchant Email Address
-        required:
-        - merchantEmailAddress
-      - title: Merchant Name
-        required:
-        - merchantName
-      - title: Merchant Phone Number
-        required:
-        - merchantPhoneNumber
-      - title: Text
-        required:
-        - text
-      - title: URL/QR
-        required:
-        - url
-      - title: Horizontal Line
-        required:
-        - horizontalLine
-      - title: Tax Number
-        required:
-        - taxNumber
-      required:
-      - lineType
+    Customer:
+      title: Customer
       type: object
       properties:
-        image:
-          $ref: '#/components/schemas/BillImage'
-        logo:
-          $ref: '#/components/schemas/BillLogo'
-        merchantAddress:
-          $ref: '#/components/schemas/BillMerchantAddress'
-        merchantEmailAddress:
-          $ref: '#/components/schemas/BillMerchantEmailAddress'
-        merchantName:
-          $ref: '#/components/schemas/BillMerchantName'
-        merchantPhoneNumber:
-          $ref: '#/components/schemas/BillMerchantPhoneNumber'
-        text:
-          $ref: '#/components/schemas/BillText'
-        url:
-          $ref: '#/components/schemas/BillURL'
-        horizontalLine:
-          $ref: '#/components/schemas/BillHorizontalLine'
-        taxNumber:
-          $ref: '#/components/schemas/BillTaxNumber'
-        lineType:
-          $ref: '#/components/schemas/BillLineType'
-    BillLogo:
-      title: BillLogo
-      required:
-      - svgImage
-      type: object
-      properties:
-        svgImage:
-          title: svgImage
+        id:
+          description: The unique identifier of the customer.
           type: string
-          description: SVG representation of an image
-      description: A predefined bill field, containing a logo. This will appear at the top of the bill
+        emailAddress:
+          description: The customer's email address.
+          maxLength: 254
+          type: string
+        phoneNumber:
+          description: The customer's phone number.
+          maxLength: 50
+          type: string
+        name:
+          description: The customer's name.
+          type: string
+          x-stoplight:
+            id: rvqovaxl33c9q
+      additionalProperties: false
       example:
-        svgImage: <svg viewBox='0 0 389 100' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M146.7 100C119.754 100 97.8318 77.5807 97.8318 50.0245C97.8318 22.4682 119.754 0.0489248 146.7 0.0489248C173.645 0.0489248 195.568 22.4682 195.568 50.0245C195.568 77.5807 173.645 100 146.7 100ZM146.616 17.6737C129.155 17.6737 114.946 32.204 114.946 50.0612C114.946 67.9183 129.155 82.4486 146.616 82.4486C164.078 82.4486 178.286 67.9183 178.286 50.0612C178.286 32.204 164.078 17.6737 146.616 17.6737ZM339.182 100C312.237 100 290.314 77.5807 290.314 50.0245C290.314 22.4682 312.237 0.0489248 339.182 0.0489248C366.128 0.0489248 388.05 22.4682 388.05 50.0245C388.05 77.5807 366.128 100 339.182 100ZM339.098 17.6737C321.637 17.6737 307.429 32.204 307.429 50.0612C307.429 67.9183 321.637 82.4486 339.098 82.4486C356.56 82.4486 370.768 67.9183 370.768 50.0612C370.768 32.204 356.56 17.6737 339.098 17.6737ZM17.5212 100C7.85764 100 0 91.9643 0 82.0817V17.9795C0 8.09687 7.85764 0.0489248 17.5212 0.0489248H38.2716C65.2172 0.0489248 87.1397 22.4682 87.1397 50.0245C87.1397 77.5807 65.2172 100 38.2716 100H17.5212ZM17.4136 17.6676C17.4136 17.6709 17.4108 17.6737 17.4075 17.6738C17.2907 17.677 17.1983 17.7736 17.1983 17.8938V82.2285C17.1983 82.3508 17.294 82.4486 17.4136 82.4486H37.853C55.3742 82.4486 69.7739 68.0651 69.9414 50.3792C70.0251 41.683 66.7601 33.476 60.7682 27.275C54.7643 21.0739 46.7751 17.6615 38.2716 17.6615H17.4197C17.4163 17.6615 17.4136 17.6642 17.4136 17.6676V17.6676ZM242.917 100C252.688 100 261.885 96.0983 268.822 89.0166C275.747 81.9349 279.562 72.5171 279.562 62.5245L279.61 2.66634C279.61 1.19863 278.438 0 277.003 0H264.995C263.56 0 262.388 1.19863 262.388 2.66634L262.34 62.5245C262.34 73.4711 253.621 82.3875 242.917 82.3875H242.618C232.081 82.2285 223.494 73.1654 223.494 62.2065V51.4432C223.494 49.9755 222.322 48.7769 220.887 48.7769H208.879C207.444 48.7769 206.272 49.9755 206.272 51.4432V62.1208C206.272 82.8889 222.621 99.8777 242.702 100H242.917Z' fill='#180F06'></path></svg>
+        emailAddress: support@dojo.com
+        phoneNumber: 448000443550
+    ExtendOrderLockResponse:
+      type: object
+      description: Response for a write lock extension request
+      additionalProperties: false
+      title: ExtendOrderLockResponse
     OrderBill:
       title: OrderBill
       required:
@@ -1242,248 +1453,8 @@ components:
               size: Body
               align: Center
             lineType: Text
-    BillHorizontalLine:
-      title: HorizontalLineType
-      type: object
-      properties:
-        line:
-          type: string
-          enum:
-          - Single
-          - Double
-      description: A bill line containing a horizontal line
-      example: Single
-    Discount:
-      description: ''
-      required:
-      - name
-      - amountTotal
-      type: object
-      properties:
-        name:
-          description: The name that was given to the discount.
-          type: string
-        affectedPlu:
-          description: Product plu for which the discount is applied to. Empty if discount is for the total amount
-          type: string
-        discountReference:
-          description: Discount reference that uniquely identifies the discount
-          type: string
-        code:
-          description: Discount code
-          type: string
-        amountTotal:
-          $ref: '#/components/schemas/Money'
-        amountPercentage:
-          description: Percentage covered by the discount, which is stored with precision 2 (e.g., 25.1% ➜ 2510)
-          type: integer
-      example:
-        isPercentage: true
-        provider: Order & Pay app
-        name: Spring Sale 25% off
-        discountCode: SPRING2023
-        discountReference: '123456'
-        affectedPlu: item_123
-        value: 2500
-        amount: 500
-      x-examples:
-        Example 1:
-          type: Percentage
-          provider: provider
-          name: Spring Sale
-          channelDiscountCode: SPRING2023
-          referenceId: 123456
-          value: 1000
-          amount: 500
-    BillMerchantAddress:
-      title: BillMerchantAddress
-      required:
-      - addressLines
-      - postcode
-      type: object
-      properties:
-        addressLines:
-          title: addressLines
-          type: array
-          description: Lines of address
-          items:
-            type: string
-        postcode:
-          title: postcode
-          type: string
-          description: ZIP or postal code.
-      description: A predefined bill field, containing an address. This will be pre-formatted in the receipt
-      example:
-        addressLines:
-        - Brunel Building
-        - 1 & 2 Canalside Walk
-        postcode: W2 1DG
-    BillMerchantName:
-      title: BillMerchantName
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          title: name
-          type: string
-          description: A predefined bill field, containing the merchants name. This will be pre-formatted in the bill
-      description: A predefined bill field, containing the merchants name. This will be pre-formatted in the bill
-      example:
-        name: Dojo
-    Money:
-      title: Money
-      required:
-      - value
-      - currencyCode
-      type: object
-      properties:
-        value:
-          format: int64
-          description: The amount in the minor unit, for example '100' for 1.00 GBP.
-          type: integer
-        currencyCode:
-          description: Three-letter currency code in ISO 4217 alpha-3 format. Currently this accepts `GBP` and `EUR`.
-          maxLength: 10
-          minLength: 1
-          type: string
-      example:
-        value: 1000
-        currencyCode: GBP
-      x-stoplight:
-        id: c9op7zec1txu2
-    Modifier:
-      title: Modifier
-      required:
-      - amountPerModifier
-      - name
-      - plu
-      - quantity
-      type: object
-      properties:
-        name:
-          description: A human-readable name of the modifier.
-          type: string
-          x-stoplight:
-            id: dbij8ceea0jui
-        quantity:
-          description: How many times this modifier is applied to the item. Please note that this amount is per single item, so if a customer orders two burgers each with double extra cheese, the quantity should be 2, not 4.
-          type: integer
-          x-stoplight:
-            id: 0o2r5334l8vue
-        amountPerModifier:
-          $ref: '#/components/schemas/Money'
-          description: The price of the single modifier.
-        plu:
-          description: ''
-          type: string
-      x-stoplight:
-        id: a8zdtsiz5l6a8
-    EPOSErrorType:
-      type: string
-      enum:
-      - NotFound
-      - UnexpectedError
-      - InvalidRequest
-      - Conflict
-    BillMerchantPhoneNumber:
-      title: BillMerchantPhoneNumber
-      required:
-      - phoneNumber
-      type: object
-      properties:
-        phoneNumber:
-          title: phoneNumber
-          type: string
-          description: The phone number
-      description: A predefined bill field, containing the merchants contact phone number. This will be pre-formatted in the bill
-      example:
-        phoneNumber: 01234 567890
-    ExtendOrderLockRequest:
-      type: object
-      description: Request an extension to the write lock on an Order.
-      additionalProperties: false
-      title: ExtendOrderLockRequest
-      required:
-      - expiry
-      properties:
-        expiry:
-          description: 'The lock expiry time. If this time has been reached and no UnlockOrder has been received the lock can be considered stale and released.
-
-            This may be extended by the ExtendOrderLockRequest if registered. It is optional to consume this expiry.
-
-            Dojo will always attempt to release or extend the lock before this expiry is reached, it exists to avoid stale locks if there is a full loss of communication between the EPOS and Dojo.
-
-            '
-          type: string
-          format: date-time
-    ExtendOrderLockResponse:
-      type: object
-      description: Response for a write lock extension request
-      additionalProperties: false
-      title: ExtendOrderLockResponse
-    TaxLine:
-      title: TaxLine
-      description: The tax line object.
-      required:
-      - amountTotal
-      type: object
-      properties:
-        id:
-          description: Unique identifier for the object.
-          maxLength: 60
-          type: string
-        name:
-          description: A name of the tax.
-          maxLength: 100
-          type: string
-        affectedPlu:
-          description: Plu of a product, if it is product specific tax
-          type: string
-        amountPercentage:
-          description: Tax percentage, which is stored with precision 2 (e.g., 25.1% ➜ 2510)
-          type: integer
-        amountTotal:
-          $ref: '#/components/schemas/Money'
-      additionalProperties: false
-    CollectionDetails:
-      title: CollectionDetails
-      description: ''
-      type: object
-      properties:
-        asap:
-          description: A boolean indicating whether order collection is as soon as possible
-          type: boolean
-        collectAt:
-          format: date-time
-          description: Order collection timestamp in ISO8601 UTC standard. Only applicable when asap is not set or false
-          type: string
-      example:
-        collectionTime: '2024-02-21T14:39:21.6050276Z'
-        asap: false
-    PagedOrdersResponse:
-      title: PagedOrder
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Order'
-          readOnly: false
-          x-stoplight:
-            id: ou7je7f6bizdg
-        before:
-          type: string
-          x-stoplight:
-            id: jutkpidtbhr6q
-        after:
-          type: string
-          x-stoplight:
-            id: vwlxjfle0yxqt
-      x-stoplight:
-        id: bjkxvbo62zl42
-    BillImage:
-      title: BillImage
+    BillLogo:
+      title: BillLogo
       required:
       - svgImage
       type: object
@@ -1492,40 +1463,61 @@ components:
           title: svgImage
           type: string
           description: SVG representation of an image
-        align:
-          $ref: '#/components/schemas/Align'
-      description: A bill line containing an image
+      description: A predefined bill field, containing a logo. This will appear at the top of the bill
       example:
         svgImage: <svg viewBox='0 0 389 100' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M146.7 100C119.754 100 97.8318 77.5807 97.8318 50.0245C97.8318 22.4682 119.754 0.0489248 146.7 0.0489248C173.645 0.0489248 195.568 22.4682 195.568 50.0245C195.568 77.5807 173.645 100 146.7 100ZM146.616 17.6737C129.155 17.6737 114.946 32.204 114.946 50.0612C114.946 67.9183 129.155 82.4486 146.616 82.4486C164.078 82.4486 178.286 67.9183 178.286 50.0612C178.286 32.204 164.078 17.6737 146.616 17.6737ZM339.182 100C312.237 100 290.314 77.5807 290.314 50.0245C290.314 22.4682 312.237 0.0489248 339.182 0.0489248C366.128 0.0489248 388.05 22.4682 388.05 50.0245C388.05 77.5807 366.128 100 339.182 100ZM339.098 17.6737C321.637 17.6737 307.429 32.204 307.429 50.0612C307.429 67.9183 321.637 82.4486 339.098 82.4486C356.56 82.4486 370.768 67.9183 370.768 50.0612C370.768 32.204 356.56 17.6737 339.098 17.6737ZM17.5212 100C7.85764 100 0 91.9643 0 82.0817V17.9795C0 8.09687 7.85764 0.0489248 17.5212 0.0489248H38.2716C65.2172 0.0489248 87.1397 22.4682 87.1397 50.0245C87.1397 77.5807 65.2172 100 38.2716 100H17.5212ZM17.4136 17.6676C17.4136 17.6709 17.4108 17.6737 17.4075 17.6738C17.2907 17.677 17.1983 17.7736 17.1983 17.8938V82.2285C17.1983 82.3508 17.294 82.4486 17.4136 82.4486H37.853C55.3742 82.4486 69.7739 68.0651 69.9414 50.3792C70.0251 41.683 66.7601 33.476 60.7682 27.275C54.7643 21.0739 46.7751 17.6615 38.2716 17.6615H17.4197C17.4163 17.6615 17.4136 17.6642 17.4136 17.6676V17.6676ZM242.917 100C252.688 100 261.885 96.0983 268.822 89.0166C275.747 81.9349 279.562 72.5171 279.562 62.5245L279.61 2.66634C279.61 1.19863 278.438 0 277.003 0H264.995C263.56 0 262.388 1.19863 262.388 2.66634L262.34 62.5245C262.34 73.4711 253.621 82.3875 242.917 82.3875H242.618C232.081 82.2285 223.494 73.1654 223.494 62.2065V51.4432C223.494 49.9755 222.322 48.7769 220.887 48.7769H208.879C207.444 48.7769 206.272 49.9755 206.272 51.4432V62.1208C206.272 82.8889 222.621 99.8777 242.702 100H242.917Z' fill='#180F06'></path></svg>
-    Size:
-      title: Size
+    OrderType:
+      description: ''
+      enum:
+      - DineIn
+      - Collection
+      type: string
+    Align:
+      title: Align
       type: string
       enum:
-      - Body
-      - Header1
-      - Header2
-    BillMerchantEmailAddress:
-      title: BillMerchantEmailAddress
+      - Center
+      - Left
+      - Right
+      example:
+      - Center
+    Payment:
+      description: ''
       required:
-      - emailAddress
+      - paidAmount
+      - paymentIntentId
       type: object
       properties:
-        emailAddress:
-          title: emailAddress
+        paymentIntentId:
+          description: ''
           type: string
-          description: The email address
-      description: A predefined bill field, containing the merchants contact email address. This will be pre-formatted in the bill
+        paidAmount:
+          $ref: '#/components/schemas/Money'
+          description: Indicates the paid amount of this specific payment, excluding `tipsAmount` but includes eventual service charges.
+        tipsAmount:
+          $ref: '#/components/schemas/Money'
+          description: The tip amount added to this specific payment. It is not included in `paidAmount`.
+    BillTaxNumber:
+      title: BillTaxNumber
+      required:
+      - name
+      - number
+      type: object
+      properties:
+        name:
+          title: name
+          type: string
+          description: The tax name
+          example: VAT
+        number:
+          title: number
+          type: string
+          description: The tax number
+      description: A predefined bill field, containing the merchants tax number. This will be pre-formatted in the bill, and shown at the bottom
       example:
-        emailAddress: dojo@dojo.tech
+        name: VAT
+        number: '12345678'
   parameters:
-    WaiterId:
-      in: header
-      name: waiter-id
-      required: false
-      schema:
-        type: string
-      example: '42'
-      description: The ID of the waiter making the request, if known
     DeviceType:
       in: header
       name: device-type
@@ -1550,3 +1542,11 @@ components:
         type: string
       example: tm_sandbox_65c5fe8a104a1222b2d8b968
       description: The ID of the device making the request, if known
+    WaiterId:
+      in: header
+      name: waiter-id
+      required: false
+      schema:
+        type: string
+      example: '42'
+      description: The ID of the waiter making the request, if known

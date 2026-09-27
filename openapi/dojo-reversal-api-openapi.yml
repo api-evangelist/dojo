@@ -67,6 +67,23 @@ paths:
       description: Reverses a payment intent.
 components:
   schemas:
+    Reversal:
+      description: The create reversal response object.
+      type: object
+      properties:
+        message:
+          description: The description of the operation.
+          type:
+          - string
+          - 'null'
+        reversalId:
+          description: The unique identifier for the reversal.
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+      example:
+        id: rvs_127usj
     ProblemDetails:
       type: object
       description: Dojo follows the error response format proposed in [RFC 7807](https://datatracker.ietf.org/doc/html/rfc7807), also known as Problem Details for HTTP APIs.
@@ -101,23 +118,6 @@ components:
           type: object
           description: This field names any extension methods that have been configured to help handle errors handling functionality.
           additionalProperties: {}
-    Reversal:
-      description: The create reversal response object.
-      type: object
-      properties:
-        message:
-          description: The description of the operation.
-          type:
-          - string
-          - 'null'
-        reversalId:
-          description: The unique identifier for the reversal.
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-      example:
-        id: rvs_127usj
   parameters:
     Version:
       name: version

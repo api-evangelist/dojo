@@ -59,96 +59,7 @@ paths:
       - $ref: '#/components/parameters/DeviceId'
       - $ref: '#/components/parameters/DeviceType'
 components:
-  parameters:
-    WaiterId:
-      in: header
-      name: waiter-id
-      required: false
-      schema:
-        type: string
-      example: '42'
-      description: The ID of the waiter making the request, if known
-    DeviceType:
-      in: header
-      name: device-type
-      required: false
-      schema:
-        type: string
-      example: Dojo Terminal
-      description: The device making the request, if known
-    DojoRequestingProduct:
-      name: dojo-requesting-product
-      in: header
-      required: false
-      schema:
-        type: string
-      example: Order&Pay
-      description: The dojo product making the request, if known.
-    DeviceId:
-      name: device-id
-      in: header
-      required: false
-      schema:
-        type: string
-      example: tm_sandbox_65c5fe8a104a1222b2d8b968
-      description: The ID of the device making the request, if known
   schemas:
-    EPOSError:
-      title: EPOSError
-      type: object
-      required:
-      - errorType
-      properties:
-        debugMessage:
-          type: string
-        traceId:
-          type: string
-        errorType:
-          $ref: '#/components/schemas/EPOSErrorType'
-    Cursor:
-      title: Cursor
-      description: A cursor for use in pagination.
-      type: object
-      properties:
-        limit:
-          description: The maximum number of results to be returned in a single page.
-          maximum: 100
-          type: integer
-          x-stoplight:
-            id: l5tzcxdo5qbt1
-        before:
-          description: A cursor for use in pagination for the previous page. before and after are mutually exclusive. Only one of these may be used.
-          type: string
-          x-stoplight:
-            id: 8vxj9sdmbby14
-        after:
-          description: A cursor for use in pagination for the next page. before and after are mutually exclusive. Only one of these may be used.
-          type: string
-          x-stoplight:
-            id: 1jsibbqp1zdti
-      x-stoplight:
-        id: m8ixmhyvzw3oo
-    PagedTablesResponse:
-      title: PagedOrder
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Table'
-          readOnly: false
-          x-stoplight:
-            id: ou7je7f6bizdg
-        before:
-          type: string
-          x-stoplight:
-            id: jutkpidtbhr6q
-        after:
-          type: string
-          x-stoplight:
-            id: vwlxjfle0yxqt
-      x-stoplight:
-        id: bjkxvbo62zl42
     Table:
       title: Root Type for Table
       description: ''
@@ -179,6 +90,25 @@ components:
         name: Table 12
         maxCovers: 4
         areaId: area_123
+    EPOSError:
+      title: EPOSError
+      type: object
+      required:
+      - errorType
+      properties:
+        debugMessage:
+          type: string
+        traceId:
+          type: string
+        errorType:
+          $ref: '#/components/schemas/EPOSErrorType'
+    EPOSErrorType:
+      type: string
+      enum:
+      - NotFound
+      - UnexpectedError
+      - InvalidRequest
+      - Conflict
     SearchTablesRequest:
       description: ''
       type: object
@@ -191,10 +121,80 @@ components:
         waiterId:
           description: ''
           type: string
-    EPOSErrorType:
-      type: string
-      enum:
-      - NotFound
-      - UnexpectedError
-      - InvalidRequest
-      - Conflict
+    PagedTablesResponse:
+      title: PagedOrder
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Table'
+          readOnly: false
+          x-stoplight:
+            id: ou7je7f6bizdg
+        before:
+          type: string
+          x-stoplight:
+            id: jutkpidtbhr6q
+        after:
+          type: string
+          x-stoplight:
+            id: vwlxjfle0yxqt
+      x-stoplight:
+        id: bjkxvbo62zl42
+    Cursor:
+      title: Cursor
+      description: A cursor for use in pagination.
+      type: object
+      properties:
+        limit:
+          description: The maximum number of results to be returned in a single page.
+          maximum: 100
+          type: integer
+          x-stoplight:
+            id: l5tzcxdo5qbt1
+        before:
+          description: A cursor for use in pagination for the previous page. before and after are mutually exclusive. Only one of these may be used.
+          type: string
+          x-stoplight:
+            id: 8vxj9sdmbby14
+        after:
+          description: A cursor for use in pagination for the next page. before and after are mutually exclusive. Only one of these may be used.
+          type: string
+          x-stoplight:
+            id: 1jsibbqp1zdti
+      x-stoplight:
+        id: m8ixmhyvzw3oo
+  parameters:
+    DeviceType:
+      in: header
+      name: device-type
+      required: false
+      schema:
+        type: string
+      example: Dojo Terminal
+      description: The device making the request, if known
+    DojoRequestingProduct:
+      name: dojo-requesting-product
+      in: header
+      required: false
+      schema:
+        type: string
+      example: Order&Pay
+      description: The dojo product making the request, if known.
+    WaiterId:
+      in: header
+      name: waiter-id
+      required: false
+      schema:
+        type: string
+      example: '42'
+      description: The ID of the waiter making the request, if known
+    DeviceId:
+      name: device-id
+      in: header
+      required: false
+      schema:
+        type: string
+      example: tm_sandbox_65c5fe8a104a1222b2d8b968
+      description: The ID of the device making the request, if known

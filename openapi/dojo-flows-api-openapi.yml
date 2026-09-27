@@ -68,24 +68,16 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Param:
+    RunFlowRequest:
       type: object
       properties:
-        name:
+        flow:
           type: string
-        type:
-          type: string
-        required:
-          type: boolean
-        description:
-          type: string
-        default:
-          type: string
+          description: the name of the flow as returned by the /flows endpoint
+        params:
+          type: object
       required:
-      - name
-      - type
-      - required
-      - description
+      - flow
     StepResult:
       type: object
       properties:
@@ -109,16 +101,42 @@ components:
       - name
       - status
       - startedAt
-    RunFlowRequest:
+    Status:
+      type: string
+      enum:
+      - SUCCESS
+      - FAILURE
+      - TIMED_OUT
+      - IN_PROGRESS
+    FlowDescription:
       type: object
       properties:
-        flow:
+        name:
           type: string
-          description: the name of the flow as returned by the /flows endpoint
         params:
-          type: object
+          type: array
+          items:
+            $ref: '#/components/schemas/Param'
       required:
-      - flow
+      - name
+    Param:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        required:
+          type: boolean
+        description:
+          type: string
+        default:
+          type: string
+      required:
+      - name
+      - type
+      - required
+      - description
     FlowResult:
       type: object
       properties:
@@ -148,21 +166,3 @@ components:
       - flowName
       - status
       - startedAt
-    FlowDescription:
-      type: object
-      properties:
-        name:
-          type: string
-        params:
-          type: array
-          items:
-            $ref: '#/components/schemas/Param'
-      required:
-      - name
-    Status:
-      type: string
-      enum:
-      - SUCCESS
-      - FAILURE
-      - TIMED_OUT
-      - IN_PROGRESS
