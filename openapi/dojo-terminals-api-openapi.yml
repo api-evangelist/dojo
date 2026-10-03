@@ -115,29 +115,6 @@ paths:
       description: Retrieve a terminal by using its ID.
 components:
   schemas:
-    TerminalProperties:
-      description: Properties related to the terminal.
-      required:
-      - tid
-      type: object
-      properties:
-        tid:
-          description: An 8-digit identifier printed on receipts.
-          type: string
-          example: '12345678'
-    TerminalStatus:
-      title: TerminalStatus
-      description: A machine-readable value describing the state of the terminal.
-      enum:
-      - Available
-      - Offline
-      - InUse
-      type: string
-    ErrorCode:
-      description: 'Machine-usable code describing an error.
-
-        (INTERNAL_ERROR, TERMINAL_UNAVAILABLE, INVALID_REQUEST)'
-      type: string
     Error:
       description: An object containing information about an error that occurred as part of an API request.
       required:
@@ -183,6 +160,16 @@ components:
             type: array
             items:
               type: string
+    TerminalProperties:
+      description: Properties related to the terminal.
+      required:
+      - tid
+      type: object
+      properties:
+        tid:
+          description: An 8-digit identifier printed on receipts.
+          type: string
+          example: '12345678'
     Terminal:
       title: Terminal
       description: The terminal object.
@@ -205,6 +192,19 @@ components:
           format: date-time
           description: The timestamp of the update date, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
           type: string
+    ErrorCode:
+      description: 'Machine-usable code describing an error.
+
+        (INTERNAL_ERROR, TERMINAL_UNAVAILABLE, INVALID_REQUEST)'
+      type: string
+    TerminalStatus:
+      title: TerminalStatus
+      description: A machine-readable value describing the state of the terminal.
+      enum:
+      - Available
+      - Offline
+      - InUse
+      type: string
   parameters:
     ResellerId:
       name: reseller-id

@@ -248,39 +248,46 @@ components:
         tableIds:
         - table-02-003
         - table-02-004
-    PagedReservationsResponse:
-      title: PagedOrder
+    Cursor:
+      title: Cursor
+      description: A cursor for use in pagination.
       type: object
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Reservation'
-          readOnly: false
+        limit:
+          description: The maximum number of results to be returned in a single page.
+          maximum: 100
+          type: integer
           x-stoplight:
-            id: ou7je7f6bizdg
+            id: l5tzcxdo5qbt1
         before:
+          description: A cursor for use in pagination for the previous page. before and after are mutually exclusive. Only one of these may be used.
           type: string
           x-stoplight:
-            id: jutkpidtbhr6q
+            id: 8vxj9sdmbby14
         after:
+          description: A cursor for use in pagination for the next page. before and after are mutually exclusive. Only one of these may be used.
           type: string
           x-stoplight:
-            id: vwlxjfle0yxqt
+            id: 1jsibbqp1zdti
       x-stoplight:
-        id: bjkxvbo62zl42
-    EPOSError:
-      title: EPOSError
+        id: m8ixmhyvzw3oo
+    SearchReservationsRequest:
+      description: ''
       type: object
-      required:
-      - errorType
       properties:
-        debugMessage:
+        cursor:
+          $ref: '#/components/schemas/Cursor'
+        tableId:
           type: string
-        traceId:
+          description: ''
+        fromTime:
+          format: date-time
+          description: ''
           type: string
-        errorType:
-          $ref: '#/components/schemas/EPOSErrorType'
+        toTime:
+          format: date-time
+          description: ''
+          type: string
     CreateReservationRequest:
       properties:
         dojoReservationId:
@@ -339,23 +346,39 @@ components:
       - UnexpectedError
       - InvalidRequest
       - Conflict
-    SearchReservationsRequest:
-      description: ''
+    EPOSError:
+      title: EPOSError
+      type: object
+      required:
+      - errorType
+      properties:
+        debugMessage:
+          type: string
+        traceId:
+          type: string
+        errorType:
+          $ref: '#/components/schemas/EPOSErrorType'
+    PagedReservationsResponse:
+      title: PagedOrder
       type: object
       properties:
-        cursor:
-          $ref: '#/components/schemas/Cursor'
-        tableId:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reservation'
+          readOnly: false
+          x-stoplight:
+            id: ou7je7f6bizdg
+        before:
           type: string
-          description: ''
-        fromTime:
-          format: date-time
-          description: ''
+          x-stoplight:
+            id: jutkpidtbhr6q
+        after:
           type: string
-        toTime:
-          format: date-time
-          description: ''
-          type: string
+          x-stoplight:
+            id: vwlxjfle0yxqt
+      x-stoplight:
+        id: bjkxvbo62zl42
     Reservation:
       title: Reservation
       description: 'A reservation describes a point in the future that a party is expected
@@ -424,54 +447,7 @@ components:
         tableIds:
         - table-02-003
         - table-02-004
-    Cursor:
-      title: Cursor
-      description: A cursor for use in pagination.
-      type: object
-      properties:
-        limit:
-          description: The maximum number of results to be returned in a single page.
-          maximum: 100
-          type: integer
-          x-stoplight:
-            id: l5tzcxdo5qbt1
-        before:
-          description: A cursor for use in pagination for the previous page. before and after are mutually exclusive. Only one of these may be used.
-          type: string
-          x-stoplight:
-            id: 8vxj9sdmbby14
-        after:
-          description: A cursor for use in pagination for the next page. before and after are mutually exclusive. Only one of these may be used.
-          type: string
-          x-stoplight:
-            id: 1jsibbqp1zdti
-      x-stoplight:
-        id: m8ixmhyvzw3oo
   parameters:
-    DeviceType:
-      in: header
-      name: device-type
-      required: false
-      schema:
-        type: string
-      example: Dojo Terminal
-      description: The device making the request, if known
-    DojoRequestingProduct:
-      name: dojo-requesting-product
-      in: header
-      required: false
-      schema:
-        type: string
-      example: Order&Pay
-      description: The dojo product making the request, if known.
-    WaiterId:
-      in: header
-      name: waiter-id
-      required: false
-      schema:
-        type: string
-      example: '42'
-      description: The ID of the waiter making the request, if known
     DeviceId:
       name: device-id
       in: header
@@ -480,3 +456,27 @@ components:
         type: string
       example: tm_sandbox_65c5fe8a104a1222b2d8b968
       description: The ID of the device making the request, if known
+    DojoRequestingProduct:
+      name: dojo-requesting-product
+      in: header
+      required: false
+      schema:
+        type: string
+      example: Order&Pay
+      description: The dojo product making the request, if known.
+    DeviceType:
+      in: header
+      name: device-type
+      required: false
+      schema:
+        type: string
+      example: Dojo Terminal
+      description: The device making the request, if known
+    WaiterId:
+      in: header
+      name: waiter-id
+      required: false
+      schema:
+        type: string
+      example: '42'
+      description: The ID of the waiter making the request, if known

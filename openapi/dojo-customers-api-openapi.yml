@@ -420,6 +420,85 @@ paths:
         Results are paginated. By default, the method returns up to 50 customers.'
 components:
   schemas:
+    CustomerPaymentMethods:
+      type: object
+      additionalProperties: false
+      properties:
+        customerId:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier of the customer.
+        merchantId:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for the merchant. A single merchant can be associated with multiple terminals, point-of-sale machines, and waiters.
+        savedPaymentMethods:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CustomerPaymentMethod'
+          description: List of the customer saved payment methods.
+        supportedPaymentMethods:
+          oneOf:
+          - $ref: '#/components/schemas/SupportedPaymentMethods'
+          description: Supported payment methods.
+      example:
+        customerId: cust_qNkU6yob0vOMxUlb2oy123
+        merchantId: '123456789'
+        savedPaymentMethods:
+        - id: pm_12345
+          cardDetails:
+            pan: 52000000****0056
+            expiryDate: '2024-12-31'
+            scheme: MASTERCARD
+        supportedPaymentMethods:
+          cardSchemes:
+          - VISA
+          - MASTERCARD
+          - MAESTRO
+          - DISCOVER
+          - DCI
+          - AMEX
+          wallets:
+          - APPLE_PAY
+          - GOOGLE_PAY
+    ProblemDetails:
+      type: object
+      description: Dojo follows the error response format proposed in [RFC 7807](https://datatracker.ietf.org/doc/html/rfc7807), also known as Problem Details for HTTP APIs.
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+          description: A URI reference [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986) that identifies the problem type.
+        title:
+          type:
+          - string
+          - 'null'
+          description: A short, human-readable summary of the error.
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The [HTTP status code](#section/Introduction/HTTP-Responses).
+        detail:
+          type:
+          - string
+          - 'null'
+          description: An optional, human-readable message giving more details about the error.
+        instance:
+          type:
+          - string
+          - 'null'
+          description: The URI reference of the problem.
+        extensions:
+          type: object
+          description: This field names any extension methods that have been configured to help handle errors handling functionality.
+          additionalProperties: {}
     PagedResultOfCustomer:
       type: object
       additionalProperties: false
@@ -443,40 +522,9 @@ components:
           - 'null'
           example: IjIwMjItMDYtMjBUMTM6MzI6MjIuNDM1WiI=
           description: A cursor for use in pagination for the next page.
-    UpdateCustomerRequest:
-      type: object
-      additionalProperties: false
-      example:
-        phoneNumber: 078976534161
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: The customer's name.
-        billingAddress:
-          oneOf:
-          - $ref: '#/components/schemas/Address'
-          description: The recipient's invoicing address.
-        shippingAddress:
-          oneOf:
-          - $ref: '#/components/schemas/Address'
-          description: The recipient's shipping address.
-        emailAddress:
-          type:
-          - string
-          - 'null'
-          description: The customer's email address.
-        phoneNumber:
-          type:
-          - string
-          - 'null'
-          description: The customer's phone number.
-        vatNumber:
-          type:
-          - string
-          - 'null'
-          description: The customer's VAT number.
+    CardScheme:
+      description: Supported card schemes (VISA, MASTERCARD, MAESTRO, DISCOVER, DCI, AMEX)
+      type: string
     CustomerFull:
       type: object
       additionalProperties: false
@@ -541,78 +589,6 @@ components:
     WalletPaymentOption:
       type: string
       description: Wallet payment options (e.g., Apple Pay, Google Pay).
-    CustomerPaymentMethod:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          description: The unique identifier of the customer's saved payment method.
-        cardDetails:
-          description: The card details saved by the customer.
-          oneOf:
-          - $ref: '#/components/schemas/CardDetails'
-    CardDetails:
-      type: object
-      properties:
-        pan:
-          description: 'The masked primary account number (PAN) of the customer''s saved card.
-
-            '
-          type: string
-        expiryDate:
-          description: The expiry date of the card saved by the customer.
-          type: string
-        scheme:
-          $ref: '#/components/schemas/CardScheme'
-      additionalProperties: false
-    SupportedPaymentMethods:
-      type: object
-      additionalProperties: false
-      properties:
-        cardSchemes:
-          type:
-          - array
-          - 'null'
-          description: Supported card schemes.
-          items:
-            $ref: '#/components/schemas/CardScheme'
-        wallets:
-          type:
-          - array
-          - 'null'
-          description: List of supported payment wallets.
-          items:
-            $ref: '#/components/schemas/WalletPaymentOption'
-    SearchCustomerRequest:
-      type: object
-      additionalProperties: false
-      description: 'A cursor for use in pagination. '
-      properties:
-        limit:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 100
-          example: 20
-          default: 50
-          description: The maximum number of results to be returned in a single page.
-        before:
-          type:
-          - string
-          - 'null'
-          maxLength: 200
-          description: A cursor for use in pagination for the previous page. `before` and `after` are mutually exclusive. Only one of these may be used.
-        after:
-          type:
-          - string
-          - 'null'
-          maxLength: 200
-          description: 'A cursor for use in pagination for the next page. `before` and `after` are mutually exclusive. Only one of these may be used.
-
-            '
     Address:
       type: object
       additionalProperties: false
@@ -689,110 +665,78 @@ components:
           description: County or zone.
       required:
       - countryCode
-    CustomerPaymentMethods:
+    SupportedPaymentMethods:
       type: object
       additionalProperties: false
       properties:
-        customerId:
-          type:
-          - string
-          - 'null'
-          description: The unique identifier of the customer.
-        merchantId:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for the merchant. A single merchant can be associated with multiple terminals, point-of-sale machines, and waiters.
-        savedPaymentMethods:
+        cardSchemes:
           type:
           - array
           - 'null'
+          description: Supported card schemes.
           items:
-            $ref: '#/components/schemas/CustomerPaymentMethod'
-          description: List of the customer saved payment methods.
-        supportedPaymentMethods:
-          oneOf:
-          - $ref: '#/components/schemas/SupportedPaymentMethods'
-          description: Supported payment methods.
-      example:
-        customerId: cust_qNkU6yob0vOMxUlb2oy123
-        merchantId: '123456789'
-        savedPaymentMethods:
-        - id: pm_12345
-          cardDetails:
-            pan: 52000000****0056
-            expiryDate: '2024-12-31'
-            scheme: MASTERCARD
-        supportedPaymentMethods:
-          cardSchemes:
-          - VISA
-          - MASTERCARD
-          - MAESTRO
-          - DISCOVER
-          - DCI
-          - AMEX
-          wallets:
-          - APPLE_PAY
-          - GOOGLE_PAY
-    CustomerSecret:
+            $ref: '#/components/schemas/CardScheme'
+        wallets:
+          type:
+          - array
+          - 'null'
+          description: List of supported payment wallets.
+          items:
+            $ref: '#/components/schemas/WalletPaymentOption'
+    CardDetails:
+      type: object
+      properties:
+        pan:
+          description: 'The masked primary account number (PAN) of the customer''s saved card.
+
+            '
+          type: string
+        expiryDate:
+          description: The expiry date of the card saved by the customer.
+          type: string
+        scheme:
+          $ref: '#/components/schemas/CardScheme'
+      additionalProperties: false
+    SearchCustomerRequest:
+      type: object
+      additionalProperties: false
+      description: 'A cursor for use in pagination. '
+      properties:
+        limit:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 100
+          example: 20
+          default: 50
+          description: The maximum number of results to be returned in a single page.
+        before:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+          description: A cursor for use in pagination for the previous page. `before` and `after` are mutually exclusive. Only one of these may be used.
+        after:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+          description: 'A cursor for use in pagination for the next page. `before` and `after` are mutually exclusive. Only one of these may be used.
+
+            '
+    CustomerPaymentMethod:
       type: object
       additionalProperties: false
       properties:
-        secret:
+        id:
           type:
           - string
           - 'null'
-          description: The unique identifier for the secret.
-        createdAt:
-          type: string
-          format: date-time
-          description: 'The creation date, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
-
-            '
-        expireAt:
-          type: string
-          format: date-time
-          description: 'The timestamp at which the customer secret expires, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
-
-            '
-      example:
-        secret: cs_qNkU6yob0vOMxUlb2oynUw
-        createdAt: '2022-10-31T10:15:00Z'
-        expireAt: '2022-10-31T10:30:22Z'
-    ProblemDetails:
-      type: object
-      description: Dojo follows the error response format proposed in [RFC 7807](https://datatracker.ietf.org/doc/html/rfc7807), also known as Problem Details for HTTP APIs.
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-          description: A URI reference [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986) that identifies the problem type.
-        title:
-          type:
-          - string
-          - 'null'
-          description: A short, human-readable summary of the error.
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: The [HTTP status code](#section/Introduction/HTTP-Responses).
-        detail:
-          type:
-          - string
-          - 'null'
-          description: An optional, human-readable message giving more details about the error.
-        instance:
-          type:
-          - string
-          - 'null'
-          description: The URI reference of the problem.
-        extensions:
-          type: object
-          description: This field names any extension methods that have been configured to help handle errors handling functionality.
-          additionalProperties: {}
+          description: The unique identifier of the customer's saved payment method.
+        cardDetails:
+          description: The card details saved by the customer.
+          oneOf:
+          - $ref: '#/components/schemas/CardDetails'
     CreateCustomerRequest:
       type: object
       additionalProperties: false
@@ -833,9 +777,65 @@ components:
           - 'null'
           maxLength: 50
           description: The customer's VAT number.
-    CardScheme:
-      description: Supported card schemes (VISA, MASTERCARD, MAESTRO, DISCOVER, DCI, AMEX)
-      type: string
+    UpdateCustomerRequest:
+      type: object
+      additionalProperties: false
+      example:
+        phoneNumber: 078976534161
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The customer's name.
+        billingAddress:
+          oneOf:
+          - $ref: '#/components/schemas/Address'
+          description: The recipient's invoicing address.
+        shippingAddress:
+          oneOf:
+          - $ref: '#/components/schemas/Address'
+          description: The recipient's shipping address.
+        emailAddress:
+          type:
+          - string
+          - 'null'
+          description: The customer's email address.
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The customer's phone number.
+        vatNumber:
+          type:
+          - string
+          - 'null'
+          description: The customer's VAT number.
+    CustomerSecret:
+      type: object
+      additionalProperties: false
+      properties:
+        secret:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier for the secret.
+        createdAt:
+          type: string
+          format: date-time
+          description: 'The creation date, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
+
+            '
+        expireAt:
+          type: string
+          format: date-time
+          description: 'The timestamp at which the customer secret expires, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
+
+            '
+      example:
+        secret: cs_qNkU6yob0vOMxUlb2oynUw
+        createdAt: '2022-10-31T10:15:00Z'
+        expireAt: '2022-10-31T10:30:22Z'
   parameters:
     VersionCustomers:
       name: version

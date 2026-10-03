@@ -143,97 +143,39 @@ components:
         authType: basic
         basic:
           username: epos-1
-    RestAuthRequest:
-      description: The authentication details for REST adapters
-      required:
-      - authType
-      type: object
-      properties:
-        authType:
-          description: The authentication flow that Dojo will use to make requests against this REST integration
-          enum:
-          - basic
-          type: string
-        basic:
-          $ref: '#/components/schemas/RestBasicAuthRequest'
-          description: The basic auth details, configured if authType == 'basic'
-      example:
-        authType: basic
-        basic:
-          username: epos-1
-          password: hunter2
-    CapabilityRequest:
-      title: Root Type for method
-      description: Send a request.
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/CapabilityName'
-        version:
-          type: string
-      required:
-      - name
-      - version
-      example:
-        name: GetOrder
-        version: 1.0.0
-    RestBasicAuthResponse:
+    RestBasicAuthRequest:
       title: Root Type for restAuth
-      description: The basic authentication response details for REST adapters.
+      description: The basic authentication request details for REST adapters.
       type: object
       properties:
         username:
           type: string
+        password:
+          type: string
       required:
       - username
+      - password
       example:
         username: epos-1
-    WsIntegrationResponse:
+        password: admin
+    WsIntegrationRequest:
       title: Root Type for wsAdapter
-      description: WebSockets response
+      description: WebSockets request
       required:
       - capabilities
-      - createdAt
       type: object
       properties:
         capabilities:
-          description: Receive a response to a WS request
+          description: Send a WS request
           type: array
           items:
-            $ref: '#/components/schemas/CapabilityResponse'
-        createdAt:
-          format: date-time
-          type: string
+            $ref: '#/components/schemas/CapabilityRequest'
       example:
         capabilities:
         - name: GetOrder
           version: 1.0.0
         - name: RecordPayment
           version: 1.0.0
-        createdAt: '2024-03-30T12:00:00Z'
-    DojoManagedIntegrationResponse:
-      title: Root Type for dojoManagedIntegration
-      description: ''
-      required:
-      - capabilities
-      - createdAt
-      type: object
-      properties:
-        capabilities:
-          description: ''
-          type: array
-          items:
-            $ref: '#/components/schemas/CapabilityResponse'
-        createdAt:
-          format: date-time
-          type: string
-      example:
-        capabilities:
-        - name: GetOrder
-          version: v1
-        - name: RecordPayment
-          version: v1
-        createdAt: '2024-03-30T12:00:00Z'
     AllIntegrationsResponse:
       description: All the integrations currently registered and active for this account.
       required:
@@ -274,94 +216,17 @@ components:
             basic:
               username: epos-dojo-1
           createdAt: '2024-03-30T12:00:00Z'
-    WsIntegrationRequest:
-      title: Root Type for wsAdapter
-      description: WebSockets request
-      required:
-      - capabilities
-      type: object
-      properties:
-        capabilities:
-          description: Send a WS request
-          type: array
-          items:
-            $ref: '#/components/schemas/CapabilityRequest'
-      example:
-        capabilities:
-        - name: GetOrder
-          version: 1.0.0
-        - name: RecordPayment
-          version: 1.0.0
-    CapabilityName:
-      type: string
-      description: 'The name of a capability.
-
-        (CancelOrderById, CreateOrder, ListAreas, GetOrderById, SearchTables, HandleEvent:payment_intent.created, HandleEvent:payment_intent.status_updated, SearchOrders, GetPartyById, DeletePartyById, SearchParties, UpdatePartyById, CreateParty, GetReservationById, SearchReservations, UpdateReservationById, DeleteReservationById, CreateReservation, RecordOrderPayment, CreateOrderLock, DeleteOrderLock, ExtendOrderLock, GetOrderBill)'
-    RestBasicAuthRequest:
+    RestBasicAuthResponse:
       title: Root Type for restAuth
-      description: The basic authentication request details for REST adapters.
+      description: The basic authentication response details for REST adapters.
       type: object
       properties:
         username:
           type: string
-        password:
-          type: string
       required:
       - username
-      - password
       example:
         username: epos-1
-        password: admin
-    RestIntegrationRequest:
-      title: Root Type for restAdapter request
-      description: REST request
-      required:
-      - capabilities
-      - auth
-      - url
-      type: object
-      properties:
-        url:
-          type: string
-        capabilities:
-          description: Send a REST request
-          type: array
-          items:
-            $ref: '#/components/schemas/CapabilityRequest'
-        auth:
-          $ref: '#/components/schemas/RestAuthRequest'
-      example:
-        capabilities:
-        - name: GetOrder
-          version: 1.0.0
-        - name: RecordPayment
-          version: 1.0.0
-        url: https://my-epos.com/orders
-        auth:
-          authType: basic
-          basic:
-            username: epos-1
-            password: hunter2
-    CapabilityResponse:
-      title: Root Type for method
-      description: Receive a capability response
-      type: object
-      properties:
-        name:
-          type: string
-        version:
-          type: string
-        updatedAt:
-          format: date-time
-          type: string
-      required:
-      - name
-      - version
-      - updatedAt
-      example:
-        name: GetOrder
-        version: 1.0.0
-        updatedAt: '2024-03-30T12:00:00Z'
     RestIntegrationResponse:
       title: Root Type for restAdapter response
       description: REST response
@@ -396,6 +261,141 @@ components:
           basic:
             username: epos-1
         createdAt: '2024-03-30T12:00:00Z'
+    DojoManagedIntegrationResponse:
+      title: Root Type for dojoManagedIntegration
+      description: ''
+      required:
+      - capabilities
+      - createdAt
+      type: object
+      properties:
+        capabilities:
+          description: ''
+          type: array
+          items:
+            $ref: '#/components/schemas/CapabilityResponse'
+        createdAt:
+          format: date-time
+          type: string
+      example:
+        capabilities:
+        - name: GetOrder
+          version: v1
+        - name: RecordPayment
+          version: v1
+        createdAt: '2024-03-30T12:00:00Z'
+    CapabilityName:
+      type: string
+      description: 'The name of a capability.
+
+        (CancelOrderById, CreateOrder, ListAreas, GetOrderById, SearchTables, HandleEvent:payment_intent.created, HandleEvent:payment_intent.status_updated, SearchOrders, GetPartyById, DeletePartyById, SearchParties, UpdatePartyById, CreateParty, GetReservationById, SearchReservations, UpdateReservationById, DeleteReservationById, CreateReservation, RecordOrderPayment, CreateOrderLock, DeleteOrderLock, ExtendOrderLock, GetOrderBill)'
+    WsIntegrationResponse:
+      title: Root Type for wsAdapter
+      description: WebSockets response
+      required:
+      - capabilities
+      - createdAt
+      type: object
+      properties:
+        capabilities:
+          description: Receive a response to a WS request
+          type: array
+          items:
+            $ref: '#/components/schemas/CapabilityResponse'
+        createdAt:
+          format: date-time
+          type: string
+      example:
+        capabilities:
+        - name: GetOrder
+          version: 1.0.0
+        - name: RecordPayment
+          version: 1.0.0
+        createdAt: '2024-03-30T12:00:00Z'
+    CapabilityResponse:
+      title: Root Type for method
+      description: Receive a capability response
+      type: object
+      properties:
+        name:
+          type: string
+        version:
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - name
+      - version
+      - updatedAt
+      example:
+        name: GetOrder
+        version: 1.0.0
+        updatedAt: '2024-03-30T12:00:00Z'
+    RestIntegrationRequest:
+      title: Root Type for restAdapter request
+      description: REST request
+      required:
+      - capabilities
+      - auth
+      - url
+      type: object
+      properties:
+        url:
+          type: string
+        capabilities:
+          description: Send a REST request
+          type: array
+          items:
+            $ref: '#/components/schemas/CapabilityRequest'
+        auth:
+          $ref: '#/components/schemas/RestAuthRequest'
+      example:
+        capabilities:
+        - name: GetOrder
+          version: 1.0.0
+        - name: RecordPayment
+          version: 1.0.0
+        url: https://my-epos.com/orders
+        auth:
+          authType: basic
+          basic:
+            username: epos-1
+            password: hunter2
+    RestAuthRequest:
+      description: The authentication details for REST adapters
+      required:
+      - authType
+      type: object
+      properties:
+        authType:
+          description: The authentication flow that Dojo will use to make requests against this REST integration
+          enum:
+          - basic
+          type: string
+        basic:
+          $ref: '#/components/schemas/RestBasicAuthRequest'
+          description: The basic auth details, configured if authType == 'basic'
+      example:
+        authType: basic
+        basic:
+          username: epos-1
+          password: hunter2
+    CapabilityRequest:
+      title: Root Type for method
+      description: Send a request.
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/CapabilityName'
+        version:
+          type: string
+      required:
+      - name
+      - version
+      example:
+        name: GetOrder
+        version: 1.0.0
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
