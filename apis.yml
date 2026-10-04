@@ -800,6 +800,9 @@ apis:
   - type: APIReference
     url: https://docs.dojo.tech/epos-tester-tool/api
 common:
+- type: CapabilityMap
+  url: capabilities/dojo-capability-edges.yml
+  name: Dojo Business Capability Map
 - type: AgenticAccess
   url: agentic-access/dojo-agentic-access.yml
 - type: VulnerabilityDisclosure
