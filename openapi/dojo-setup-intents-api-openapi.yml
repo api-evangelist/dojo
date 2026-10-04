@@ -313,86 +313,22 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
 components:
   schemas:
-    SupportedPaymentMethods:
-      type: object
-      additionalProperties: false
-      properties:
-        cardSchemes:
-          type:
-          - array
-          - 'null'
-          description: Supported card schemes.
-          items:
-            $ref: '#/components/schemas/CardScheme'
-        wallets:
-          type:
-          - array
-          - 'null'
-          description: List of supported payment wallets.
-          items:
-            $ref: '#/components/schemas/WalletPaymentOption'
-    RequestSecurity:
-      type: object
-      additionalProperties: false
-      description: Customer's device information.
-      properties:
-        userAgent:
-          type:
-          - string
-          - 'null'
-          maxLength: 300
-          description: The customer's browser agent.
-        ipAddress:
-          maxLength: 70
-          type:
-          - string
-          - 'null'
-          description: The customer's device IP address.
-        device:
-          maxLength: 120
-          type:
-          - string
-          - 'null'
-          description: The customer's device type.
-      example:
-        userAgent: null
-        ipAddress: null
-        device: null
-    Card:
-      type: object
-      additionalProperties: false
-      properties:
-        cardNumber:
-          type:
-          - string
-          - 'null'
-          description: The card number.
-        cardName:
-          type:
-          - string
-          - 'null'
-          description: The name of the cardholder.
-        expiryDate:
-          type:
-          - string
-          - 'null'
-          description: If available, the expiry date of the card in the format 'MM/YY'.
-        cardType:
-          type:
-          - string
-          - 'null'
-          description: The card scheme.
-        cardFundingType:
-          $ref: '#/components/schemas/CardFundingType'
-        last4PAN:
-          type:
-          - string
-          - 'null'
-          description: The last four digits of the Primary Account Number. For Visa and Mastercard, this will be the four numbers at the end of the sixteen-digit card number.
-        entryMode:
-          $ref: '#/components/schemas/TerminalSessionPaymentEntryMode'
-        verificationMethod:
-          $ref: '#/components/schemas/TerminalSessionPaymentVerificationMode'
+    SetupIntentResponse:
+      allOf:
+      - $ref: '#/components/schemas/SetupIntentPublicResponse'
+      - type: object
+        additionalProperties: false
+        properties:
+          setupEvents:
+            type:
+            - array
+            - 'null'
+            description: Updates related to the setup intent's status.
+            items:
+              $ref: '#/components/schemas/PaymentStatusResponse'
+    MerchantInitiatedTransactionType:
+      type: string
+      description: Details about the merchant-initiated transaction type (NoShow, Unscheduled)
     PaymentStatusResponse:
       type: object
       additionalProperties: false
@@ -444,52 +380,172 @@ components:
           - string
           - 'null'
           description: The unique identifier of the customer payment method.
-    PaymentDetails:
+    SupportedPaymentMethods:
       type: object
       additionalProperties: false
-      description: The payment details object.
       properties:
-        transactionId:
+        cardSchemes:
+          type:
+          - array
+          - 'null'
+          description: Supported card schemes.
+          items:
+            $ref: '#/components/schemas/CardScheme'
+        wallets:
+          type:
+          - array
+          - 'null'
+          description: List of supported payment wallets.
+          items:
+            $ref: '#/components/schemas/WalletPaymentOption'
+    Address:
+      type: object
+      additionalProperties: false
+      example:
+        address1: The Brunel Building
+        address2: 2 Canalside Walk
+        city: London
+        postcode: W2 1DG
+        countryCode: GB
+        county: UK
+      description: Details about the address.
+      properties:
+        address1:
           type:
           - string
           - 'null'
-          description: 'The unique identifier of the transaction.
+          maxLength: 100
+          description: Address line 1 (for example, company name).
+        address2:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: Address line 2 (for example, street, apartment, or suite).
+        address3:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: Address line 3.
+        address4:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: Address line 4.
+        city:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: City, town, district, suburb, or village.
+          example: London
+        state:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: State, province, or region.
+        postcode:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+          description: ZIP or postal code.
+        countryCode:
+          type: string
+          maxLength: 10
+          description: 'Two-letter country code in [ISO 3166–1-alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format.
 
             '
-        transactionDateTime:
+          example: GB
+        locality:
           type:
           - string
           - 'null'
-          description: The date and time of the payment in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
-        message:
+          maxLength: 100
+          description: Locality, can use in addition to city.
+        county:
           type:
           - string
           - 'null'
-          description: The description of the operation.
-        paymentMethodId:
-          type:
-          - string
-          - 'null'
-          description: The unique identifier of the customer payment method.
-        authCode:
-          type:
-          - string
-          - 'null'
-          description: The acquirer's authorization code. This code is returned on a successful transaction.
-        card:
-          oneOf:
-          - $ref: '#/components/schemas/Card'
-          description: Card details, including card number, scheme, and expiry date.
-        avsResult:
-          type:
-          - string
-          - 'null'
-          description: 'The result of the Address Verification Service (AVS) check.
-
-            '
-    CardScheme:
-      description: Supported card schemes (VISA, MASTERCARD, MAESTRO, DISCOVER, DCI, AMEX)
+          maxLength: 100
+          description: County or zone.
+      required:
+      - countryCode
+    TerminalSessionPaymentEntryMode:
       type: string
+      description: 'Entry mode of the payment.
+
+        (Contactless, ContactChip, Magstripe, ManualEntry, Unknown)'
+    TerminalSessionPaymentVerificationMode:
+      type: string
+      description: 'Method used to verify that the person presenting the card is the
+
+        legitimate cardholder. The most common verification methods are PIN and signature.
+
+        (Pin, Signature, Device, None)'
+    Customer:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier of the customer.
+        emailAddress:
+          type:
+          - string
+          - 'null'
+          maxLength: 254
+          description: The customer's email address.
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+          description: The customer's phone number.
+      description: Details about the customer.
+      example:
+        emailAddress: support@dojo.com
+        phoneNumber: '+448000443550'
+    Card:
+      type: object
+      additionalProperties: false
+      properties:
+        cardNumber:
+          type:
+          - string
+          - 'null'
+          description: The card number.
+        cardName:
+          type:
+          - string
+          - 'null'
+          description: The name of the cardholder.
+        expiryDate:
+          type:
+          - string
+          - 'null'
+          description: If available, the expiry date of the card in the format 'MM/YY'.
+        cardType:
+          type:
+          - string
+          - 'null'
+          description: The card scheme.
+        cardFundingType:
+          $ref: '#/components/schemas/CardFundingType'
+        last4PAN:
+          type:
+          - string
+          - 'null'
+          description: The last four digits of the Primary Account Number. For Visa and Mastercard, this will be the four numbers at the end of the sixteen-digit card number.
+        entryMode:
+          $ref: '#/components/schemas/TerminalSessionPaymentEntryMode'
+        verificationMethod:
+          $ref: '#/components/schemas/TerminalSessionPaymentVerificationMode'
     MerchantConfig:
       type: object
       additionalProperties: false
@@ -499,23 +555,84 @@ components:
           oneOf:
           - $ref: '#/components/schemas/SupportedPaymentMethods'
           description: Supported payment methods.
-    WalletPaymentOption:
-      type: string
-      description: Wallet payment options (e.g., Apple Pay, Google Pay).
-    CaptureMode:
-      description: 'The type of capture for the payment, where:
+    PaymentIntentConfigResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: The [checkout page’s title](../payments/accept-payments/checkout-page/configuration#add-information-about-your-company).
+        redirectUrl:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The URL that a customer will be directed to after payment.
+        cancelUrl:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The URL that a customer will be directed to when canceling a payment.
+        customerEmail:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentIntentConfigCustomerEmail'
+          description: The customer's email address.
+        details:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentIntentConfigDetails'
+          description: 'The following configuration details of the payment intent. See [detailed information about the order and taxes](../payments/accept-payments/checkout-page/configuration#show-detailed-information-about-the-order-and-taxes).
 
-        - `Auto` payments are captured automatically, once authorization is complete.
 
-        - `Manual` payments are captured only when a capture request is made.'
-      default: Auto
-      enum:
-      - Auto
-      - Manual
+            - The total order amount including tax.
+
+            - The order reference ID.
+
+            '
+        billingAddress:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentIntentConfigBillingAddress'
+          description: Configuration of the billing address.
+        shippingDetails:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentIntentConfigShippingDetails'
+          description: 'Configuration of the shipping details.
+
+            '
+        payment:
+          oneOf:
+          - $ref: '#/components/schemas/PaymentConfigDetails'
+          description: Configuration of the payment.
+    paymentEventType:
       type: string
+      description: The current state of the payment.
       x-enumNames:
-      - Auto
-      - Manual
+      - Created
+      - Authorized
+      - Captured
+      - Reversed
+      - Refunded
+      - Canceled
+      - AuthChallenged
+      - Declined
+      - ManualAuthReady
+      - Error
+      - Unknown
+      enum:
+      - Created
+      - Authorized
+      - Captured
+      - Reversed
+      - Refunded
+      - Canceled
+      - AuthChallenged
+      - Declined
+      - ManualAuthReady
+      - Error
+      - Unknown
     SetupIntentPublicResponse:
       type: object
       additionalProperties: false
@@ -623,28 +740,76 @@ components:
           - string
           - 'null'
           description: Information about a single payment source type. Invalid if used along with `paymentSources` parameter.
-    MerchantInitiatedTransactionType:
-      type: string
-      description: Details about the merchant-initiated transaction type (NoShow, Unscheduled)
-    TerminalSessionPaymentVerificationMode:
-      type: string
-      description: 'Method used to verify that the person presenting the card is the
+    PaymentDetails:
+      type: object
+      additionalProperties: false
+      description: The payment details object.
+      properties:
+        transactionId:
+          type:
+          - string
+          - 'null'
+          description: 'The unique identifier of the transaction.
 
-        legitimate cardholder. The most common verification methods are PIN and signature.
+            '
+        transactionDateTime:
+          type:
+          - string
+          - 'null'
+          description: The date and time of the payment in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
+        message:
+          type:
+          - string
+          - 'null'
+          description: The description of the operation.
+        paymentMethodId:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier of the customer payment method.
+        authCode:
+          type:
+          - string
+          - 'null'
+          description: The acquirer's authorization code. This code is returned on a successful transaction.
+        card:
+          oneOf:
+          - $ref: '#/components/schemas/Card'
+          description: Card details, including card number, scheme, and expiry date.
+        avsResult:
+          type:
+          - string
+          - 'null'
+          description: 'The result of the Address Verification Service (AVS) check.
 
-        (Pin, Signature, Device, None)'
-    PaymentConfigDetails:
+            '
+    OrderDetails:
       type: object
       additionalProperties: false
       properties:
-        customAmountAllowed:
-          type: boolean
-          description: 'If set to `true` the amount of the payment intent can be changed.
+        availabilityDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The payment description.
+        isUpdate:
+          type:
+          - boolean
+          - 'null'
+          description: An optional true/false field.
+        id:
+          type:
+          - string
+          - 'null'
+          description: 'The unique identifier of the order in Dojo.
 
             '
-        tipsAllowed:
-          type: boolean
-          description: 'If set to `true`, tip is allowed.
+        externalId:
+          type:
+          - string
+          - 'null'
+          description: 'The unique identifier of the order in external systems, such as EPOS.
 
             '
     ProblemDetails:
@@ -681,105 +846,45 @@ components:
           type: object
           description: This field names any extension methods that have been configured to help handle errors handling functionality.
           additionalProperties: {}
-    SetupIntentResponse:
-      allOf:
-      - $ref: '#/components/schemas/SetupIntentPublicResponse'
-      - type: object
-        additionalProperties: false
-        properties:
-          setupEvents:
-            type:
-            - array
-            - 'null'
-            description: Updates related to the setup intent's status.
-            items:
-              $ref: '#/components/schemas/PaymentStatusResponse'
-    Address:
+    RequestSecurity:
       type: object
       additionalProperties: false
-      example:
-        address1: The Brunel Building
-        address2: 2 Canalside Walk
-        city: London
-        postcode: W2 1DG
-        countryCode: GB
-        county: UK
-      description: Details about the address.
+      description: Customer's device information.
       properties:
-        address1:
+        userAgent:
           type:
           - string
           - 'null'
-          maxLength: 100
-          description: Address line 1 (for example, company name).
-        address2:
+          maxLength: 300
+          description: The customer's browser agent.
+        ipAddress:
+          maxLength: 70
           type:
           - string
           - 'null'
-          maxLength: 100
-          description: Address line 2 (for example, street, apartment, or suite).
-        address3:
+          description: The customer's device IP address.
+        device:
+          maxLength: 120
           type:
           - string
           - 'null'
-          maxLength: 100
-          description: Address line 3.
-        address4:
-          type:
-          - string
-          - 'null'
-          maxLength: 100
-          description: Address line 4.
-        city:
-          type:
-          - string
-          - 'null'
-          maxLength: 100
-          description: City, town, district, suburb, or village.
-          example: London
-        state:
-          type:
-          - string
-          - 'null'
-          maxLength: 100
-          description: State, province, or region.
-        postcode:
-          type:
-          - string
-          - 'null'
-          maxLength: 50
-          description: ZIP or postal code.
-        countryCode:
-          type: string
-          maxLength: 10
-          description: 'Two-letter country code in [ISO 3166–1-alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format.
+          description: The customer's device type.
+      example:
+        userAgent: null
+        ipAddress: null
+        device: null
+    PaymentIntentConfigShippingDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        collectionRequired:
+          type: boolean
+          description: 'Set to `true` if the object requires collection.
 
             '
-          example: GB
-        locality:
-          type:
-          - string
-          - 'null'
-          maxLength: 100
-          description: Locality, can use in addition to city.
-        county:
-          type:
-          - string
-          - 'null'
-          maxLength: 100
-          description: County or zone.
-      required:
-      - countryCode
-    PaymentIntentConfigDetails:
-      type: object
-      additionalProperties: false
-      properties:
-        showTotal:
-          type: boolean
-          description: If has the value `true`, the total order amount will be showed.
-        showReference:
-          type: boolean
-          description: If the value is `true`, the order reference ID will be shown.
+    WalletPaymentOption:
+      type: string
+      description: Wallet payment options (e.g., Apple Pay, Google Pay).
     SetupIntentStatus:
       type: string
       description: Current status of the setup intent.
@@ -799,57 +904,52 @@ components:
       - Expired
       - CardExpired
       - Closed
-    PaymentIntentConfigResponse:
+    PaymentIntentConfigDetails:
       type: object
       additionalProperties: false
       properties:
-        title:
-          type:
-          - string
-          - 'null'
-          maxLength: 100
-          description: The [checkout page’s title](../payments/accept-payments/checkout-page/configuration#add-information-about-your-company).
-        redirectUrl:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: The URL that a customer will be directed to after payment.
-        cancelUrl:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: The URL that a customer will be directed to when canceling a payment.
-        customerEmail:
-          oneOf:
-          - $ref: '#/components/schemas/PaymentIntentConfigCustomerEmail'
-          description: The customer's email address.
-        details:
-          oneOf:
-          - $ref: '#/components/schemas/PaymentIntentConfigDetails'
-          description: 'The following configuration details of the payment intent. See [detailed information about the order and taxes](../payments/accept-payments/checkout-page/configuration#show-detailed-information-about-the-order-and-taxes).
+        showTotal:
+          type: boolean
+          description: If has the value `true`, the total order amount will be showed.
+        showReference:
+          type: boolean
+          description: If the value is `true`, the order reference ID will be shown.
+    Money:
+      description: 'The amount intended to be collected by this payment intent excluding `tipsAmount` `serviceChargeAmount` and `cashbackAmount`.
 
+        '
+      type: object
+      additionalProperties: false
+      required:
+      - value
+      - currencyCode
+      properties:
+        value:
+          description: The amount in [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) minor units, for example, "100" for 1.00 GBP.
+          type: integer
+          format: int64
+        currencyCode:
+          description: Three-letter currency code in [ISO 4217 alpha-3](https://www.iso.org/iso-4217-currency-codes.html) format. Accepts `GBP` and `EUR`.
+          type: string
+          maxLength: 10
+          minLength: 1
+    CaptureMode:
+      description: 'The type of capture for the payment, where:
 
-            - The total order amount including tax.
+        - `Auto` payments are captured automatically, once authorization is complete.
 
-            - The order reference ID.
-
-            '
-        billingAddress:
-          oneOf:
-          - $ref: '#/components/schemas/PaymentIntentConfigBillingAddress'
-          description: Configuration of the billing address.
-        shippingDetails:
-          oneOf:
-          - $ref: '#/components/schemas/PaymentIntentConfigShippingDetails'
-          description: 'Configuration of the shipping details.
-
-            '
-        payment:
-          oneOf:
-          - $ref: '#/components/schemas/PaymentConfigDetails'
-          description: Configuration of the payment.
+        - `Manual` payments are captured only when a capture request is made.'
+      default: Auto
+      enum:
+      - Auto
+      - Manual
+      type: string
+      x-enumNames:
+      - Auto
+      - Manual
+    CardFundingType:
+      type: string
+      description: 'The main funding types are credit, debit, pre-paid, and charge. '
     PaymentIntentConfigCustomerEmail:
       type: object
       additionalProperties: false
@@ -861,93 +961,11 @@ components:
 
             '
           default: false
-    paymentEventType:
-      type: string
-      description: The current state of the payment.
-      x-enumNames:
-      - Created
-      - Authorized
-      - Captured
-      - Reversed
-      - Refunded
-      - Canceled
-      - AuthChallenged
-      - Declined
-      - ManualAuthReady
-      - Error
-      - Unknown
-      enum:
-      - Created
-      - Authorized
-      - Captured
-      - Reversed
-      - Refunded
-      - Canceled
-      - AuthChallenged
-      - Declined
-      - ManualAuthReady
-      - Error
-      - Unknown
-    CardFundingType:
-      type: string
-      description: 'The main funding types are credit, debit, pre-paid, and charge. '
     PaymentMethod:
       type: string
       description: 'The payment methods that customers can use to pay.
 
         (Card, Wallet, SavedCard)'
-    PaymentIntentConfigBillingAddress:
-      type: object
-      additionalProperties: false
-      properties:
-        collectionRequired:
-          type: boolean
-          description: 'Set to `true` if the object requires collection.
-
-            '
-    PaymentIntentConfigShippingDetails:
-      type: object
-      additionalProperties: false
-      properties:
-        collectionRequired:
-          type: boolean
-          description: 'Set to `true` if the object requires collection.
-
-            '
-    TerminalSessionPaymentEntryMode:
-      type: string
-      description: 'Entry mode of the payment.
-
-        (Contactless, ContactChip, Magstripe, ManualEntry, Unknown)'
-    OrderDetails:
-      type: object
-      additionalProperties: false
-      properties:
-        availabilityDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: The payment description.
-        isUpdate:
-          type:
-          - boolean
-          - 'null'
-          description: An optional true/false field.
-        id:
-          type:
-          - string
-          - 'null'
-          description: 'The unique identifier of the order in Dojo.
-
-            '
-        externalId:
-          type:
-          - string
-          - 'null'
-          description: 'The unique identifier of the order in external systems, such as EPOS.
-
-            '
     ShippingDetails:
       type: object
       additionalProperties: false
@@ -969,50 +987,9 @@ components:
           oneOf:
           - $ref: '#/components/schemas/Address'
           description: Details about the address.
-    Customer:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          description: The unique identifier of the customer.
-        emailAddress:
-          type:
-          - string
-          - 'null'
-          maxLength: 254
-          description: The customer's email address.
-        phoneNumber:
-          type:
-          - string
-          - 'null'
-          maxLength: 50
-          description: The customer's phone number.
-      description: Details about the customer.
-      example:
-        emailAddress: support@dojo.com
-        phoneNumber: '+448000443550'
-    Money:
-      description: 'The amount intended to be collected by this payment intent excluding `tipsAmount` `serviceChargeAmount` and `cashbackAmount`.
-
-        '
-      type: object
-      additionalProperties: false
-      required:
-      - value
-      - currencyCode
-      properties:
-        value:
-          description: The amount in [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) minor units, for example, "100" for 1.00 GBP.
-          type: integer
-          format: int64
-        currencyCode:
-          description: Three-letter currency code in [ISO 4217 alpha-3](https://www.iso.org/iso-4217-currency-codes.html) format. Accepts `GBP` and `EUR`.
-          type: string
-          maxLength: 10
-          minLength: 1
+    CardScheme:
+      description: Supported card schemes (VISA, MASTERCARD, MAESTRO, DISCOVER, DCI, AMEX)
+      type: string
     CreateSetupIntentRequest:
       type: object
       description: The setup intent request object.
@@ -1088,6 +1065,20 @@ components:
           - 'null'
           format: date-time
           description: The timestamp and date of when a setup intent will be voided, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format. This occurs when a setup intent is created and not yet authorized.
+    PaymentConfigDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        customAmountAllowed:
+          type: boolean
+          description: 'If set to `true` the amount of the payment intent can be changed.
+
+            '
+        tipsAllowed:
+          type: boolean
+          description: 'If set to `true`, tip is allowed.
+
+            '
     PaymentIntentConfigRequest:
       type: object
       additionalProperties: false
@@ -1139,6 +1130,15 @@ components:
           oneOf:
           - $ref: '#/components/schemas/PaymentConfigDetails'
           description: Configuration of the payment.
+    PaymentIntentConfigBillingAddress:
+      type: object
+      additionalProperties: false
+      properties:
+        collectionRequired:
+          type: boolean
+          description: 'Set to `true` if the object requires collection.
+
+            '
   parameters:
     Version:
       name: version

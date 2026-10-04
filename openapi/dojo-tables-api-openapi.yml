@@ -60,6 +60,30 @@ paths:
       - $ref: '#/components/parameters/DeviceType'
 components:
   schemas:
+    SearchTablesRequest:
+      description: ''
+      type: object
+      properties:
+        cursor:
+          $ref: '#/components/schemas/Cursor'
+        areaId:
+          description: ''
+          type: string
+        waiterId:
+          description: ''
+          type: string
+    EPOSError:
+      title: EPOSError
+      type: object
+      required:
+      - errorType
+      properties:
+        debugMessage:
+          type: string
+        traceId:
+          type: string
+        errorType:
+          $ref: '#/components/schemas/EPOSErrorType'
     Table:
       title: Root Type for Table
       description: ''
@@ -90,6 +114,13 @@ components:
         name: Table 12
         maxCovers: 4
         areaId: area_123
+    EPOSErrorType:
+      type: string
+      enum:
+      - NotFound
+      - UnexpectedError
+      - InvalidRequest
+      - Conflict
     PagedTablesResponse:
       title: PagedOrder
       type: object
@@ -111,18 +142,6 @@ components:
             id: vwlxjfle0yxqt
       x-stoplight:
         id: bjkxvbo62zl42
-    SearchTablesRequest:
-      description: ''
-      type: object
-      properties:
-        cursor:
-          $ref: '#/components/schemas/Cursor'
-        areaId:
-          description: ''
-          type: string
-        waiterId:
-          description: ''
-          type: string
     Cursor:
       title: Cursor
       description: A cursor for use in pagination.
@@ -146,26 +165,15 @@ components:
             id: 1jsibbqp1zdti
       x-stoplight:
         id: m8ixmhyvzw3oo
-    EPOSErrorType:
-      type: string
-      enum:
-      - NotFound
-      - UnexpectedError
-      - InvalidRequest
-      - Conflict
-    EPOSError:
-      title: EPOSError
-      type: object
-      required:
-      - errorType
-      properties:
-        debugMessage:
-          type: string
-        traceId:
-          type: string
-        errorType:
-          $ref: '#/components/schemas/EPOSErrorType'
   parameters:
+    DeviceType:
+      in: header
+      name: device-type
+      required: false
+      schema:
+        type: string
+      example: Dojo Terminal
+      description: The device making the request, if known
     DeviceId:
       name: device-id
       in: header
@@ -182,14 +190,6 @@ components:
         type: string
       example: Order&Pay
       description: The dojo product making the request, if known.
-    DeviceType:
-      in: header
-      name: device-type
-      required: false
-      schema:
-        type: string
-      example: Dojo Terminal
-      description: The device making the request, if known
     WaiterId:
       in: header
       name: waiter-id

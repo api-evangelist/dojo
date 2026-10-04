@@ -77,24 +77,6 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
 components:
   schemas:
-    Capture:
-      type: object
-      description: The capture response object.
-      additionalProperties: false
-      properties:
-        message:
-          type:
-          - string
-          - 'null'
-          description: The description of the operation.
-        captureId:
-          type:
-          - string
-          - 'null'
-          description: The unique identifier for the capture.
-      example:
-        message: Demo capture
-        captureId: cp_itIiJMEAvES3ynYF_Yhs2g
     ProblemDetails:
       type: object
       description: Dojo follows the error response format proposed in [RFC 7807](https://datatracker.ietf.org/doc/html/rfc7807), also known as Problem Details for HTTP APIs.
@@ -152,6 +134,24 @@ components:
             tipsAmount: 100
           description: The tip amount.
       additionalProperties: false
+    Capture:
+      type: object
+      description: The capture response object.
+      additionalProperties: false
+      properties:
+        message:
+          type:
+          - string
+          - 'null'
+          description: The description of the operation.
+        captureId:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier for the capture.
+      example:
+        message: Demo capture
+        captureId: cp_itIiJMEAvES3ynYF_Yhs2g
   parameters:
     Version:
       name: version

@@ -185,40 +185,135 @@ paths:
       - $ref: '#/components/parameters/DeviceId'
       - $ref: '#/components/parameters/DeviceType'
 components:
-  parameters:
-    DeviceId:
-      name: device-id
-      in: header
-      required: false
-      schema:
-        type: string
-      example: tm_sandbox_65c5fe8a104a1222b2d8b968
-      description: The ID of the device making the request, if known
-    DojoRequestingProduct:
-      name: dojo-requesting-product
-      in: header
-      required: false
-      schema:
-        type: string
-      example: Order&Pay
-      description: The dojo product making the request, if known.
-    DeviceType:
-      in: header
-      name: device-type
-      required: false
-      schema:
-        type: string
-      example: Dojo Terminal
-      description: The device making the request, if known
-    WaiterId:
-      in: header
-      name: waiter-id
-      required: false
-      schema:
-        type: string
-      example: '42'
-      description: The ID of the waiter making the request, if known
   schemas:
+    Cursor:
+      title: Cursor
+      description: A cursor for use in pagination.
+      type: object
+      properties:
+        limit:
+          description: The maximum number of results to be returned in a single page.
+          maximum: 100
+          type: integer
+          x-stoplight:
+            id: l5tzcxdo5qbt1
+        before:
+          description: A cursor for use in pagination for the previous page. before and after are mutually exclusive. Only one of these may be used.
+          type: string
+          x-stoplight:
+            id: 8vxj9sdmbby14
+        after:
+          description: A cursor for use in pagination for the next page. before and after are mutually exclusive. Only one of these may be used.
+          type: string
+          x-stoplight:
+            id: 1jsibbqp1zdti
+      x-stoplight:
+        id: m8ixmhyvzw3oo
+    EPOSError:
+      title: EPOSError
+      type: object
+      required:
+      - errorType
+      properties:
+        debugMessage:
+          type: string
+        traceId:
+          type: string
+        errorType:
+          $ref: '#/components/schemas/EPOSErrorType'
+    PagedPartiesResponse:
+      title: PagedOrder
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Party'
+          readOnly: false
+          x-stoplight:
+            id: ou7je7f6bizdg
+        before:
+          type: string
+          x-stoplight:
+            id: jutkpidtbhr6q
+        after:
+          type: string
+          x-stoplight:
+            id: vwlxjfle0yxqt
+      x-stoplight:
+        id: bjkxvbo62zl42
+    PartyDeposit:
+      title: Party Deposit
+      description: Information about payments captured pre-arrival to secure the reservation.
+      required:
+      - totalAmount
+      - paymentIntentIds
+      properties:
+        totalAmount:
+          $ref: '#/components/schemas/Money'
+          description: 'The deposit value of the party at the time it was seated. The common
+
+            flow for this field is that it is set by the Dojo VQ&B RMS shortly
+
+            after a party referring to a reservation (with a deposit) is
+
+            created.'
+        description:
+          type: string
+          description: 'A human-readable description of the deposit. This may be used to
+
+            describe the reason for the deposit, or any other relevant information.'
+          example: Sunday Lunch deposit - 4 covers
+        paymentIntentIds:
+          description: 'List of payment-intents that were captured to make the deposit.
+
+            Some may have been either partially or wholly refunded.
+
+
+            May not be edited by the EPOS partner.'
+          type: array
+          items:
+            type: string
+    Money:
+      title: Money
+      required:
+      - value
+      - currencyCode
+      type: object
+      properties:
+        value:
+          format: int64
+          description: The amount in the minor unit, for example '100' for 1.00 GBP.
+          type: integer
+        currencyCode:
+          description: Three-letter currency code in ISO 4217 alpha-3 format. Currently this accepts `GBP` and `EUR`.
+          maxLength: 10
+          minLength: 1
+          type: string
+      example:
+        value: 1000
+        currencyCode: GBP
+      x-stoplight:
+        id: c9op7zec1txu2
+    SearchPartiesRequest:
+      description: ''
+      type: object
+      properties:
+        cursor:
+          $ref: '#/components/schemas/Cursor'
+        completedOnly:
+          description: ''
+          type: boolean
+        tableId:
+          description: ''
+          type: string
+    EPOSErrorType:
+      type: string
+      enum:
+      - NotFound
+      - UnexpectedError
+      - InvalidRequest
+      - Conflict
     Party:
       title: Party
       description: 'The representation of a customer or group of customers _currently_
@@ -297,199 +392,6 @@ components:
         tableIds:
         - table-01-001
         - table-01-002
-    Cursor:
-      title: Cursor
-      description: A cursor for use in pagination.
-      type: object
-      properties:
-        limit:
-          description: The maximum number of results to be returned in a single page.
-          maximum: 100
-          type: integer
-          x-stoplight:
-            id: l5tzcxdo5qbt1
-        before:
-          description: A cursor for use in pagination for the previous page. before and after are mutually exclusive. Only one of these may be used.
-          type: string
-          x-stoplight:
-            id: 8vxj9sdmbby14
-        after:
-          description: A cursor for use in pagination for the next page. before and after are mutually exclusive. Only one of these may be used.
-          type: string
-          x-stoplight:
-            id: 1jsibbqp1zdti
-      x-stoplight:
-        id: m8ixmhyvzw3oo
-    SearchPartiesRequest:
-      description: ''
-      type: object
-      properties:
-        cursor:
-          $ref: '#/components/schemas/Cursor'
-        completedOnly:
-          description: ''
-          type: boolean
-        tableId:
-          description: ''
-          type: string
-    CreatePartyRequest:
-      title: Create Party Request
-      description: Request payload made from Dojo -> EPOS Partner to create a new party in the EPOS domain. Note that Dojo will always provide _all_ known fields.
-      properties:
-        name:
-          title: Name
-          type: string
-        covers:
-          title: Covers
-          type: integer
-        tableIds:
-          title: Table IDs
-          type: array
-          items:
-            type: string
-          minLength: 1
-        status:
-          title: Status
-          type: string
-        startTime:
-          title: Start time
-          type: string
-          format: date-time
-          description: When the party was seated. ISO8601 formatted, ms precise.
-        expectedEndTime:
-          title: Expected end time
-          type: string
-          format: date-time
-          description: When the party is expected to leave, if known. ISO8601 formatted, ms precise.
-        hostNotes:
-          title: Host notes
-          type: string
-        guestRequests:
-          title: Guest requests
-          type: string
-        reservationId:
-          title: Reservation ID
-          type: string
-        deposit:
-          $ref: '#/components/schemas/PartyDeposit'
-        dojoPartyId:
-          title: For reference. The Dojo API party ID.
-          type: string
-        dojoReservationId:
-          title: For reference. The Dojo API reservation ID.
-          type: string
-      required:
-      - startTime
-      - tableIds
-      - dojoPartyId
-      example:
-        name: Martin B.
-        covers: 4
-        tableIds:
-        - table-01-001
-        - table-01-002
-        startTime: '2024-08-12T09:30:00.000Z'
-        expectedEndTime: '2024-08-12T11:00:00.000Z'
-        guestRequests: nut allergy; gluten intolerance; please could we have a table next to a window?
-        hostNotes: called ahead to notify kitchen of dietary requirements - confirm upon arrival
-        reservationId: reservation-2024-08-12-0028
-        deposit:
-          totalAmount:
-            value: 5000
-            currencyCode: GBP
-    PartyDeposit:
-      title: Party Deposit
-      description: Information about payments captured pre-arrival to secure the reservation.
-      required:
-      - totalAmount
-      - paymentIntentIds
-      properties:
-        totalAmount:
-          $ref: '#/components/schemas/Money'
-          description: 'The deposit value of the party at the time it was seated. The common
-
-            flow for this field is that it is set by the Dojo VQ&B RMS shortly
-
-            after a party referring to a reservation (with a deposit) is
-
-            created.'
-        description:
-          type: string
-          description: 'A human-readable description of the deposit. This may be used to
-
-            describe the reason for the deposit, or any other relevant information.'
-          example: Sunday Lunch deposit - 4 covers
-        paymentIntentIds:
-          description: 'List of payment-intents that were captured to make the deposit.
-
-            Some may have been either partially or wholly refunded.
-
-
-            May not be edited by the EPOS partner.'
-          type: array
-          items:
-            type: string
-    EPOSErrorType:
-      type: string
-      enum:
-      - NotFound
-      - UnexpectedError
-      - InvalidRequest
-      - Conflict
-    Money:
-      title: Money
-      required:
-      - value
-      - currencyCode
-      type: object
-      properties:
-        value:
-          format: int64
-          description: The amount in the minor unit, for example '100' for 1.00 GBP.
-          type: integer
-        currencyCode:
-          description: Three-letter currency code in ISO 4217 alpha-3 format. Currently this accepts `GBP` and `EUR`.
-          maxLength: 10
-          minLength: 1
-          type: string
-      example:
-        value: 1000
-        currencyCode: GBP
-      x-stoplight:
-        id: c9op7zec1txu2
-    PagedPartiesResponse:
-      title: PagedOrder
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Party'
-          readOnly: false
-          x-stoplight:
-            id: ou7je7f6bizdg
-        before:
-          type: string
-          x-stoplight:
-            id: jutkpidtbhr6q
-        after:
-          type: string
-          x-stoplight:
-            id: vwlxjfle0yxqt
-      x-stoplight:
-        id: bjkxvbo62zl42
-    EPOSError:
-      title: EPOSError
-      type: object
-      required:
-      - errorType
-      properties:
-        debugMessage:
-          type: string
-        traceId:
-          type: string
-        errorType:
-          $ref: '#/components/schemas/EPOSErrorType'
     UpdatePartyRequest:
       title: Update Party Request
       description: 'The representation of a customer or group of customers _currently_
@@ -562,3 +464,101 @@ components:
         tableIds:
         - table-01-001
         - table-01-002
+    CreatePartyRequest:
+      title: Create Party Request
+      description: Request payload made from Dojo -> EPOS Partner to create a new party in the EPOS domain. Note that Dojo will always provide _all_ known fields.
+      properties:
+        name:
+          title: Name
+          type: string
+        covers:
+          title: Covers
+          type: integer
+        tableIds:
+          title: Table IDs
+          type: array
+          items:
+            type: string
+          minLength: 1
+        status:
+          title: Status
+          type: string
+        startTime:
+          title: Start time
+          type: string
+          format: date-time
+          description: When the party was seated. ISO8601 formatted, ms precise.
+        expectedEndTime:
+          title: Expected end time
+          type: string
+          format: date-time
+          description: When the party is expected to leave, if known. ISO8601 formatted, ms precise.
+        hostNotes:
+          title: Host notes
+          type: string
+        guestRequests:
+          title: Guest requests
+          type: string
+        reservationId:
+          title: Reservation ID
+          type: string
+        deposit:
+          $ref: '#/components/schemas/PartyDeposit'
+        dojoPartyId:
+          title: For reference. The Dojo API party ID.
+          type: string
+        dojoReservationId:
+          title: For reference. The Dojo API reservation ID.
+          type: string
+      required:
+      - startTime
+      - tableIds
+      - dojoPartyId
+      example:
+        name: Martin B.
+        covers: 4
+        tableIds:
+        - table-01-001
+        - table-01-002
+        startTime: '2024-08-12T09:30:00.000Z'
+        expectedEndTime: '2024-08-12T11:00:00.000Z'
+        guestRequests: nut allergy; gluten intolerance; please could we have a table next to a window?
+        hostNotes: called ahead to notify kitchen of dietary requirements - confirm upon arrival
+        reservationId: reservation-2024-08-12-0028
+        deposit:
+          totalAmount:
+            value: 5000
+            currencyCode: GBP
+  parameters:
+    DeviceType:
+      in: header
+      name: device-type
+      required: false
+      schema:
+        type: string
+      example: Dojo Terminal
+      description: The device making the request, if known
+    DeviceId:
+      name: device-id
+      in: header
+      required: false
+      schema:
+        type: string
+      example: tm_sandbox_65c5fe8a104a1222b2d8b968
+      description: The ID of the device making the request, if known
+    DojoRequestingProduct:
+      name: dojo-requesting-product
+      in: header
+      required: false
+      schema:
+        type: string
+      example: Order&Pay
+      description: The dojo product making the request, if known.
+    WaiterId:
+      in: header
+      name: waiter-id
+      required: false
+      schema:
+        type: string
+      example: '42'
+      description: The ID of the waiter making the request, if known

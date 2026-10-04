@@ -420,51 +420,6 @@ paths:
         Results are paginated. By default, the method returns up to 50 customers.'
 components:
   schemas:
-    CustomerPaymentMethods:
-      type: object
-      additionalProperties: false
-      properties:
-        customerId:
-          type:
-          - string
-          - 'null'
-          description: The unique identifier of the customer.
-        merchantId:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for the merchant. A single merchant can be associated with multiple terminals, point-of-sale machines, and waiters.
-        savedPaymentMethods:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CustomerPaymentMethod'
-          description: List of the customer saved payment methods.
-        supportedPaymentMethods:
-          oneOf:
-          - $ref: '#/components/schemas/SupportedPaymentMethods'
-          description: Supported payment methods.
-      example:
-        customerId: cust_qNkU6yob0vOMxUlb2oy123
-        merchantId: '123456789'
-        savedPaymentMethods:
-        - id: pm_12345
-          cardDetails:
-            pan: 52000000****0056
-            expiryDate: '2024-12-31'
-            scheme: MASTERCARD
-        supportedPaymentMethods:
-          cardSchemes:
-          - VISA
-          - MASTERCARD
-          - MAESTRO
-          - DISCOVER
-          - DCI
-          - AMEX
-          wallets:
-          - APPLE_PAY
-          - GOOGLE_PAY
     ProblemDetails:
       type: object
       description: Dojo follows the error response format proposed in [RFC 7807](https://datatracker.ietf.org/doc/html/rfc7807), also known as Problem Details for HTTP APIs.
@@ -499,6 +454,140 @@ components:
           type: object
           description: This field names any extension methods that have been configured to help handle errors handling functionality.
           additionalProperties: {}
+    CustomerPaymentMethod:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier of the customer's saved payment method.
+        cardDetails:
+          description: The card details saved by the customer.
+          oneOf:
+          - $ref: '#/components/schemas/CardDetails'
+    SearchCustomerRequest:
+      type: object
+      additionalProperties: false
+      description: 'A cursor for use in pagination. '
+      properties:
+        limit:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 100
+          example: 20
+          default: 50
+          description: The maximum number of results to be returned in a single page.
+        before:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+          description: A cursor for use in pagination for the previous page. `before` and `after` are mutually exclusive. Only one of these may be used.
+        after:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+          description: 'A cursor for use in pagination for the next page. `before` and `after` are mutually exclusive. Only one of these may be used.
+
+            '
+    WalletPaymentOption:
+      type: string
+      description: Wallet payment options (e.g., Apple Pay, Google Pay).
+    CreateCustomerRequest:
+      type: object
+      additionalProperties: false
+      example:
+        name: Alex
+        emailAddress: alex@dojo.com
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: The customer's name.
+        shippingAddress:
+          oneOf:
+          - $ref: '#/components/schemas/Address'
+          description: The recipient's shipping address.
+        billingAddress:
+          oneOf:
+          - $ref: '#/components/schemas/Address'
+          description: The recipient's invoicing address.
+        emailAddress:
+          type:
+          - string
+          - 'null'
+          maxLength: 254
+          description: The customer's email address.
+        phoneNumber:
+          maxLength: 50
+          minLength: 5
+          type:
+          - string
+          - 'null'
+          description: The customer's phone number.
+        vatNumber:
+          type:
+          - string
+          - 'null'
+          maxLength: 50
+          description: The customer's VAT number.
+    UpdateCustomerRequest:
+      type: object
+      additionalProperties: false
+      example:
+        phoneNumber: 078976534161
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The customer's name.
+        billingAddress:
+          oneOf:
+          - $ref: '#/components/schemas/Address'
+          description: The recipient's invoicing address.
+        shippingAddress:
+          oneOf:
+          - $ref: '#/components/schemas/Address'
+          description: The recipient's shipping address.
+        emailAddress:
+          type:
+          - string
+          - 'null'
+          description: The customer's email address.
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          description: The customer's phone number.
+        vatNumber:
+          type:
+          - string
+          - 'null'
+          description: The customer's VAT number.
+    CardDetails:
+      type: object
+      properties:
+        pan:
+          description: 'The masked primary account number (PAN) of the customer''s saved card.
+
+            '
+          type: string
+        expiryDate:
+          description: The expiry date of the card saved by the customer.
+          type: string
+        scheme:
+          $ref: '#/components/schemas/CardScheme'
+      additionalProperties: false
+    CardScheme:
+      description: Supported card schemes (VISA, MASTERCARD, MAESTRO, DISCOVER, DCI, AMEX)
+      type: string
     PagedResultOfCustomer:
       type: object
       additionalProperties: false
@@ -522,9 +611,24 @@ components:
           - 'null'
           example: IjIwMjItMDYtMjBUMTM6MzI6MjIuNDM1WiI=
           description: A cursor for use in pagination for the next page.
-    CardScheme:
-      description: Supported card schemes (VISA, MASTERCARD, MAESTRO, DISCOVER, DCI, AMEX)
-      type: string
+    SupportedPaymentMethods:
+      type: object
+      additionalProperties: false
+      properties:
+        cardSchemes:
+          type:
+          - array
+          - 'null'
+          description: Supported card schemes.
+          items:
+            $ref: '#/components/schemas/CardScheme'
+        wallets:
+          type:
+          - array
+          - 'null'
+          description: List of supported payment wallets.
+          items:
+            $ref: '#/components/schemas/WalletPaymentOption'
     CustomerFull:
       type: object
       additionalProperties: false
@@ -586,9 +690,6 @@ components:
           type: integer
           format: int32
           description: The version of the customer's data updated with every change.
-    WalletPaymentOption:
-      type: string
-      description: Wallet payment options (e.g., Apple Pay, Google Pay).
     Address:
       type: object
       additionalProperties: false
@@ -665,152 +766,51 @@ components:
           description: County or zone.
       required:
       - countryCode
-    SupportedPaymentMethods:
+    CustomerPaymentMethods:
       type: object
       additionalProperties: false
       properties:
-        cardSchemes:
+        customerId:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier of the customer.
+        merchantId:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for the merchant. A single merchant can be associated with multiple terminals, point-of-sale machines, and waiters.
+        savedPaymentMethods:
           type:
           - array
           - 'null'
-          description: Supported card schemes.
           items:
-            $ref: '#/components/schemas/CardScheme'
-        wallets:
-          type:
-          - array
-          - 'null'
-          description: List of supported payment wallets.
-          items:
-            $ref: '#/components/schemas/WalletPaymentOption'
-    CardDetails:
-      type: object
-      properties:
-        pan:
-          description: 'The masked primary account number (PAN) of the customer''s saved card.
-
-            '
-          type: string
-        expiryDate:
-          description: The expiry date of the card saved by the customer.
-          type: string
-        scheme:
-          $ref: '#/components/schemas/CardScheme'
-      additionalProperties: false
-    SearchCustomerRequest:
-      type: object
-      additionalProperties: false
-      description: 'A cursor for use in pagination. '
-      properties:
-        limit:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 100
-          example: 20
-          default: 50
-          description: The maximum number of results to be returned in a single page.
-        before:
-          type:
-          - string
-          - 'null'
-          maxLength: 200
-          description: A cursor for use in pagination for the previous page. `before` and `after` are mutually exclusive. Only one of these may be used.
-        after:
-          type:
-          - string
-          - 'null'
-          maxLength: 200
-          description: 'A cursor for use in pagination for the next page. `before` and `after` are mutually exclusive. Only one of these may be used.
-
-            '
-    CustomerPaymentMethod:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          description: The unique identifier of the customer's saved payment method.
-        cardDetails:
-          description: The card details saved by the customer.
+            $ref: '#/components/schemas/CustomerPaymentMethod'
+          description: List of the customer saved payment methods.
+        supportedPaymentMethods:
           oneOf:
-          - $ref: '#/components/schemas/CardDetails'
-    CreateCustomerRequest:
-      type: object
-      additionalProperties: false
+          - $ref: '#/components/schemas/SupportedPaymentMethods'
+          description: Supported payment methods.
       example:
-        name: Alex
-        emailAddress: alex@dojo.com
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          maxLength: 100
-          description: The customer's name.
-        shippingAddress:
-          oneOf:
-          - $ref: '#/components/schemas/Address'
-          description: The recipient's shipping address.
-        billingAddress:
-          oneOf:
-          - $ref: '#/components/schemas/Address'
-          description: The recipient's invoicing address.
-        emailAddress:
-          type:
-          - string
-          - 'null'
-          maxLength: 254
-          description: The customer's email address.
-        phoneNumber:
-          maxLength: 50
-          minLength: 5
-          type:
-          - string
-          - 'null'
-          description: The customer's phone number.
-        vatNumber:
-          type:
-          - string
-          - 'null'
-          maxLength: 50
-          description: The customer's VAT number.
-    UpdateCustomerRequest:
-      type: object
-      additionalProperties: false
-      example:
-        phoneNumber: 078976534161
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: The customer's name.
-        billingAddress:
-          oneOf:
-          - $ref: '#/components/schemas/Address'
-          description: The recipient's invoicing address.
-        shippingAddress:
-          oneOf:
-          - $ref: '#/components/schemas/Address'
-          description: The recipient's shipping address.
-        emailAddress:
-          type:
-          - string
-          - 'null'
-          description: The customer's email address.
-        phoneNumber:
-          type:
-          - string
-          - 'null'
-          description: The customer's phone number.
-        vatNumber:
-          type:
-          - string
-          - 'null'
-          description: The customer's VAT number.
+        customerId: cust_qNkU6yob0vOMxUlb2oy123
+        merchantId: '123456789'
+        savedPaymentMethods:
+        - id: pm_12345
+          cardDetails:
+            pan: 52000000****0056
+            expiryDate: '2024-12-31'
+            scheme: MASTERCARD
+        supportedPaymentMethods:
+          cardSchemes:
+          - VISA
+          - MASTERCARD
+          - MAESTRO
+          - DISCOVER
+          - DCI
+          - AMEX
+          wallets:
+          - APPLE_PAY
+          - GOOGLE_PAY
     CustomerSecret:
       type: object
       additionalProperties: false

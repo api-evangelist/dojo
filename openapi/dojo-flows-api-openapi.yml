@@ -68,6 +68,16 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    RunFlowRequest:
+      type: object
+      properties:
+        flow:
+          type: string
+          description: the name of the flow as returned by the /flows endpoint
+        params:
+          type: object
+      required:
+      - flow
     Param:
       type: object
       properties:
@@ -86,6 +96,24 @@ components:
       - type
       - required
       - description
+    FlowDescription:
+      type: object
+      properties:
+        name:
+          type: string
+        params:
+          type: array
+          items:
+            $ref: '#/components/schemas/Param'
+      required:
+      - name
+    Status:
+      type: string
+      enum:
+      - SUCCESS
+      - FAILURE
+      - TIMED_OUT
+      - IN_PROGRESS
     StepResult:
       type: object
       properties:
@@ -138,31 +166,3 @@ components:
       - flowName
       - status
       - startedAt
-    Status:
-      type: string
-      enum:
-      - SUCCESS
-      - FAILURE
-      - TIMED_OUT
-      - IN_PROGRESS
-    FlowDescription:
-      type: object
-      properties:
-        name:
-          type: string
-        params:
-          type: array
-          items:
-            $ref: '#/components/schemas/Param'
-      required:
-      - name
-    RunFlowRequest:
-      type: object
-      properties:
-        flow:
-          type: string
-          description: the name of the flow as returned by the /flows endpoint
-        params:
-          type: object
-      required:
-      - flow

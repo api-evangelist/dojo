@@ -120,38 +120,6 @@ paths:
       summary: Retrieve a refund
 components:
   schemas:
-    CreateRefundRequest:
-      description: The create refund request object.
-      required:
-      - amount
-      type: object
-      properties:
-        amount:
-          type: integer
-          format: int64
-          description: The refund amount.
-        previousTransactionId:
-          type:
-          - string
-          - 'null'
-          maxLength: 100
-          description: The unique identifier for the previous transaction.
-        refundReason:
-          description: The reason for the refund.
-          maxLength: 1024
-          type:
-          - string
-          - 'null'
-        notes:
-          description: A description for the refund, if applicable.
-          maxLength: 4096
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-      example:
-        amount: 1000
-        refundReason: Demo refund
     ProblemDetails:
       type: object
       description: Dojo follows the error response format proposed in [RFC 7807](https://datatracker.ietf.org/doc/html/rfc7807), also known as Problem Details for HTTP APIs.
@@ -186,6 +154,38 @@ components:
           type: object
           description: This field names any extension methods that have been configured to help handle errors handling functionality.
           additionalProperties: {}
+    CreateRefundRequest:
+      description: The create refund request object.
+      required:
+      - amount
+      type: object
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: The refund amount.
+        previousTransactionId:
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+          description: The unique identifier for the previous transaction.
+        refundReason:
+          description: The reason for the refund.
+          maxLength: 1024
+          type:
+          - string
+          - 'null'
+        notes:
+          description: A description for the refund, if applicable.
+          maxLength: 4096
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+      example:
+        amount: 1000
+        refundReason: Demo refund
     Refund:
       type: object
       additionalProperties: false

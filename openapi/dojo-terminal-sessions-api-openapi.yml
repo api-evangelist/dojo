@@ -963,7 +963,369 @@ paths:
       operationId: TerminalSession_Signature
       summary: Respond to a signature verification request
 components:
+  parameters:
+    ResellerId:
+      name: reseller-id
+      description: This identifies the reseller of the EPOS. This may be the same as the `software-house-id` if they are also the seller.
+      schema:
+        type: string
+      example: reseller1
+      in: header
+      required: false
+    Version:
+      name: version
+      in: header
+      required: true
+      schema:
+        type: string
+        format: date
+      example: '2026-02-27'
+      description: The API version with format yyyy-mm-dd. The current version is `2026-02-27`.
+    SoftwareHouseId:
+      name: software-house-id
+      description: This field shows the EPOS company whose software is generating the request. This value should not be configurable as it will remain the same for all customers using particular EPOS software.
+      schema:
+        type: string
+      example: softwareHouse1
+      in: header
+      required: true
   schemas:
+    TerminalSessionStatusEvent:
+      description: The current progress of the terminal session, including whether it is in-progress or finished.
+      required:
+      - status
+      - createdAt
+      - debugMessage
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/TerminalSessionStatus'
+        createdAt:
+          format: date-time
+          description: 'The creation date, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
+
+            '
+          type: string
+        debugMessage:
+          description: 'The message to troubleshoot the terminal session by revealing the internal state of the terminal.
+
+            '
+          type: string
+    TerminalSessionDetails:
+      description: Details about the terminal session, including which type of transaction it is associated with.
+      required:
+      - sessionType
+      type: object
+      anyOf:
+      - required:
+        - sale
+        title: Sale
+      - required:
+        - unlinkedRefund
+        title: Unlinked Refund
+      - required:
+        - matchedRefund
+        title: Matched Refund
+      properties:
+        unlinkedRefund:
+          $ref: '#/components/schemas/TerminalSessionUnlinkedRefundDetails'
+        matchedRefund:
+          $ref: '#/components/schemas/TerminalSessionMatchedRefundDetails'
+        sale:
+          $ref: '#/components/schemas/TerminalSessionSaleDetails'
+          x-displayName: Sale
+        sessionType:
+          $ref: '#/components/schemas/TerminalSessionType'
+    TerminalSessionPaymentEntryMode:
+      type: string
+      description: 'Entry mode of the payment.
+
+        (Contactless, ContactChip, Magstripe, ManualEntry, Unknown)'
+    TerminalSessionReceiptLine:
+      description: The value and configuration of the terminal session receipt line.
+      required:
+      - lineType
+      type: object
+      properties:
+        lineType:
+          $ref: '#/components/schemas/TerminalSessionReceiptLineType'
+        text:
+          $ref: '#/components/schemas/TerminalSessionReceiptText'
+        imageLogo:
+          $ref: '#/components/schemas/TerminalSessionReceiptImageLogo'
+    TerminalSessionPaymentVerificationMode:
+      type: string
+      description: 'Method used to verify that the person presenting the card is the
+
+        legitimate cardholder. The most common verification methods are PIN and signature.
+
+        (Pin, Signature, Device, None)'
+    TerminalSessionUnlinkedRefundDetails:
+      description: A refund which is not linked to any previous transaction.
+      required:
+      - amount
+      type: object
+      properties:
+        amount:
+          allOf:
+          - $ref: '#/components/schemas/Money'
+          description: The value of the unlinked refund, in minor units.
+        cardholderNotPresent:
+          description: Indicates whether this transaction should be completed as Cardholder Not Present (CNP), with manual entry of card details. If the flag is true, the card machine skips the `Present Card` screen and goes directly into Key Card Number.
+          type: boolean
+    Card:
+      type: object
+      additionalProperties: false
+      properties:
+        cardNumber:
+          type:
+          - string
+          - 'null'
+          description: The card number.
+        cardName:
+          type:
+          - string
+          - 'null'
+          description: The name of the cardholder.
+        expiryDate:
+          type:
+          - string
+          - 'null'
+          description: If available, the expiry date of the card in the format 'MM/YY'.
+        cardType:
+          type:
+          - string
+          - 'null'
+          description: The card scheme.
+        cardFundingType:
+          $ref: '#/components/schemas/CardFundingType'
+        last4PAN:
+          type:
+          - string
+          - 'null'
+          description: The last four digits of the Primary Account Number. For Visa and Mastercard, this will be the four numbers at the end of the sixteen-digit card number.
+        entryMode:
+          $ref: '#/components/schemas/TerminalSessionPaymentEntryMode'
+        verificationMethod:
+          $ref: '#/components/schemas/TerminalSessionPaymentVerificationMode'
+    CreateTerminalSessionRequest:
+      type: object
+      description: Create a terminal session, and decide what sort of transaction it is going to be associated with. Note that only one of the refund types can be specified, and this selection must be the same as the `sessionType`.
+      additionalProperties: false
+      title: CreateTerminalSessionRequest
+      required:
+      - terminalId
+      - details
+      properties:
+        terminalId:
+          description: The unique identifier for the terminal.
+          type: string
+          example: tm_sandbox_amxm22C23
+        details:
+          $ref: '#/components/schemas/TerminalSessionDetails'
+    TerminalSessionReceiptTextSize:
+      description: "Decide the size of included receipt text. \n"
+      enum:
+      - SizeHeader1
+      - SizeHeader2
+      - SizeBody
+      type: string
+    TerminalSessionReceipt:
+      description: The receipt object is a record of the transactions associated with a terminal session.
+      required:
+      - lines
+      type: object
+      properties:
+        lines:
+          description: The line items purchased by the customer.
+          type: array
+          items:
+            $ref: '#/components/schemas/TerminalSessionReceiptLine'
+    TerminalSessionReceiptText:
+      description: 'Edit the content of text included with the terminal session receipt, and configure the text''s appearance.
+
+        '
+      required:
+      - value
+      - size
+      - align
+      - emphasisBold
+      type: object
+      properties:
+        value:
+          description: 'This string field is for the actual receipt text body.
+
+            '
+          type: string
+        size:
+          $ref: '#/components/schemas/TerminalSessionReceiptTextSize'
+        align:
+          $ref: '#/components/schemas/TerminalSessionReceiptAlign'
+        emphasisBold:
+          description: 'Decide whether the terminal session receipt text is bold. True/false.
+
+            '
+          type: boolean
+    TerminalSessionReceiptAlign:
+      description: "Align the receipt text to the center, to the left, or to the right. \n"
+      enum:
+      - AlignLeft
+      - AlignCenter
+      - AlignRight
+      type: string
+    TerminalSessionSaleDetails:
+      description: Use this field when creating a terminal session request to name a payment intent by its ID to associate with the session.
+      required:
+      - paymentIntentId
+      type: object
+      properties:
+        paymentIntentId:
+          description: 'The unique identifier of the payment intent.
+
+            '
+          type: string
+          example: pi_sandbox_RBMHTJ4fIkmSppDILZVCGw
+    PaymentDetails:
+      type: object
+      additionalProperties: false
+      description: The payment details object.
+      properties:
+        transactionId:
+          type:
+          - string
+          - 'null'
+          description: 'The unique identifier of the transaction.
+
+            '
+        transactionDateTime:
+          type:
+          - string
+          - 'null'
+          description: The date and time of the payment in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
+        message:
+          type:
+          - string
+          - 'null'
+          description: The description of the operation.
+        paymentMethodId:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier of the customer payment method.
+        authCode:
+          type:
+          - string
+          - 'null'
+          description: The acquirer's authorization code. This code is returned on a successful transaction.
+        card:
+          oneOf:
+          - $ref: '#/components/schemas/Card'
+          description: Card details, including card number, scheme, and expiry date.
+        avsResult:
+          type:
+          - string
+          - 'null'
+          description: 'The result of the Address Verification Service (AVS) check.
+
+            '
+    TerminalSessionStatus:
+      description: The current status of the terminal session. A finalized, successful session will be `Captured`.
+      enum:
+      - InitiateRequested
+      - Initiated
+      - Authorized
+      - Captured
+      - CancelRequested
+      - Canceled
+      - SignatureVerificationAccepted
+      - SignatureVerificationRejected
+      - SignatureVerificationRequired
+      - Expired
+      - Declined
+      type: string
+    TerminalSessionNotificationEvent:
+      description: This event is a timestamped record of when a notification was issued.
+      required:
+      - notificationType
+      - createdAt
+      type: object
+      properties:
+        notificationType:
+          $ref: '#/components/schemas/TerminalSessionNotificationType'
+        createdAt:
+          format: date-time
+          description: This is when the terminal session was created, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
+          type: string
+    Money:
+      description: 'The amount intended to be collected by this payment intent excluding `tipsAmount` `serviceChargeAmount` and `cashbackAmount`.
+
+        '
+      type: object
+      additionalProperties: false
+      required:
+      - value
+      - currencyCode
+      properties:
+        value:
+          description: The amount in [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) minor units, for example, "100" for 1.00 GBP.
+          type: integer
+          format: int64
+        currencyCode:
+          description: Three-letter currency code in [ISO 4217 alpha-3](https://www.iso.org/iso-4217-currency-codes.html) format. Accepts `GBP` and `EUR`.
+          type: string
+          maxLength: 10
+          minLength: 1
+    CardFundingType:
+      type: string
+      description: 'The main funding types are credit, debit, pre-paid, and charge. '
+    TerminalSessionNotificationType:
+      description: 'Terminal notifications.
+
+        (Approved, Declined, InsertCard, EnterPin, PleaseWait, PresentCard, PresentOnlyOneCard, RemoveCard, CardUnsupported, CardError, ReEnterCard)'
+      type: string
+    TerminalSessionMatchedRefundDetails:
+      description: A matched refund is associated with the payment intent of the initial transaction.
+      required:
+      - paymentIntentId
+      type: object
+      properties:
+        paymentIntentId:
+          type: string
+          description: 'The unique identifier of the payment intent.
+
+            '
+        amount:
+          allOf:
+          - $ref: '#/components/schemas/Money'
+          description: The value of the linked refund, in minor units.
+    TerminalSessionReceiptLineType:
+      description: These are the line types that will form the physical receipt.
+      enum:
+      - Text
+      - LogoImage
+      - NewLine
+      - SingleLineSeperator
+      - DoubleLineSeperator
+      type: string
+    TerminalSessionReceiptImageLogo:
+      description: 'An optional logo can be added to the terminals receipt. '
+      required:
+      - value
+      - align
+      type: object
+      properties:
+        value:
+          description: ''
+          type: string
+        align:
+          $ref: '#/components/schemas/TerminalSessionReceiptAlign'
+    TerminalSessionType:
+      description: Decide which type of transaction a terminal session is going to be associated with.
+      enum:
+      - Sale
+      - MatchedRefund
+      - UnlinkedRefund
+      type: string
     ProblemDetailsTerminals:
       type: object
       title: ProblemDetails
@@ -1008,138 +1370,16 @@ components:
           - 'null'
           description: A human-readable explanation of errors.
           additionalProperties: {}
-    TerminalSessionReceiptImageLogo:
-      description: 'An optional logo can be added to the terminals receipt. '
+    SignatureVerificationRequest:
+      title: SignatureVerificationRequest
+      description: Request to the EPOS to confirm whether the signature has been accepted or not in a payment that requires signature verification. This request must be replied to within a set period of time defined by the timeout property. If no reply to this request is received (i.e. no confirmation of acceptance), the signature will automatically be accepted.
       required:
-      - value
-      - align
+      - accepted
       type: object
       properties:
-        value:
-          description: ''
-          type: string
-        align:
-          $ref: '#/components/schemas/TerminalSessionReceiptAlign'
-    TerminalSessionDetails:
-      description: Details about the terminal session, including which type of transaction it is associated with.
-      required:
-      - sessionType
-      type: object
-      anyOf:
-      - required:
-        - sale
-        title: Sale
-      - required:
-        - unlinkedRefund
-        title: Unlinked Refund
-      - required:
-        - matchedRefund
-        title: Matched Refund
-      properties:
-        unlinkedRefund:
-          $ref: '#/components/schemas/TerminalSessionUnlinkedRefundDetails'
-        matchedRefund:
-          $ref: '#/components/schemas/TerminalSessionMatchedRefundDetails'
-        sale:
-          $ref: '#/components/schemas/TerminalSessionSaleDetails'
-          x-displayName: Sale
-        sessionType:
-          $ref: '#/components/schemas/TerminalSessionType'
-    Card:
-      type: object
-      additionalProperties: false
-      properties:
-        cardNumber:
-          type:
-          - string
-          - 'null'
-          description: The card number.
-        cardName:
-          type:
-          - string
-          - 'null'
-          description: The name of the cardholder.
-        expiryDate:
-          type:
-          - string
-          - 'null'
-          description: If available, the expiry date of the card in the format 'MM/YY'.
-        cardType:
-          type:
-          - string
-          - 'null'
-          description: The card scheme.
-        cardFundingType:
-          $ref: '#/components/schemas/CardFundingType'
-        last4PAN:
-          type:
-          - string
-          - 'null'
-          description: The last four digits of the Primary Account Number. For Visa and Mastercard, this will be the four numbers at the end of the sixteen-digit card number.
-        entryMode:
-          $ref: '#/components/schemas/TerminalSessionPaymentEntryMode'
-        verificationMethod:
-          $ref: '#/components/schemas/TerminalSessionPaymentVerificationMode'
-    PaymentDetails:
-      type: object
-      additionalProperties: false
-      description: The payment details object.
-      properties:
-        transactionId:
-          type:
-          - string
-          - 'null'
-          description: 'The unique identifier of the transaction.
-
-            '
-        transactionDateTime:
-          type:
-          - string
-          - 'null'
-          description: The date and time of the payment in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
-        message:
-          type:
-          - string
-          - 'null'
-          description: The description of the operation.
-        paymentMethodId:
-          type:
-          - string
-          - 'null'
-          description: The unique identifier of the customer payment method.
-        authCode:
-          type:
-          - string
-          - 'null'
-          description: The acquirer's authorization code. This code is returned on a successful transaction.
-        card:
-          oneOf:
-          - $ref: '#/components/schemas/Card'
-          description: Card details, including card number, scheme, and expiry date.
-        avsResult:
-          type:
-          - string
-          - 'null'
-          description: 'The result of the Address Verification Service (AVS) check.
-
-            '
-    TerminalSessionReceiptLine:
-      description: The value and configuration of the terminal session receipt line.
-      required:
-      - lineType
-      type: object
-      properties:
-        lineType:
-          $ref: '#/components/schemas/TerminalSessionReceiptLineType'
-        text:
-          $ref: '#/components/schemas/TerminalSessionReceiptText'
-        imageLogo:
-          $ref: '#/components/schemas/TerminalSessionReceiptImageLogo'
-    TerminalSessionNotificationType:
-      description: 'Terminal notifications.
-
-        (Approved, Declined, InsertCard, EnterPin, PleaseWait, PresentCard, PresentOnlyOneCard, RemoveCard, CardUnsupported, CardError, ReEnterCard)'
-      type: string
+        accepted:
+          description: True/false. Failed signature verification requests will be false.
+          type: boolean
     TerminalSession:
       description: This is the terminal session object, containing detailed information about the history of the terminal session, and its current status.
       required:
@@ -1195,246 +1435,6 @@ components:
           oneOf:
           - $ref: '#/components/schemas/PaymentDetails'
           description: These details about the payment will only populate once the status of the transaction is finalized.
-    TerminalSessionStatus:
-      description: The current status of the terminal session. A finalized, successful session will be `Captured`.
-      enum:
-      - InitiateRequested
-      - Initiated
-      - Authorized
-      - Captured
-      - CancelRequested
-      - Canceled
-      - SignatureVerificationAccepted
-      - SignatureVerificationRejected
-      - SignatureVerificationRequired
-      - Expired
-      - Declined
-      type: string
-    TerminalSessionReceiptLineType:
-      description: These are the line types that will form the physical receipt.
-      enum:
-      - Text
-      - LogoImage
-      - NewLine
-      - SingleLineSeperator
-      - DoubleLineSeperator
-      type: string
-    TerminalSessionReceipt:
-      description: The receipt object is a record of the transactions associated with a terminal session.
-      required:
-      - lines
-      type: object
-      properties:
-        lines:
-          description: The line items purchased by the customer.
-          type: array
-          items:
-            $ref: '#/components/schemas/TerminalSessionReceiptLine'
-    TerminalSessionUnlinkedRefundDetails:
-      description: A refund which is not linked to any previous transaction.
-      required:
-      - amount
-      type: object
-      properties:
-        amount:
-          allOf:
-          - $ref: '#/components/schemas/Money'
-          description: The value of the unlinked refund, in minor units.
-        cardholderNotPresent:
-          description: Indicates whether this transaction should be completed as Cardholder Not Present (CNP), with manual entry of card details. If the flag is true, the card machine skips the `Present Card` screen and goes directly into Key Card Number.
-          type: boolean
-    CreateTerminalSessionRequest:
-      type: object
-      description: Create a terminal session, and decide what sort of transaction it is going to be associated with. Note that only one of the refund types can be specified, and this selection must be the same as the `sessionType`.
-      additionalProperties: false
-      title: CreateTerminalSessionRequest
-      required:
-      - terminalId
-      - details
-      properties:
-        terminalId:
-          description: The unique identifier for the terminal.
-          type: string
-          example: tm_sandbox_amxm22C23
-        details:
-          $ref: '#/components/schemas/TerminalSessionDetails'
-    TerminalSessionPaymentVerificationMode:
-      type: string
-      description: 'Method used to verify that the person presenting the card is the
-
-        legitimate cardholder. The most common verification methods are PIN and signature.
-
-        (Pin, Signature, Device, None)'
-    TerminalSessionSaleDetails:
-      description: Use this field when creating a terminal session request to name a payment intent by its ID to associate with the session.
-      required:
-      - paymentIntentId
-      type: object
-      properties:
-        paymentIntentId:
-          description: 'The unique identifier of the payment intent.
-
-            '
-          type: string
-          example: pi_sandbox_RBMHTJ4fIkmSppDILZVCGw
-    TerminalSessionReceiptTextSize:
-      description: "Decide the size of included receipt text. \n"
-      enum:
-      - SizeHeader1
-      - SizeHeader2
-      - SizeBody
-      type: string
-    TerminalSessionStatusEvent:
-      description: The current progress of the terminal session, including whether it is in-progress or finished.
-      required:
-      - status
-      - createdAt
-      - debugMessage
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/TerminalSessionStatus'
-        createdAt:
-          format: date-time
-          description: 'The creation date, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
-
-            '
-          type: string
-        debugMessage:
-          description: 'The message to troubleshoot the terminal session by revealing the internal state of the terminal.
-
-            '
-          type: string
-    TerminalSessionType:
-      description: Decide which type of transaction a terminal session is going to be associated with.
-      enum:
-      - Sale
-      - MatchedRefund
-      - UnlinkedRefund
-      type: string
-    TerminalSessionMatchedRefundDetails:
-      description: A matched refund is associated with the payment intent of the initial transaction.
-      required:
-      - paymentIntentId
-      type: object
-      properties:
-        paymentIntentId:
-          type: string
-          description: 'The unique identifier of the payment intent.
-
-            '
-        amount:
-          allOf:
-          - $ref: '#/components/schemas/Money'
-          description: The value of the linked refund, in minor units.
-    CardFundingType:
-      type: string
-      description: 'The main funding types are credit, debit, pre-paid, and charge. '
-    TerminalSessionReceiptAlign:
-      description: "Align the receipt text to the center, to the left, or to the right. \n"
-      enum:
-      - AlignLeft
-      - AlignCenter
-      - AlignRight
-      type: string
-    TerminalSessionPaymentEntryMode:
-      type: string
-      description: 'Entry mode of the payment.
-
-        (Contactless, ContactChip, Magstripe, ManualEntry, Unknown)'
-    TerminalSessionNotificationEvent:
-      description: This event is a timestamped record of when a notification was issued.
-      required:
-      - notificationType
-      - createdAt
-      type: object
-      properties:
-        notificationType:
-          $ref: '#/components/schemas/TerminalSessionNotificationType'
-        createdAt:
-          format: date-time
-          description: This is when the terminal session was created, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format.
-          type: string
-    Money:
-      description: 'The amount intended to be collected by this payment intent excluding `tipsAmount` `serviceChargeAmount` and `cashbackAmount`.
-
-        '
-      type: object
-      additionalProperties: false
-      required:
-      - value
-      - currencyCode
-      properties:
-        value:
-          description: The amount in [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) minor units, for example, "100" for 1.00 GBP.
-          type: integer
-          format: int64
-        currencyCode:
-          description: Three-letter currency code in [ISO 4217 alpha-3](https://www.iso.org/iso-4217-currency-codes.html) format. Accepts `GBP` and `EUR`.
-          type: string
-          maxLength: 10
-          minLength: 1
-    SignatureVerificationRequest:
-      title: SignatureVerificationRequest
-      description: Request to the EPOS to confirm whether the signature has been accepted or not in a payment that requires signature verification. This request must be replied to within a set period of time defined by the timeout property. If no reply to this request is received (i.e. no confirmation of acceptance), the signature will automatically be accepted.
-      required:
-      - accepted
-      type: object
-      properties:
-        accepted:
-          description: True/false. Failed signature verification requests will be false.
-          type: boolean
-    TerminalSessionReceiptText:
-      description: 'Edit the content of text included with the terminal session receipt, and configure the text''s appearance.
-
-        '
-      required:
-      - value
-      - size
-      - align
-      - emphasisBold
-      type: object
-      properties:
-        value:
-          description: 'This string field is for the actual receipt text body.
-
-            '
-          type: string
-        size:
-          $ref: '#/components/schemas/TerminalSessionReceiptTextSize'
-        align:
-          $ref: '#/components/schemas/TerminalSessionReceiptAlign'
-        emphasisBold:
-          description: 'Decide whether the terminal session receipt text is bold. True/false.
-
-            '
-          type: boolean
-  parameters:
-    Version:
-      name: version
-      in: header
-      required: true
-      schema:
-        type: string
-        format: date
-      example: '2026-02-27'
-      description: The API version with format yyyy-mm-dd. The current version is `2026-02-27`.
-    ResellerId:
-      name: reseller-id
-      description: This identifies the reseller of the EPOS. This may be the same as the `software-house-id` if they are also the seller.
-      schema:
-        type: string
-      example: reseller1
-      in: header
-      required: false
-    SoftwareHouseId:
-      name: software-house-id
-      description: This field shows the EPOS company whose software is generating the request. This value should not be configurable as it will remain the same for all customers using particular EPOS software.
-      schema:
-        type: string
-      example: softwareHouse1
-      in: header
-      required: true
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

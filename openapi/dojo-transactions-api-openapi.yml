@@ -106,78 +106,19 @@ components:
           - 'null'
           description: A human-readable explanation of errors.
           additionalProperties: {}
-    SearchTransactionsRequest:
+    PagedResultOfTransaction:
       type: object
       additionalProperties: false
-      description: ''
-      required:
-      - startDate
-      - endDate
       properties:
-        startDate:
+        data:
           type:
-          - string
+          - array
           - 'null'
-          format: date-time
-          description: 'A date and time to display transaction results from, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format. The span between the start and end dates cannot exceed 7 days.
+          description: 'An array of transactions.
 
             '
-        endDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: 'A date and time to display transaction results until, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format. The span between the start and end dates cannot exceed 7 days.
-
-            '
-        cursor:
-          oneOf:
-          - $ref: '#/components/schemas/Cursor'
-          description: A cursor for use in pagination.
-      example:
-        statuses:
-        - Authorized
-        startDate: '2019-08-24T14:15:22Z'
-        endDate: '2023-08-24T14:15:22Z'
-        cursor:
-          limit: 20
-    TerminalEntryModeType:
-      type: string
-      description: Indicates the entry mode used on a payment made using a terminal.
-      title: TerminalEntryModeType
-      enum:
-      - Chip
-      - ContactLess
-      - Swipe
-      - Keyed
-      - Unknown
-    TransactionType:
-      type: string
-      description: Types of transaction.
-      title: TransactionType
-      enum:
-      - Sale
-      - Refund
-      - PreAuth
-      - Collection
-    PagedTransaction:
-      allOf:
-      - $ref: '#/components/schemas/PagedResultOfTransaction'
-      - type: object
-        additionalProperties: false
-    Cursor:
-      type: object
-      additionalProperties: false
-      description: A cursor for use in pagination.
-      properties:
-        limit:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 100
-          example: 20
-          default: 50
-          description: The maximum number of results that can be returned in a single page.
+          items:
+            $ref: '#/components/schemas/Transaction'
         before:
           type:
           - string
@@ -192,19 +133,52 @@ components:
           description: 'A cursor for use in pagination. Sends you to the next page. `before` and `after` are
 
             mutually exclusive—only one of these may be used.'
-    TransactionStatus:
+    Card:
+      title: Card
+      type: object
+      example:
+        number: '**********0027'
+        fundingType: Debit
+        type: Mastercard
+      properties:
+        number:
+          type:
+          - string
+          - 'null'
+          description: The card number. Masked for security.
+        fundingType:
+          type:
+          - string
+          - 'null'
+          description: 'Card funding type for example: `Credit`, `Debit`, etc...'
+        type:
+          type:
+          - string
+          - 'null'
+          description: 'Card scheme for example: `Visa`, `Mastercard`, etc.'
+    TransactionType:
       type: string
-      description: Current status of the transaction.
-      title: TransactionStatus
+      description: Types of transaction.
+      title: TransactionType
       enum:
-      - Authorized
-      - Declined
-      - Held
-      - UnderReview
-      - Reversed
-      - AwaitingCollection
-      - Released
-      - Expired
+      - Sale
+      - Refund
+      - PreAuth
+      - Collection
+    PaymentProduct:
+      type: string
+      description: The Dojo payment product associated with this transaction.
+      title: PaymentProduct
+      enum:
+      - TapToPayOnIPhone
+      - DojoPocket
+      - Terminal
+      - OnlineCheckout
+      - VirtualTerminal
+      - PaymentLinks
+      - DojoBookings
+      - PayByQr
+      - Other
     Transaction:
       type: object
       additionalProperties: false
@@ -262,29 +236,6 @@ components:
           oneOf:
           - $ref: '#/components/schemas/PaymentDetails'
           description: The details of the payment associated with the transaction including payment product, card information, etc.
-    Card:
-      title: Card
-      type: object
-      example:
-        number: '**********0027'
-        fundingType: Debit
-        type: Mastercard
-      properties:
-        number:
-          type:
-          - string
-          - 'null'
-          description: The card number. Masked for security.
-        fundingType:
-          type:
-          - string
-          - 'null'
-          description: 'Card funding type for example: `Credit`, `Debit`, etc...'
-        type:
-          type:
-          - string
-          - 'null'
-          description: 'Card scheme for example: `Visa`, `Mastercard`, etc.'
     Money:
       title: Money
       type: object
@@ -304,47 +255,6 @@ components:
       required:
       - value
       - currencyCode
-    PagedResultOfTransaction:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type:
-          - array
-          - 'null'
-          description: 'An array of transactions.
-
-            '
-          items:
-            $ref: '#/components/schemas/Transaction'
-        before:
-          type:
-          - string
-          - 'null'
-          description: 'A cursor for use in pagination. Returns you to the previous page. `before` and `after`
-
-            are mutually exclusive—only one of these may be used.'
-        after:
-          type:
-          - string
-          - 'null'
-          description: 'A cursor for use in pagination. Sends you to the next page. `before` and `after` are
-
-            mutually exclusive—only one of these may be used.'
-    PaymentProduct:
-      type: string
-      description: The Dojo payment product associated with this transaction.
-      title: PaymentProduct
-      enum:
-      - TapToPayOnIPhone
-      - DojoPocket
-      - Terminal
-      - OnlineCheckout
-      - VirtualTerminal
-      - PaymentLinks
-      - DojoBookings
-      - PayByQr
-      - Other
     PaymentDetails:
       title: PaymentDetails
       type: object
@@ -368,6 +278,96 @@ components:
           - string
           - 'null'
           description: The ID of the terminal used for payment.
+    TerminalEntryModeType:
+      type: string
+      description: Indicates the entry mode used on a payment made using a terminal.
+      title: TerminalEntryModeType
+      enum:
+      - Chip
+      - ContactLess
+      - Swipe
+      - Keyed
+      - Unknown
+    SearchTransactionsRequest:
+      type: object
+      additionalProperties: false
+      description: ''
+      required:
+      - startDate
+      - endDate
+      properties:
+        startDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: 'A date and time to display transaction results from, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format. The span between the start and end dates cannot exceed 7 days.
+
+            '
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: 'A date and time to display transaction results until, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format. The span between the start and end dates cannot exceed 7 days.
+
+            '
+        cursor:
+          oneOf:
+          - $ref: '#/components/schemas/Cursor'
+          description: A cursor for use in pagination.
+      example:
+        statuses:
+        - Authorized
+        startDate: '2019-08-24T14:15:22Z'
+        endDate: '2023-08-24T14:15:22Z'
+        cursor:
+          limit: 20
+    PagedTransaction:
+      allOf:
+      - $ref: '#/components/schemas/PagedResultOfTransaction'
+      - type: object
+        additionalProperties: false
+    TransactionStatus:
+      type: string
+      description: Current status of the transaction.
+      title: TransactionStatus
+      enum:
+      - Authorized
+      - Declined
+      - Held
+      - UnderReview
+      - Reversed
+      - AwaitingCollection
+      - Released
+      - Expired
+    Cursor:
+      type: object
+      additionalProperties: false
+      description: A cursor for use in pagination.
+      properties:
+        limit:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 100
+          example: 20
+          default: 50
+          description: The maximum number of results that can be returned in a single page.
+        before:
+          type:
+          - string
+          - 'null'
+          description: 'A cursor for use in pagination. Returns you to the previous page. `before` and `after`
+
+            are mutually exclusive—only one of these may be used.'
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'A cursor for use in pagination. Sends you to the next page. `before` and `after` are
+
+            mutually exclusive—only one of these may be used.'
   securitySchemes:
     ApiKeyAuth:
       in: header
