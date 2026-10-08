@@ -50,10 +50,10 @@ tags:
 - Acquiring
 - Card Payments
 - In-Person Payments
-- Terminal
 - Point-of-Sale
 - Webhook
 - Real-Time
+- Payment Terminals
 tags_raw:
 - Payments
 - United Kingdom
@@ -62,10 +62,10 @@ tags_raw:
 - Acquiring
 - Card Payments
 - In-Person Payments
-- Terminals
 - Point of Sale
 - Webhooks
 - Real-Time
+- Payment Terminals
 created: '2026-07-24'
 modified: '2026-07-24'
 specificationVersion: '0.23'
@@ -885,3 +885,5 @@ common:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-tags-removed:
+- Terminal
