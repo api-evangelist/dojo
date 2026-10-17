@@ -68,16 +68,17 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    RunFlowRequest:
+    FlowDescription:
       type: object
       properties:
-        flow:
+        name:
           type: string
-          description: the name of the flow as returned by the /flows endpoint
         params:
-          type: object
+          type: array
+          items:
+            $ref: '#/components/schemas/Param'
       required:
-      - flow
+      - name
     Param:
       type: object
       properties:
@@ -96,17 +97,6 @@ components:
       - type
       - required
       - description
-    FlowDescription:
-      type: object
-      properties:
-        name:
-          type: string
-        params:
-          type: array
-          items:
-            $ref: '#/components/schemas/Param'
-      required:
-      - name
     Status:
       type: string
       enum:
@@ -114,29 +104,16 @@ components:
       - FAILURE
       - TIMED_OUT
       - IN_PROGRESS
-    StepResult:
+    RunFlowRequest:
       type: object
       properties:
-        name:
+        flow:
           type: string
-        status:
-          $ref: '#/components/schemas/Status'
-        additionalInformation:
-          type: array
-          items:
-            type: string
-        startedAt:
-          format: date-time
-          type: string
-          example: '2024-03-30T12:00:00Z'
-        finishedAt:
-          format: date-time
-          type: string
-          example: '2024-03-30T12:00:00Z'
+          description: the name of the flow as returned by the /flows endpoint
+        params:
+          type: object
       required:
-      - name
-      - status
-      - startedAt
+      - flow
     FlowResult:
       type: object
       properties:
@@ -164,5 +141,28 @@ components:
       required:
       - flowID
       - flowName
+      - status
+      - startedAt
+    StepResult:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/Status'
+        additionalInformation:
+          type: array
+          items:
+            type: string
+        startedAt:
+          format: date-time
+          type: string
+          example: '2024-03-30T12:00:00Z'
+        finishedAt:
+          format: date-time
+          type: string
+          example: '2024-03-30T12:00:00Z'
+      required:
+      - name
       - status
       - startedAt

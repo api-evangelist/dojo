@@ -77,6 +77,29 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
 components:
   schemas:
+    CreateCaptureRequest:
+      description: The capture request object.
+      required:
+      - amount
+      type: object
+      example:
+        amount: 2000
+      properties:
+        amount:
+          type: integer
+          format: int64
+          example:
+            amount: 2000
+          description: The capture amount. You can capture a full or partial amount. Multiple partial captures can be made on the same total.
+        tipsAmount:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          example:
+            tipsAmount: 100
+          description: The tip amount.
+      additionalProperties: false
     ProblemDetails:
       type: object
       description: Dojo follows the error response format proposed in [RFC 7807](https://datatracker.ietf.org/doc/html/rfc7807), also known as Problem Details for HTTP APIs.
@@ -111,29 +134,6 @@ components:
           type: object
           description: This field names any extension methods that have been configured to help handle errors handling functionality.
           additionalProperties: {}
-    CreateCaptureRequest:
-      description: The capture request object.
-      required:
-      - amount
-      type: object
-      example:
-        amount: 2000
-      properties:
-        amount:
-          type: integer
-          format: int64
-          example:
-            amount: 2000
-          description: The capture amount. You can capture a full or partial amount. Multiple partial captures can be made on the same total.
-        tipsAmount:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          example:
-            tipsAmount: 100
-          description: The tip amount.
-      additionalProperties: false
     Capture:
       type: object
       description: The capture response object.

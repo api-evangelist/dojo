@@ -120,6 +120,38 @@ paths:
       summary: Retrieve a refund
 components:
   schemas:
+    Refund:
+      type: object
+      additionalProperties: false
+      properties:
+        paymentIntentId:
+          type:
+          - string
+          - 'null'
+          description: 'The unique identifier of the payment intent.
+
+            '
+        refundId:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for the refund. It will be used to reference this refund in all operations. It is recommended to use a UUID.
+        refundReason:
+          type:
+          - string
+          - 'null'
+          description: The reason for the refund.
+        notes:
+          type:
+          - string
+          - 'null'
+          description: A description for the refund, if applicable.
+      description: The refund response object.
+      example:
+        paymentIntentId: pi_sandbox_RBMHTJ4fIkmSppDILZVCGw
+        refundId: rfnd_127usj
+        refundReason: Demo refund
+        notes: null
     ProblemDetails:
       type: object
       description: Dojo follows the error response format proposed in [RFC 7807](https://datatracker.ietf.org/doc/html/rfc7807), also known as Problem Details for HTTP APIs.
@@ -186,38 +218,6 @@ components:
       example:
         amount: 1000
         refundReason: Demo refund
-    Refund:
-      type: object
-      additionalProperties: false
-      properties:
-        paymentIntentId:
-          type:
-          - string
-          - 'null'
-          description: 'The unique identifier of the payment intent.
-
-            '
-        refundId:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for the refund. It will be used to reference this refund in all operations. It is recommended to use a UUID.
-        refundReason:
-          type:
-          - string
-          - 'null'
-          description: The reason for the refund.
-        notes:
-          type:
-          - string
-          - 'null'
-          description: A description for the refund, if applicable.
-      description: The refund response object.
-      example:
-        paymentIntentId: pi_sandbox_RBMHTJ4fIkmSppDILZVCGw
-        refundId: rfnd_127usj
-        refundReason: Demo refund
-        notes: null
   parameters:
     Version:
       name: version

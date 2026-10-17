@@ -60,30 +60,6 @@ paths:
       - $ref: '#/components/parameters/DeviceType'
 components:
   schemas:
-    SearchTablesRequest:
-      description: ''
-      type: object
-      properties:
-        cursor:
-          $ref: '#/components/schemas/Cursor'
-        areaId:
-          description: ''
-          type: string
-        waiterId:
-          description: ''
-          type: string
-    EPOSError:
-      title: EPOSError
-      type: object
-      required:
-      - errorType
-      properties:
-        debugMessage:
-          type: string
-        traceId:
-          type: string
-        errorType:
-          $ref: '#/components/schemas/EPOSErrorType'
     Table:
       title: Root Type for Table
       description: ''
@@ -114,6 +90,18 @@ components:
         name: Table 12
         maxCovers: 4
         areaId: area_123
+    EPOSError:
+      title: EPOSError
+      type: object
+      required:
+      - errorType
+      properties:
+        debugMessage:
+          type: string
+        traceId:
+          type: string
+        errorType:
+          $ref: '#/components/schemas/EPOSErrorType'
     EPOSErrorType:
       type: string
       enum:
@@ -142,6 +130,18 @@ components:
             id: vwlxjfle0yxqt
       x-stoplight:
         id: bjkxvbo62zl42
+    SearchTablesRequest:
+      description: ''
+      type: object
+      properties:
+        cursor:
+          $ref: '#/components/schemas/Cursor'
+        areaId:
+          description: ''
+          type: string
+        waiterId:
+          description: ''
+          type: string
     Cursor:
       title: Cursor
       description: A cursor for use in pagination.
@@ -166,6 +166,14 @@ components:
       x-stoplight:
         id: m8ixmhyvzw3oo
   parameters:
+    WaiterId:
+      in: header
+      name: waiter-id
+      required: false
+      schema:
+        type: string
+      example: '42'
+      description: The ID of the waiter making the request, if known
     DeviceType:
       in: header
       name: device-type
@@ -190,11 +198,3 @@ components:
         type: string
       example: Order&Pay
       description: The dojo product making the request, if known.
-    WaiterId:
-      in: header
-      name: waiter-id
-      required: false
-      schema:
-        type: string
-      example: '42'
-      description: The ID of the waiter making the request, if known

@@ -182,51 +182,49 @@ paths:
       - $ref: '#/components/parameters/DeviceType'
 components:
   schemas:
-    EPOSError:
-      title: EPOSError
+    SearchReservationsRequest:
+      description: ''
       type: object
-      required:
-      - errorType
       properties:
-        debugMessage:
+        cursor:
+          $ref: '#/components/schemas/Cursor'
+        tableId:
           type: string
-        traceId:
+          description: ''
+        fromTime:
+          format: date-time
+          description: ''
           type: string
-        errorType:
-          $ref: '#/components/schemas/EPOSErrorType'
-    CreateReservationRequest:
+        toTime:
+          format: date-time
+          description: ''
+          type: string
+    PagedReservationsResponse:
+      title: PagedOrder
+      type: object
       properties:
-        dojoReservationId:
-          title: DojoReservationID
-          type: string
-        name:
-          title: Name
-          type: string
-        covers:
-          title: Covers
-          type: integer
-        startTime:
-          title: Start time
-          type: string
-          format: date-time
-          description: When the reservation is expected to arrive. ISO8601 formatted, ms precise.
-        endTime:
-          title: End time
-          type: string
-          format: date-time
-          description: When the reservation is expected to depart. ISO8601 formatted, ms precise.
-        tableIds:
-          title: Table IDs
+        data:
           type: array
           items:
-            type: string
-          minLength: 1
-        hostNotes:
-          title: Notes
+            $ref: '#/components/schemas/Reservation'
+          readOnly: false
+          x-stoplight:
+            id: ou7je7f6bizdg
+        before:
           type: string
-        guestRequests:
-          title: Requests
+          x-stoplight:
+            id: jutkpidtbhr6q
+        after:
           type: string
+          x-stoplight:
+            id: vwlxjfle0yxqt
+      x-stoplight:
+        id: bjkxvbo62zl42
+    UpdateReservationRequest:
+      title: Update Reservation Request
+      description: 'A reservation describes a point in the future that a party is expected
+
+        to be seated at, how long for, and where.'
       required:
       - dojoReservationId
       - name
@@ -234,8 +232,53 @@ components:
       - startTime
       - endTime
       - tableIds
+      type: object
+      properties:
+        dojoReservationId:
+          description: The Dojo API reservation ID
+          type: string
+        name:
+          title: Name
+          description: The name of the guest who the reservation is for.
+          type: string
+        covers:
+          title: Covers
+          description: The number of covers the reservation is expected to occupy.
+          type: integer
+        startTime:
+          format: date-time
+          title: Start time
+          description: 'The time the reservation is expected to begin. ISO8601 formatted,
+
+            millisecond precision.'
+          type: string
+        endTime:
+          format: date-time
+          title: End time
+          description: 'The time the reservation is expected to finish. ISO8601 formatted,
+
+            millisecond precision.'
+          type: string
+        tableIds:
+          title: Table IDs
+          description: The tables the reservation is expected to occupy.
+          minLength: 1
+          type: array
+          items:
+            type: string
+        hostNotes:
+          title: Host notes
+          description: Host-written notes about the reservation. Not exposed to guests.
+          type: string
+        guestRequests:
+          title: Guest requests
+          description: 'Guest-written requests for the reservation. Shown to & editable by
+
+            guests. May not be edited by the EPOS partner, as this may contain
+
+            dietary requirements set by the Guest.'
+          type: string
       example:
-        dojoReservationId: dojo-res-210345
         name: Sasha J.
         covers: 3
         startTime: '2024-08-12T13:00:00.000Z'
@@ -243,8 +286,6 @@ components:
         tableIds:
         - table-02-003
         - table-02-004
-        guestRequests: we'll be bringing our dog
-        hostNotes: dog may be given little snacks
     Reservation:
       title: Reservation
       description: 'A reservation describes a point in the future that a party is expected
@@ -313,72 +354,18 @@ components:
         tableIds:
         - table-02-003
         - table-02-004
-    UpdateReservationRequest:
-      title: Update Reservation Request
-      description: 'A reservation describes a point in the future that a party is expected
-
-        to be seated at, how long for, and where.'
-      required:
-      - dojoReservationId
-      - name
-      - covers
-      - startTime
-      - endTime
-      - tableIds
+    EPOSError:
+      title: EPOSError
       type: object
+      required:
+      - errorType
       properties:
-        dojoReservationId:
-          description: The Dojo API reservation ID
+        debugMessage:
           type: string
-        name:
-          title: Name
-          description: The name of the guest who the reservation is for.
+        traceId:
           type: string
-        covers:
-          title: Covers
-          description: The number of covers the reservation is expected to occupy.
-          type: integer
-        startTime:
-          format: date-time
-          title: Start time
-          description: 'The time the reservation is expected to begin. ISO8601 formatted,
-
-            millisecond precision.'
-          type: string
-        endTime:
-          format: date-time
-          title: End time
-          description: 'The time the reservation is expected to finish. ISO8601 formatted,
-
-            millisecond precision.'
-          type: string
-        tableIds:
-          title: Table IDs
-          description: The tables the reservation is expected to occupy.
-          minLength: 1
-          type: array
-          items:
-            type: string
-        hostNotes:
-          title: Host notes
-          description: Host-written notes about the reservation. Not exposed to guests.
-          type: string
-        guestRequests:
-          title: Guest requests
-          description: 'Guest-written requests for the reservation. Shown to & editable by
-
-            guests. May not be edited by the EPOS partner, as this may contain
-
-            dietary requirements set by the Guest.'
-          type: string
-      example:
-        name: Sasha J.
-        covers: 3
-        startTime: '2024-08-12T13:00:00.000Z'
-        endTime: '2024-08-12T15:00:00.000Z'
-        tableIds:
-        - table-02-003
-        - table-02-004
+        errorType:
+          $ref: '#/components/schemas/EPOSErrorType'
     EPOSErrorType:
       type: string
       enum:
@@ -386,27 +373,57 @@ components:
       - UnexpectedError
       - InvalidRequest
       - Conflict
-    PagedReservationsResponse:
-      title: PagedOrder
-      type: object
+    CreateReservationRequest:
       properties:
-        data:
+        dojoReservationId:
+          title: DojoReservationID
+          type: string
+        name:
+          title: Name
+          type: string
+        covers:
+          title: Covers
+          type: integer
+        startTime:
+          title: Start time
+          type: string
+          format: date-time
+          description: When the reservation is expected to arrive. ISO8601 formatted, ms precise.
+        endTime:
+          title: End time
+          type: string
+          format: date-time
+          description: When the reservation is expected to depart. ISO8601 formatted, ms precise.
+        tableIds:
+          title: Table IDs
           type: array
           items:
-            $ref: '#/components/schemas/Reservation'
-          readOnly: false
-          x-stoplight:
-            id: ou7je7f6bizdg
-        before:
+            type: string
+          minLength: 1
+        hostNotes:
+          title: Notes
           type: string
-          x-stoplight:
-            id: jutkpidtbhr6q
-        after:
+        guestRequests:
+          title: Requests
           type: string
-          x-stoplight:
-            id: vwlxjfle0yxqt
-      x-stoplight:
-        id: bjkxvbo62zl42
+      required:
+      - dojoReservationId
+      - name
+      - covers
+      - startTime
+      - endTime
+      - tableIds
+      example:
+        dojoReservationId: dojo-res-210345
+        name: Sasha J.
+        covers: 3
+        startTime: '2024-08-12T13:00:00.000Z'
+        endTime: '2024-08-12T15:00:00.000Z'
+        tableIds:
+        - table-02-003
+        - table-02-004
+        guestRequests: we'll be bringing our dog
+        hostNotes: dog may be given little snacks
     Cursor:
       title: Cursor
       description: A cursor for use in pagination.
@@ -430,24 +447,15 @@ components:
             id: 1jsibbqp1zdti
       x-stoplight:
         id: m8ixmhyvzw3oo
-    SearchReservationsRequest:
-      description: ''
-      type: object
-      properties:
-        cursor:
-          $ref: '#/components/schemas/Cursor'
-        tableId:
-          type: string
-          description: ''
-        fromTime:
-          format: date-time
-          description: ''
-          type: string
-        toTime:
-          format: date-time
-          description: ''
-          type: string
   parameters:
+    WaiterId:
+      in: header
+      name: waiter-id
+      required: false
+      schema:
+        type: string
+      example: '42'
+      description: The ID of the waiter making the request, if known
     DeviceType:
       in: header
       name: device-type
@@ -472,11 +480,3 @@ components:
         type: string
       example: Order&Pay
       description: The dojo product making the request, if known.
-    WaiterId:
-      in: header
-      name: waiter-id
-      required: false
-      schema:
-        type: string
-      example: '42'
-      description: The ID of the waiter making the request, if known

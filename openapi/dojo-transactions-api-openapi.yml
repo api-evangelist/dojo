@@ -65,47 +65,24 @@ paths:
         Results are paginated. By default, the method returns up to 50 transactions.'
 components:
   schemas:
-    ProblemDetails:
-      type: object
-      title: ProblemDetails
-      description: ''
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-          description: 'Card scheme for example: `Visa`, `Mastercard`, etc.'
-        title:
-          type:
-          - string
-          - 'null'
-          description: 'A short, human-readable summary of the error.
-
-            '
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: The [HTTP status code](#section/Introduction/HTTP-Responses).
-        detail:
-          type:
-          - string
-          - 'null'
-          description: 'A human-readable message giving more details about the error. This field is optional, so it''s not always present. '
-        traceId:
-          type:
-          - string
-          - 'null'
-          description: 'The unique identifier of the failing request. This should be used to track the source of the error.
-
-            '
-        errors:
-          type:
-          - object
-          - 'null'
-          description: A human-readable explanation of errors.
-          additionalProperties: {}
+    PagedTransaction:
+      allOf:
+      - $ref: '#/components/schemas/PagedResultOfTransaction'
+      - type: object
+        additionalProperties: false
+    TransactionStatus:
+      type: string
+      description: Current status of the transaction.
+      title: TransactionStatus
+      enum:
+      - Authorized
+      - Declined
+      - Held
+      - UnderReview
+      - Reversed
+      - AwaitingCollection
+      - Released
+      - Expired
     PagedResultOfTransaction:
       type: object
       additionalProperties: false
@@ -133,6 +110,41 @@ components:
           description: 'A cursor for use in pagination. Sends you to the next page. `before` and `after` are
 
             mutually exclusive—only one of these may be used.'
+    SearchTransactionsRequest:
+      type: object
+      additionalProperties: false
+      description: ''
+      required:
+      - startDate
+      - endDate
+      properties:
+        startDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: 'A date and time to display transaction results from, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format. The span between the start and end dates cannot exceed 7 days.
+
+            '
+        endDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: 'A date and time to display transaction results until, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format. The span between the start and end dates cannot exceed 7 days.
+
+            '
+        cursor:
+          oneOf:
+          - $ref: '#/components/schemas/Cursor'
+          description: A cursor for use in pagination.
+      example:
+        statuses:
+        - Authorized
+        startDate: '2019-08-24T14:15:22Z'
+        endDate: '2023-08-24T14:15:22Z'
+        cursor:
+          limit: 20
     Card:
       title: Card
       type: object
@@ -156,29 +168,6 @@ components:
           - string
           - 'null'
           description: 'Card scheme for example: `Visa`, `Mastercard`, etc.'
-    TransactionType:
-      type: string
-      description: Types of transaction.
-      title: TransactionType
-      enum:
-      - Sale
-      - Refund
-      - PreAuth
-      - Collection
-    PaymentProduct:
-      type: string
-      description: The Dojo payment product associated with this transaction.
-      title: PaymentProduct
-      enum:
-      - TapToPayOnIPhone
-      - DojoPocket
-      - Terminal
-      - OnlineCheckout
-      - VirtualTerminal
-      - PaymentLinks
-      - DojoBookings
-      - PayByQr
-      - Other
     Transaction:
       type: object
       additionalProperties: false
@@ -236,6 +225,30 @@ components:
           oneOf:
           - $ref: '#/components/schemas/PaymentDetails'
           description: The details of the payment associated with the transaction including payment product, card information, etc.
+    TerminalEntryModeType:
+      type: string
+      description: Indicates the entry mode used on a payment made using a terminal.
+      title: TerminalEntryModeType
+      enum:
+      - Chip
+      - ContactLess
+      - Swipe
+      - Keyed
+      - Unknown
+    PaymentProduct:
+      type: string
+      description: The Dojo payment product associated with this transaction.
+      title: PaymentProduct
+      enum:
+      - TapToPayOnIPhone
+      - DojoPocket
+      - Terminal
+      - OnlineCheckout
+      - VirtualTerminal
+      - PaymentLinks
+      - DojoBookings
+      - PayByQr
+      - Other
     Money:
       title: Money
       type: object
@@ -255,92 +268,56 @@ components:
       required:
       - value
       - currencyCode
-    PaymentDetails:
-      title: PaymentDetails
+    ProblemDetails:
       type: object
-      properties:
-        card:
-          $ref: '#/components/schemas/Card'
-        authCode:
-          type:
-          - string
-          - 'null'
-          description: Authorization code for the transaction.
-        isRemote:
-          type: boolean
-          description: Indiciates if a transaction was made using remote or terminal gateway.
-        paymentProduct:
-          $ref: '#/components/schemas/PaymentProduct'
-        terminalEntryModeType:
-          $ref: '#/components/schemas/TerminalEntryModeType'
-        terminalId:
-          type:
-          - string
-          - 'null'
-          description: The ID of the terminal used for payment.
-    TerminalEntryModeType:
-      type: string
-      description: Indicates the entry mode used on a payment made using a terminal.
-      title: TerminalEntryModeType
-      enum:
-      - Chip
-      - ContactLess
-      - Swipe
-      - Keyed
-      - Unknown
-    SearchTransactionsRequest:
-      type: object
-      additionalProperties: false
+      title: ProblemDetails
       description: ''
-      required:
-      - startDate
-      - endDate
       properties:
-        startDate:
+        type:
           type:
           - string
           - 'null'
-          format: date-time
-          description: 'A date and time to display transaction results from, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format. The span between the start and end dates cannot exceed 7 days.
-
-            '
-        endDate:
+          description: 'Card scheme for example: `Visa`, `Mastercard`, etc.'
+        title:
           type:
           - string
           - 'null'
-          format: date-time
-          description: 'A date and time to display transaction results until, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) UTC format. The span between the start and end dates cannot exceed 7 days.
+          description: 'A short, human-readable summary of the error.
 
             '
-        cursor:
-          oneOf:
-          - $ref: '#/components/schemas/Cursor'
-          description: A cursor for use in pagination.
-      example:
-        statuses:
-        - Authorized
-        startDate: '2019-08-24T14:15:22Z'
-        endDate: '2023-08-24T14:15:22Z'
-        cursor:
-          limit: 20
-    PagedTransaction:
-      allOf:
-      - $ref: '#/components/schemas/PagedResultOfTransaction'
-      - type: object
-        additionalProperties: false
-    TransactionStatus:
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The [HTTP status code](#section/Introduction/HTTP-Responses).
+        detail:
+          type:
+          - string
+          - 'null'
+          description: 'A human-readable message giving more details about the error. This field is optional, so it''s not always present. '
+        traceId:
+          type:
+          - string
+          - 'null'
+          description: 'The unique identifier of the failing request. This should be used to track the source of the error.
+
+            '
+        errors:
+          type:
+          - object
+          - 'null'
+          description: A human-readable explanation of errors.
+          additionalProperties: {}
+    TransactionType:
       type: string
-      description: Current status of the transaction.
-      title: TransactionStatus
+      description: Types of transaction.
+      title: TransactionType
       enum:
-      - Authorized
-      - Declined
-      - Held
-      - UnderReview
-      - Reversed
-      - AwaitingCollection
-      - Released
-      - Expired
+      - Sale
+      - Refund
+      - PreAuth
+      - Collection
     Cursor:
       type: object
       additionalProperties: false
@@ -368,6 +345,29 @@ components:
           description: 'A cursor for use in pagination. Sends you to the next page. `before` and `after` are
 
             mutually exclusive—only one of these may be used.'
+    PaymentDetails:
+      title: PaymentDetails
+      type: object
+      properties:
+        card:
+          $ref: '#/components/schemas/Card'
+        authCode:
+          type:
+          - string
+          - 'null'
+          description: Authorization code for the transaction.
+        isRemote:
+          type: boolean
+          description: Indiciates if a transaction was made using remote or terminal gateway.
+        paymentProduct:
+          $ref: '#/components/schemas/PaymentProduct'
+        terminalEntryModeType:
+          $ref: '#/components/schemas/TerminalEntryModeType'
+        terminalId:
+          type:
+          - string
+          - 'null'
+          description: The ID of the terminal used for payment.
   securitySchemes:
     ApiKeyAuth:
       in: header

@@ -53,49 +53,15 @@ paths:
       - $ref: '#/components/parameters/DeviceId'
       - $ref: '#/components/parameters/DeviceType'
 components:
-  schemas:
-    EPOSError:
-      title: EPOSError
-      type: object
-      required:
-      - errorType
-      properties:
-        debugMessage:
-          type: string
-        traceId:
-          type: string
-        errorType:
-          $ref: '#/components/schemas/EPOSErrorType'
-    Area:
-      description: A representation of a physical area in a merchant's location.
-      required:
-      - id
-      - name
-      type: object
-      properties:
-        id:
-          description: Unique ID of the area
-          type: string
-        name:
-          description: User friendly name of the area
-          type: string
-          example: ''
-        waiterIds:
-          description: ''
-          type: array
-          items:
-            type: string
-      example:
-        id: area_1234
-        name: downstairs
-    EPOSErrorType:
-      type: string
-      enum:
-      - NotFound
-      - UnexpectedError
-      - InvalidRequest
-      - Conflict
   parameters:
+    WaiterId:
+      in: header
+      name: waiter-id
+      required: false
+      schema:
+        type: string
+      example: '42'
+      description: The ID of the waiter making the request, if known
     DeviceType:
       in: header
       name: device-type
@@ -120,11 +86,45 @@ components:
         type: string
       example: Order&Pay
       description: The dojo product making the request, if known.
-    WaiterId:
-      in: header
-      name: waiter-id
-      required: false
-      schema:
-        type: string
-      example: '42'
-      description: The ID of the waiter making the request, if known
+  schemas:
+    Area:
+      description: A representation of a physical area in a merchant's location.
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          description: Unique ID of the area
+          type: string
+        name:
+          description: User friendly name of the area
+          type: string
+          example: ''
+        waiterIds:
+          description: ''
+          type: array
+          items:
+            type: string
+      example:
+        id: area_1234
+        name: downstairs
+    EPOSError:
+      title: EPOSError
+      type: object
+      required:
+      - errorType
+      properties:
+        debugMessage:
+          type: string
+        traceId:
+          type: string
+        errorType:
+          $ref: '#/components/schemas/EPOSErrorType'
+    EPOSErrorType:
+      type: string
+      enum:
+      - NotFound
+      - UnexpectedError
+      - InvalidRequest
+      - Conflict
