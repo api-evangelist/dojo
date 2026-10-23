@@ -800,6 +800,8 @@ apis:
   - type: APIReference
     url: https://docs.dojo.tech/epos-tester-tool/api
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/dojo/overview
 - type: CapabilityMap
   url: capabilities/dojo-capability-edges.yml
   name: Dojo Business Capability Map
