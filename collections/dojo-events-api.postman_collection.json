@@ -1,0 +1,160 @@
+{
+  "info": {
+    "_postman_id": "c5c011c5-241c-482f-b8d5-45dbe5a0fd1c",
+    "name": "Dojo Events API",
+    "description": "# Introduction\n\nThe Dojo API is a REST API, using HTTP response codes to convey status, including successful responses and errors.\n\nContact Support:\n Name: Dojo Developer Experience Team",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:06:35.000Z",
+    "updatedAt": "2026-10-22T02:06:36.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-c5c011c5-241c-482f-b8d5-45dbe5a0fd1c"
+  },
+  "item": [
+    {
+      "name": "epos",
+      "item": [
+        {
+          "name": "events",
+          "item": [
+            {
+              "name": "Submit an event",
+              "id": "9de552dc-7f6f-4d89-ae7c-161738c6546e",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventType\": \"<string>\",\n  \"event\": {\n    \"orderId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/epos/events",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "epos",
+                    "events"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "7005dcf8-942b-4e41-b12f-011a7b3256ff",
+                  "name": "New Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"eventType\": \"<string>\",\n  \"event\": {\n    \"orderId\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/epos/events",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "epos",
+                        "events"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"eventType\": \"<string>\",\n  \"event\": {\n    \"orderId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-10-22T02:06:36.000Z",
+                  "updatedAt": "2026-10-22T02:06:36.000Z",
+                  "uid": "35240-7005dcf8-942b-4e41-b12f-011a7b3256ff"
+                }
+              ],
+              "createdAt": "2026-10-22T02:06:36.000Z",
+              "updatedAt": "2026-10-22T02:06:36.000Z",
+              "uid": "35240-9de552dc-7f6f-4d89-ae7c-161738c6546e"
+            }
+          ],
+          "id": "18264dc5-4cb8-4ab5-a223-69baf3b2c569",
+          "createdAt": "2026-10-22T02:06:36.000Z",
+          "updatedAt": "2026-10-22T02:06:36.000Z",
+          "uid": "35240-18264dc5-4cb8-4ab5-a223-69baf3b2c569"
+        }
+      ],
+      "id": "fe8be8d0-23c2-49b9-b38b-974901cafbdd",
+      "createdAt": "2026-10-22T02:06:36.000Z",
+      "updatedAt": "2026-10-22T02:06:36.000Z",
+      "uid": "35240-fe8be8d0-23c2-49b9-b38b-974901cafbdd"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.dojo.tech"
+    }
+  ]
+}

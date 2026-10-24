@@ -1,0 +1,281 @@
+{
+  "info": {
+    "_postman_id": "8b95390f-4ef8-4118-bdf1-9a9e98686597",
+    "name": "EPOS Tester Flows API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:06:42.000Z",
+    "updatedAt": "2026-10-22T02:06:42.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-8b95390f-4ef8-4118-bdf1-9a9e98686597"
+  },
+  "item": [
+    {
+      "name": "flows",
+      "item": [
+        {
+          "name": "{flowId}",
+          "item": [
+            {
+              "name": "Get flows by flow id",
+              "id": "2c1b7152-5753-4fe8-baac-007acb3b59fe",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/flows/:flowId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "flows",
+                    ":flowId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "3b87eedd-b73d-480d-8685-04080e3629c7",
+                      "key": "flowId",
+                      "value": "543fb57cfe5bf7994ed1-64cd79ed20b1",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "13590717-1e48-4939-a9d1-0a9ce06c1fd6",
+                  "name": "The result of the flow",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/flows/:flowId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "flows",
+                        ":flowId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "flowId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"flowID\": \"d9c7a6b2-eee85726-5a0d-a5320b42d4e6\",\n  \"flowName\": \"<string>\",\n  \"status\": \"TIMED_OUT\",\n  \"startedAt\": \"<dateTime>\",\n  \"finishedAt\": \"<dateTime>\",\n  \"steps\": [\n    {\n      \"name\": \"<string>\",\n      \"status\": \"TIMED_OUT\",\n      \"startedAt\": \"<dateTime>\",\n      \"additionalInformation\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"finishedAt\": \"<dateTime>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"status\": \"SUCCESS\",\n      \"startedAt\": \"<dateTime>\",\n      \"additionalInformation\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"finishedAt\": \"<dateTime>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T02:06:42.000Z",
+                  "updatedAt": "2026-10-22T02:06:42.000Z",
+                  "uid": "35240-13590717-1e48-4939-a9d1-0a9ce06c1fd6"
+                }
+              ],
+              "createdAt": "2026-10-22T02:06:42.000Z",
+              "updatedAt": "2026-10-22T02:06:42.000Z",
+              "uid": "35240-2c1b7152-5753-4fe8-baac-007acb3b59fe"
+            }
+          ],
+          "id": "b924ade6-5656-4e6b-a165-061743f69112",
+          "createdAt": "2026-10-22T02:06:42.000Z",
+          "updatedAt": "2026-10-22T02:06:42.000Z",
+          "uid": "35240-b924ade6-5656-4e6b-a165-061743f69112"
+        },
+        {
+          "name": "Get flows",
+          "id": "301b6609-1f46-4cc6-a413-56851884a202",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/flows",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "flows"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2499b5c0-3d51-42bb-8762-441fe89adecf",
+              "name": "All the available flows to be started",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/flows",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "flows"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"name\": \"<string>\",\n  \"params\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"required\": \"<boolean>\",\n      \"description\": \"<string>\",\n      \"default\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"required\": \"<boolean>\",\n      \"description\": \"<string>\",\n      \"default\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-10-22T02:06:42.000Z",
+              "updatedAt": "2026-10-22T02:06:42.000Z",
+              "uid": "35240-2499b5c0-3d51-42bb-8762-441fe89adecf"
+            }
+          ],
+          "createdAt": "2026-10-22T02:06:42.000Z",
+          "updatedAt": "2026-10-22T02:06:42.000Z",
+          "uid": "35240-301b6609-1f46-4cc6-a413-56851884a202"
+        },
+        {
+          "name": "Create flows",
+          "id": "434e1dde-5ce5-49c9-aed1-a265236414c6",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"flow\": \"<string>\",\n  \"params\": {}\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/flows",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "flows"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "00ba08f0-f53a-443a-94fd-42070ba6577e",
+              "name": "The flow ID of the started flow",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"flow\": \"<string>\",\n  \"params\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/flows",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "flows"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "543fb57cfe5bf7994ed1-64cd79ed20b1",
+              "createdAt": "2026-10-22T02:06:42.000Z",
+              "updatedAt": "2026-10-22T02:06:42.000Z",
+              "uid": "35240-00ba08f0-f53a-443a-94fd-42070ba6577e"
+            }
+          ],
+          "createdAt": "2026-10-22T02:06:42.000Z",
+          "updatedAt": "2026-10-22T02:06:42.000Z",
+          "uid": "35240-434e1dde-5ce5-49c9-aed1-a265236414c6"
+        }
+      ],
+      "id": "cb560b28-1323-4d23-9fb2-41769d321e21",
+      "createdAt": "2026-10-22T02:06:42.000Z",
+      "updatedAt": "2026-10-22T02:06:42.000Z",
+      "uid": "35240-cb560b28-1323-4d23-9fb2-41769d321e21"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "/"
+    }
+  ]
+}

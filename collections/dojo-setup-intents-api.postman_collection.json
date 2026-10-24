@@ -1,0 +1,1622 @@
+{
+  "info": {
+    "_postman_id": "1932e67f-f583-428a-9aa9-5c34f7337be0",
+    "name": "Dojo Setup intents API",
+    "description": "# Introduction\n\nThe Dojo API is a REST API, using HTTP response codes to convey status, including successful responses and errors.\n\nContact Support:\n Name: Dojo Developer Experience Team",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:07:39.000Z",
+    "updatedAt": "2026-10-22T02:07:39.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-1932e67f-f583-428a-9aa9-5c34f7337be0"
+  },
+  "item": [
+    {
+      "name": "setup-intents",
+      "item": [
+        {
+          "name": "{setupIntentId}",
+          "item": [
+            {
+              "name": "refresh-client-session-secret",
+              "item": [
+                {
+                  "name": "Update a client session secret",
+                  "id": "e5164eee-a065-466f-8bcc-0cf460fee75e",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/setup-intents/:setupIntentId/refresh-client-session-secret",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "setup-intents",
+                        ":setupIntentId",
+                        "refresh-client-session-secret"
+                      ],
+                      "variable": [
+                        {
+                          "id": "0e2efc24-742c-4b73-bb30-094077103b8b",
+                          "key": "setupIntentId",
+                          "value": "<string,null>",
+                          "description": "(Required) The unique identifier for the setup intent."
+                        }
+                      ]
+                    },
+                    "description": "Updates a client session secret."
+                  },
+                  "response": [
+                    {
+                      "id": "ccc63a79-41b9-4fde-96a0-292c1435ac91",
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/setup-intents/:setupIntentId/refresh-client-session-secret",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "setup-intents",
+                            ":setupIntentId",
+                            "refresh-client-session-secret"
+                          ],
+                          "variable": [
+                            {
+                              "key": "setupIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string,null>\",\n  \"clientSessionSecret\": \"<string,null>\",\n  \"clientSessionSecretExpirationDate\": \"<string,null-date-time>\",\n  \"status\": \"Canceled\",\n  \"paymentMethods\": \"<array,null>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\"\n  },\n  \"requestSecurity\": {\n    \"userAgent\": \"<string,null>\",\n    \"ipAddress\": \"<string,null>\",\n    \"device\": \"<string,null>\"\n  },\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"expireAt\": \"<string,null-date-time>\",\n  \"reference\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"merchantConfig\": {\n    \"supportedPaymentMethods\": {\n      \"cardSchemes\": \"<array,null>\",\n      \"wallets\": \"<array,null>\"\n    }\n  },\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"metadata\": \"<object,null>\",\n  \"paymentDetails\": {\n    \"transactionId\": \"<string,null>\",\n    \"transactionDateTime\": \"<string,null>\",\n    \"message\": \"<string,null>\",\n    \"paymentMethodId\": \"<string,null>\",\n    \"authCode\": \"<string,null>\",\n    \"card\": {\n      \"cardNumber\": \"<string,null>\",\n      \"cardName\": \"<string,null>\",\n      \"expiryDate\": \"<string,null>\",\n      \"cardType\": \"<string,null>\",\n      \"cardFundingType\": \"<string>\",\n      \"last4PAN\": \"<string,null>\",\n      \"entryMode\": \"<string>\",\n      \"verificationMethod\": \"<string>\"\n    },\n    \"avsResult\": \"<string,null>\"\n  },\n  \"intendedAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"merchantInitiatedTransactionType\": \"<string>\",\n  \"terms\": \"<string,null>\",\n  \"paymentSource\": \"<string,null>\",\n  \"setupEvents\": \"<array,null>\"\n}",
+                      "createdAt": "2026-10-22T02:07:40.000Z",
+                      "updatedAt": "2026-10-22T02:07:40.000Z",
+                      "uid": "35240-ccc63a79-41b9-4fde-96a0-292c1435ac91"
+                    },
+                    {
+                      "id": "9a2795d4-1f31-4ad2-92a7-0820940d3915",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/setup-intents/:setupIntentId/refresh-client-session-secret",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "setup-intents",
+                            ":setupIntentId",
+                            "refresh-client-session-secret"
+                          ],
+                          "variable": [
+                            {
+                              "key": "setupIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"irure_a_f\": {},\n    \"exercitation_041\": {},\n    \"officia_\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:40.000Z",
+                      "updatedAt": "2026-10-22T02:07:40.000Z",
+                      "uid": "35240-9a2795d4-1f31-4ad2-92a7-0820940d3915"
+                    },
+                    {
+                      "id": "3c73d867-3589-4c84-a676-f8c7e0b8d9a6",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/setup-intents/:setupIntentId/refresh-client-session-secret",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "setup-intents",
+                            ":setupIntentId",
+                            "refresh-client-session-secret"
+                          ],
+                          "variable": [
+                            {
+                              "key": "setupIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"irure_a_f\": {},\n    \"exercitation_041\": {},\n    \"officia_\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:40.000Z",
+                      "updatedAt": "2026-10-22T02:07:40.000Z",
+                      "uid": "35240-3c73d867-3589-4c84-a676-f8c7e0b8d9a6"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:07:40.000Z",
+                  "updatedAt": "2026-10-22T02:07:40.000Z",
+                  "uid": "35240-e5164eee-a065-466f-8bcc-0cf460fee75e"
+                }
+              ],
+              "id": "643dff3b-7c03-4524-a1e5-873d238250a0",
+              "createdAt": "2026-10-22T02:07:40.000Z",
+              "updatedAt": "2026-10-22T02:07:40.000Z",
+              "uid": "35240-643dff3b-7c03-4524-a1e5-873d238250a0"
+            },
+            {
+              "name": "Retrieve a setup intent",
+              "id": "3b8f2fb1-2e98-4416-8b55-1939a2c6bd3b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                    "key": "version",
+                    "value": "<date>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/setup-intents/:setupIntentId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "setup-intents",
+                    ":setupIntentId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "d4376f79-2df6-485c-83c3-9908a3f083af",
+                      "key": "setupIntentId",
+                      "value": "<string,null>",
+                      "description": "(Required) The unique identifier for the setup intent."
+                    }
+                  ]
+                },
+                "description": "Get a setup intent by ID."
+              },
+              "response": [
+                {
+                  "id": "0e30035c-8257-4f68-9f55-0e97fdec2892",
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/setup-intents/:setupIntentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "setup-intents",
+                        ":setupIntentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "setupIntentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string,null>\",\n  \"clientSessionSecret\": \"<string,null>\",\n  \"clientSessionSecretExpirationDate\": \"<string,null-date-time>\",\n  \"status\": \"Canceled\",\n  \"paymentMethods\": \"<array,null>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\"\n  },\n  \"requestSecurity\": {\n    \"userAgent\": \"<string,null>\",\n    \"ipAddress\": \"<string,null>\",\n    \"device\": \"<string,null>\"\n  },\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"expireAt\": \"<string,null-date-time>\",\n  \"reference\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"merchantConfig\": {\n    \"supportedPaymentMethods\": {\n      \"cardSchemes\": \"<array,null>\",\n      \"wallets\": \"<array,null>\"\n    }\n  },\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"metadata\": \"<object,null>\",\n  \"paymentDetails\": {\n    \"transactionId\": \"<string,null>\",\n    \"transactionDateTime\": \"<string,null>\",\n    \"message\": \"<string,null>\",\n    \"paymentMethodId\": \"<string,null>\",\n    \"authCode\": \"<string,null>\",\n    \"card\": {\n      \"cardNumber\": \"<string,null>\",\n      \"cardName\": \"<string,null>\",\n      \"expiryDate\": \"<string,null>\",\n      \"cardType\": \"<string,null>\",\n      \"cardFundingType\": \"<string>\",\n      \"last4PAN\": \"<string,null>\",\n      \"entryMode\": \"<string>\",\n      \"verificationMethod\": \"<string>\"\n    },\n    \"avsResult\": \"<string,null>\"\n  },\n  \"intendedAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"merchantInitiatedTransactionType\": \"<string>\",\n  \"terms\": \"<string,null>\",\n  \"paymentSource\": \"<string,null>\",\n  \"setupEvents\": \"<array,null>\"\n}",
+                  "createdAt": "2026-10-22T02:07:40.000Z",
+                  "updatedAt": "2026-10-22T02:07:40.000Z",
+                  "uid": "35240-0e30035c-8257-4f68-9f55-0e97fdec2892"
+                },
+                {
+                  "id": "e37b1f25-3654-4d58-a864-718910f31619",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/setup-intents/:setupIntentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "setup-intents",
+                        ":setupIntentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "setupIntentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"irure_a_f\": {},\n    \"exercitation_041\": {},\n    \"officia_\": {}\n  }\n}",
+                  "createdAt": "2026-10-22T02:07:40.000Z",
+                  "updatedAt": "2026-10-22T02:07:40.000Z",
+                  "uid": "35240-e37b1f25-3654-4d58-a864-718910f31619"
+                },
+                {
+                  "id": "4e099ab6-4a5b-4088-abe7-1ee04f0debf8",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/setup-intents/:setupIntentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "setup-intents",
+                        ":setupIntentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "setupIntentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"irure_a_f\": {},\n    \"exercitation_041\": {},\n    \"officia_\": {}\n  }\n}",
+                  "createdAt": "2026-10-22T02:07:40.000Z",
+                  "updatedAt": "2026-10-22T02:07:40.000Z",
+                  "uid": "35240-4e099ab6-4a5b-4088-abe7-1ee04f0debf8"
+                },
+                {
+                  "id": "79ee80c7-c056-46a3-95e2-3b6f73bb7d2d",
+                  "name": "Not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/setup-intents/:setupIntentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "setup-intents",
+                        ":setupIntentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "setupIntentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"irure_a_f\": {},\n    \"exercitation_041\": {},\n    \"officia_\": {}\n  }\n}",
+                  "createdAt": "2026-10-22T02:07:40.000Z",
+                  "updatedAt": "2026-10-22T02:07:40.000Z",
+                  "uid": "35240-79ee80c7-c056-46a3-95e2-3b6f73bb7d2d"
+                }
+              ],
+              "createdAt": "2026-10-22T02:07:40.000Z",
+              "updatedAt": "2026-10-22T02:07:40.000Z",
+              "uid": "35240-3b8f2fb1-2e98-4416-8b55-1939a2c6bd3b"
+            },
+            {
+              "name": "Cancel a setup intent",
+              "id": "2cdf5185-8b4a-4c26-a6fb-31fb1918edd0",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                    "key": "version",
+                    "value": "<date>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/setup-intents/:setupIntentId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "setup-intents",
+                    ":setupIntentId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "cef85030-6ca6-48ca-a4fa-c00e3a87b54c",
+                      "key": "setupIntentId",
+                      "value": "<string,null>",
+                      "description": "(Required) The unique identifier for the setup intent."
+                    }
+                  ]
+                },
+                "description": "Cancels a setup intent."
+              },
+              "response": [
+                {
+                  "id": "8b6e05a3-c526-4ad9-9e22-834f0af65715",
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/setup-intents/:setupIntentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "setup-intents",
+                        ":setupIntentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "setupIntentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string,null>\",\n  \"clientSessionSecret\": \"<string,null>\",\n  \"clientSessionSecretExpirationDate\": \"<string,null-date-time>\",\n  \"status\": \"Canceled\",\n  \"paymentMethods\": \"<array,null>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\"\n  },\n  \"requestSecurity\": {\n    \"userAgent\": \"<string,null>\",\n    \"ipAddress\": \"<string,null>\",\n    \"device\": \"<string,null>\"\n  },\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"expireAt\": \"<string,null-date-time>\",\n  \"reference\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"merchantConfig\": {\n    \"supportedPaymentMethods\": {\n      \"cardSchemes\": \"<array,null>\",\n      \"wallets\": \"<array,null>\"\n    }\n  },\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"metadata\": \"<object,null>\",\n  \"paymentDetails\": {\n    \"transactionId\": \"<string,null>\",\n    \"transactionDateTime\": \"<string,null>\",\n    \"message\": \"<string,null>\",\n    \"paymentMethodId\": \"<string,null>\",\n    \"authCode\": \"<string,null>\",\n    \"card\": {\n      \"cardNumber\": \"<string,null>\",\n      \"cardName\": \"<string,null>\",\n      \"expiryDate\": \"<string,null>\",\n      \"cardType\": \"<string,null>\",\n      \"cardFundingType\": \"<string>\",\n      \"last4PAN\": \"<string,null>\",\n      \"entryMode\": \"<string>\",\n      \"verificationMethod\": \"<string>\"\n    },\n    \"avsResult\": \"<string,null>\"\n  },\n  \"intendedAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"merchantInitiatedTransactionType\": \"<string>\",\n  \"terms\": \"<string,null>\",\n  \"paymentSource\": \"<string,null>\",\n  \"setupEvents\": \"<array,null>\"\n}",
+                  "createdAt": "2026-10-22T02:07:40.000Z",
+                  "updatedAt": "2026-10-22T02:07:40.000Z",
+                  "uid": "35240-8b6e05a3-c526-4ad9-9e22-834f0af65715"
+                },
+                {
+                  "id": "af10876a-1b6e-416f-95f4-5eac74eee115",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/setup-intents/:setupIntentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "setup-intents",
+                        ":setupIntentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "setupIntentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"irure_a_f\": {},\n    \"exercitation_041\": {},\n    \"officia_\": {}\n  }\n}",
+                  "createdAt": "2026-10-22T02:07:40.000Z",
+                  "updatedAt": "2026-10-22T02:07:40.000Z",
+                  "uid": "35240-af10876a-1b6e-416f-95f4-5eac74eee115"
+                },
+                {
+                  "id": "d7129f0e-7fd6-4d9e-a4a6-439e535f2b66",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/setup-intents/:setupIntentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "setup-intents",
+                        ":setupIntentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "setupIntentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"irure_a_f\": {},\n    \"exercitation_041\": {},\n    \"officia_\": {}\n  }\n}",
+                  "createdAt": "2026-10-22T02:07:40.000Z",
+                  "updatedAt": "2026-10-22T02:07:40.000Z",
+                  "uid": "35240-d7129f0e-7fd6-4d9e-a4a6-439e535f2b66"
+                },
+                {
+                  "id": "e0fa4ba1-fb05-42b8-bd01-5642765f9ece",
+                  "name": "Not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/setup-intents/:setupIntentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "setup-intents",
+                        ":setupIntentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "setupIntentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"irure_a_f\": {},\n    \"exercitation_041\": {},\n    \"officia_\": {}\n  }\n}",
+                  "createdAt": "2026-10-22T02:07:40.000Z",
+                  "updatedAt": "2026-10-22T02:07:40.000Z",
+                  "uid": "35240-e0fa4ba1-fb05-42b8-bd01-5642765f9ece"
+                },
+                {
+                  "id": "87f3eed6-8a7c-4ec9-9184-35458a602e11",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/setup-intents/:setupIntentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "setup-intents",
+                        ":setupIntentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "setupIntentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-22T02:07:40.000Z",
+                  "updatedAt": "2026-10-22T02:07:40.000Z",
+                  "uid": "35240-87f3eed6-8a7c-4ec9-9184-35458a602e11"
+                }
+              ],
+              "createdAt": "2026-10-22T02:07:40.000Z",
+              "updatedAt": "2026-10-22T02:07:40.000Z",
+              "uid": "35240-2cdf5185-8b4a-4c26-a6fb-31fb1918edd0"
+            }
+          ],
+          "id": "37d3221d-c905-460e-adc0-7bf271b3cadd",
+          "createdAt": "2026-10-22T02:07:40.000Z",
+          "updatedAt": "2026-10-22T02:07:40.000Z",
+          "uid": "35240-37d3221d-c905-460e-adc0-7bf271b3cadd"
+        },
+        {
+          "name": "public",
+          "item": [
+            {
+              "name": "{setupIntentId}",
+              "item": [
+                {
+                  "name": "refresh-client-session-secret",
+                  "item": [
+                    {
+                      "name": "Update a client session secret (no auth)",
+                      "id": "effa13d8-f121-4082-8c70-6f40cf3d5d57",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/setup-intents/public/:setupIntentId/refresh-client-session-secret",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "setup-intents",
+                            "public",
+                            ":setupIntentId",
+                            "refresh-client-session-secret"
+                          ],
+                          "variable": [
+                            {
+                              "id": "4e8d6719-e9b6-4f2c-8bd8-9321143a7ca4",
+                              "key": "setupIntentId",
+                              "value": "<string,null>",
+                              "description": "(Required) The unique identifier for the setup intent."
+                            }
+                          ]
+                        },
+                        "description": "Updates a client session secret."
+                      },
+                      "response": [
+                        {
+                          "id": "b5a594ee-01d0-474b-9b5d-523132c690f5",
+                          "name": "OK",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                                "key": "version",
+                                "value": "<date>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "Authorization",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/setup-intents/public/:setupIntentId/refresh-client-session-secret",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "setup-intents",
+                                "public",
+                                ":setupIntentId",
+                                "refresh-client-session-secret"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "setupIntentId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<string,null>\",\n  \"clientSessionSecret\": \"<string,null>\",\n  \"clientSessionSecretExpirationDate\": \"<string,null-date-time>\",\n  \"status\": \"Authorized\",\n  \"paymentMethods\": \"<array,null>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\"\n  },\n  \"requestSecurity\": {\n    \"userAgent\": \"<string,null>\",\n    \"ipAddress\": \"<string,null>\",\n    \"device\": \"<string,null>\"\n  },\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"expireAt\": \"<string,null-date-time>\",\n  \"reference\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"merchantConfig\": {\n    \"supportedPaymentMethods\": {\n      \"cardSchemes\": \"<array,null>\",\n      \"wallets\": \"<array,null>\"\n    }\n  },\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"metadata\": \"<object,null>\",\n  \"paymentDetails\": {\n    \"transactionId\": \"<string,null>\",\n    \"transactionDateTime\": \"<string,null>\",\n    \"message\": \"<string,null>\",\n    \"paymentMethodId\": \"<string,null>\",\n    \"authCode\": \"<string,null>\",\n    \"card\": {\n      \"cardNumber\": \"<string,null>\",\n      \"cardName\": \"<string,null>\",\n      \"expiryDate\": \"<string,null>\",\n      \"cardType\": \"<string,null>\",\n      \"cardFundingType\": \"<string>\",\n      \"last4PAN\": \"<string,null>\",\n      \"entryMode\": \"<string>\",\n      \"verificationMethod\": \"<string>\"\n    },\n    \"avsResult\": \"<string,null>\"\n  },\n  \"intendedAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"merchantInitiatedTransactionType\": \"<string>\",\n  \"terms\": \"<string,null>\",\n  \"paymentSource\": \"<string,null>\"\n}",
+                          "createdAt": "2026-10-22T02:07:40.000Z",
+                          "updatedAt": "2026-10-22T02:07:40.000Z",
+                          "uid": "35240-b5a594ee-01d0-474b-9b5d-523132c690f5"
+                        },
+                        {
+                          "id": "158709f8-20df-4f45-8b50-81ba81cff919",
+                          "name": "Bad request",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                                "key": "version",
+                                "value": "<date>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "Authorization",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/setup-intents/public/:setupIntentId/refresh-client-session-secret",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "setup-intents",
+                                "public",
+                                ":setupIntentId",
+                                "refresh-client-session-secret"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "setupIntentId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"irure_a_f\": {},\n    \"exercitation_041\": {},\n    \"officia_\": {}\n  }\n}",
+                          "createdAt": "2026-10-22T02:07:40.000Z",
+                          "updatedAt": "2026-10-22T02:07:40.000Z",
+                          "uid": "35240-158709f8-20df-4f45-8b50-81ba81cff919"
+                        },
+                        {
+                          "id": "bb56dcc6-1ed3-4616-8358-ffcee09f7395",
+                          "name": "Unauthorized",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                                "key": "version",
+                                "value": "<date>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "Authorization",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/setup-intents/public/:setupIntentId/refresh-client-session-secret",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "setup-intents",
+                                "public",
+                                ":setupIntentId",
+                                "refresh-client-session-secret"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "setupIntentId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"irure_a_f\": {},\n    \"exercitation_041\": {},\n    \"officia_\": {}\n  }\n}",
+                          "createdAt": "2026-10-22T02:07:40.000Z",
+                          "updatedAt": "2026-10-22T02:07:40.000Z",
+                          "uid": "35240-bb56dcc6-1ed3-4616-8358-ffcee09f7395"
+                        },
+                        {
+                          "id": "f1f1cef9-e19b-44bb-a978-0fce614531d4",
+                          "name": "Not found",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                                "key": "version",
+                                "value": "<date>"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "Authorization",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/setup-intents/public/:setupIntentId/refresh-client-session-secret",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "setup-intents",
+                                "public",
+                                ":setupIntentId",
+                                "refresh-client-session-secret"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "setupIntentId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"irure_a_f\": {},\n    \"exercitation_041\": {},\n    \"officia_\": {}\n  }\n}",
+                          "createdAt": "2026-10-22T02:07:40.000Z",
+                          "updatedAt": "2026-10-22T02:07:40.000Z",
+                          "uid": "35240-f1f1cef9-e19b-44bb-a978-0fce614531d4"
+                        }
+                      ],
+                      "createdAt": "2026-10-22T02:07:40.000Z",
+                      "updatedAt": "2026-10-22T02:07:40.000Z",
+                      "uid": "35240-effa13d8-f121-4082-8c70-6f40cf3d5d57"
+                    }
+                  ],
+                  "id": "fc188e8d-c6e3-4355-a048-c3827aa85131",
+                  "createdAt": "2026-10-22T02:07:40.000Z",
+                  "updatedAt": "2026-10-22T02:07:40.000Z",
+                  "uid": "35240-fc188e8d-c6e3-4355-a048-c3827aa85131"
+                },
+                {
+                  "name": "Retrieve a setup intent (no auth)",
+                  "id": "4bda2806-2688-4dbd-a847-286819e75b7d",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/setup-intents/public/:setupIntentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "setup-intents",
+                        "public",
+                        ":setupIntentId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "1c670e54-ebb9-48e8-bbc0-e06faf24bb4a",
+                          "key": "setupIntentId",
+                          "value": "<string,null>",
+                          "description": "(Required) The unique identifier for the setup intent."
+                        }
+                      ]
+                    },
+                    "description": "Get a setup intent by ID."
+                  },
+                  "response": [
+                    {
+                      "id": "d75363ae-4634-4335-985e-bac5f27db61e",
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/setup-intents/public/:setupIntentId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "setup-intents",
+                            "public",
+                            ":setupIntentId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "setupIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string,null>\",\n  \"clientSessionSecret\": \"<string,null>\",\n  \"clientSessionSecretExpirationDate\": \"<string,null-date-time>\",\n  \"status\": \"Authorized\",\n  \"paymentMethods\": \"<array,null>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\"\n  },\n  \"requestSecurity\": {\n    \"userAgent\": \"<string,null>\",\n    \"ipAddress\": \"<string,null>\",\n    \"device\": \"<string,null>\"\n  },\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"expireAt\": \"<string,null-date-time>\",\n  \"reference\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"merchantConfig\": {\n    \"supportedPaymentMethods\": {\n      \"cardSchemes\": \"<array,null>\",\n      \"wallets\": \"<array,null>\"\n    }\n  },\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"metadata\": \"<object,null>\",\n  \"paymentDetails\": {\n    \"transactionId\": \"<string,null>\",\n    \"transactionDateTime\": \"<string,null>\",\n    \"message\": \"<string,null>\",\n    \"paymentMethodId\": \"<string,null>\",\n    \"authCode\": \"<string,null>\",\n    \"card\": {\n      \"cardNumber\": \"<string,null>\",\n      \"cardName\": \"<string,null>\",\n      \"expiryDate\": \"<string,null>\",\n      \"cardType\": \"<string,null>\",\n      \"cardFundingType\": \"<string>\",\n      \"last4PAN\": \"<string,null>\",\n      \"entryMode\": \"<string>\",\n      \"verificationMethod\": \"<string>\"\n    },\n    \"avsResult\": \"<string,null>\"\n  },\n  \"intendedAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"merchantInitiatedTransactionType\": \"<string>\",\n  \"terms\": \"<string,null>\",\n  \"paymentSource\": \"<string,null>\"\n}",
+                      "createdAt": "2026-10-22T02:07:40.000Z",
+                      "updatedAt": "2026-10-22T02:07:40.000Z",
+                      "uid": "35240-d75363ae-4634-4335-985e-bac5f27db61e"
+                    },
+                    {
+                      "id": "c5b2fe02-031f-4a10-8c76-148dcf651c5f",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/setup-intents/public/:setupIntentId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "setup-intents",
+                            "public",
+                            ":setupIntentId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "setupIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"irure_a_f\": {},\n    \"exercitation_041\": {},\n    \"officia_\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:40.000Z",
+                      "updatedAt": "2026-10-22T02:07:40.000Z",
+                      "uid": "35240-c5b2fe02-031f-4a10-8c76-148dcf651c5f"
+                    },
+                    {
+                      "id": "6e75d6cf-b143-4bd1-ba57-a05878a9b469",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/setup-intents/public/:setupIntentId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "setup-intents",
+                            "public",
+                            ":setupIntentId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "setupIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"irure_a_f\": {},\n    \"exercitation_041\": {},\n    \"officia_\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:40.000Z",
+                      "updatedAt": "2026-10-22T02:07:40.000Z",
+                      "uid": "35240-6e75d6cf-b143-4bd1-ba57-a05878a9b469"
+                    },
+                    {
+                      "id": "ec0fa622-05f1-455e-8a8f-ddfb035057cb",
+                      "name": "Not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/setup-intents/public/:setupIntentId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "setup-intents",
+                            "public",
+                            ":setupIntentId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "setupIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"irure_a_f\": {},\n    \"exercitation_041\": {},\n    \"officia_\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:40.000Z",
+                      "updatedAt": "2026-10-22T02:07:40.000Z",
+                      "uid": "35240-ec0fa622-05f1-455e-8a8f-ddfb035057cb"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:07:40.000Z",
+                  "updatedAt": "2026-10-22T02:07:40.000Z",
+                  "uid": "35240-4bda2806-2688-4dbd-a847-286819e75b7d"
+                }
+              ],
+              "id": "46337fdd-c2f6-458b-ae95-5c87c2e72e7b",
+              "createdAt": "2026-10-22T02:07:40.000Z",
+              "updatedAt": "2026-10-22T02:07:40.000Z",
+              "uid": "35240-46337fdd-c2f6-458b-ae95-5c87c2e72e7b"
+            }
+          ],
+          "id": "97a19e86-f762-4c26-95cc-9af5b7111fc2",
+          "createdAt": "2026-10-22T02:07:40.000Z",
+          "updatedAt": "2026-10-22T02:07:40.000Z",
+          "uid": "35240-97a19e86-f762-4c26-95cc-9af5b7111fc2"
+        },
+        {
+          "name": "Create a setup intent",
+          "id": "cb26b711-cf28-46b5-aa61-965d9aacd0da",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                "key": "version",
+                "value": "<date>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reference\": \"<string>\",\n  \"merchantInitiatedTransactionType\": \"<string>\",\n  \"terms\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\"\n  },\n  \"captureMode\": \"Auto\",\n  \"paymentMethods\": \"<array,null>\",\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"metadata\": \"<object,null>\",\n  \"intendedAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"orderDetails\": {\n    \"availabilityDate\": \"<string,null-date-time>\",\n    \"isUpdate\": \"<boolean,null>\",\n    \"id\": \"<string,null>\",\n    \"externalId\": \"<string,null>\"\n  },\n  \"expireAt\": \"<string,null-date-time>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/setup-intents",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "setup-intents"
+              ]
+            },
+            "description": "Creates a setup intent."
+          },
+          "response": [
+            {
+              "id": "458dc639-46b3-47e2-b45c-17ad42d13070",
+              "name": "OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                    "key": "version",
+                    "value": "<date>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference\": \"<string>\",\n  \"merchantInitiatedTransactionType\": \"<string>\",\n  \"terms\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\"\n  },\n  \"captureMode\": \"Auto\",\n  \"paymentMethods\": \"<array,null>\",\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"metadata\": \"<object,null>\",\n  \"intendedAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"orderDetails\": {\n    \"availabilityDate\": \"<string,null-date-time>\",\n    \"isUpdate\": \"<boolean,null>\",\n    \"id\": \"<string,null>\",\n    \"externalId\": \"<string,null>\"\n  },\n  \"expireAt\": \"<string,null-date-time>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/setup-intents",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "setup-intents"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"id\": \"<string,null>\",\n  \"clientSessionSecret\": \"<string,null>\",\n  \"clientSessionSecretExpirationDate\": \"<string,null-date-time>\",\n  \"status\": \"Canceled\",\n  \"paymentMethods\": \"<array,null>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\"\n  },\n  \"requestSecurity\": {\n    \"userAgent\": \"<string,null>\",\n    \"ipAddress\": \"<string,null>\",\n    \"device\": \"<string,null>\"\n  },\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"expireAt\": \"<string,null-date-time>\",\n  \"reference\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"merchantConfig\": {\n    \"supportedPaymentMethods\": {\n      \"cardSchemes\": \"<array,null>\",\n      \"wallets\": \"<array,null>\"\n    }\n  },\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"metadata\": \"<object,null>\",\n  \"paymentDetails\": {\n    \"transactionId\": \"<string,null>\",\n    \"transactionDateTime\": \"<string,null>\",\n    \"message\": \"<string,null>\",\n    \"paymentMethodId\": \"<string,null>\",\n    \"authCode\": \"<string,null>\",\n    \"card\": {\n      \"cardNumber\": \"<string,null>\",\n      \"cardName\": \"<string,null>\",\n      \"expiryDate\": \"<string,null>\",\n      \"cardType\": \"<string,null>\",\n      \"cardFundingType\": \"<string>\",\n      \"last4PAN\": \"<string,null>\",\n      \"entryMode\": \"<string>\",\n      \"verificationMethod\": \"<string>\"\n    },\n    \"avsResult\": \"<string,null>\"\n  },\n  \"intendedAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"merchantInitiatedTransactionType\": \"<string>\",\n  \"terms\": \"<string,null>\",\n  \"paymentSource\": \"<string,null>\",\n  \"setupEvents\": \"<array,null>\"\n}",
+              "createdAt": "2026-10-22T02:07:40.000Z",
+              "updatedAt": "2026-10-22T02:07:40.000Z",
+              "uid": "35240-458dc639-46b3-47e2-b45c-17ad42d13070"
+            },
+            {
+              "id": "a657c420-6d0b-4ccb-8923-72d24df7adce",
+              "name": "Bad request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                    "key": "version",
+                    "value": "<date>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference\": \"<string>\",\n  \"merchantInitiatedTransactionType\": \"<string>\",\n  \"terms\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\"\n  },\n  \"captureMode\": \"Auto\",\n  \"paymentMethods\": \"<array,null>\",\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"metadata\": \"<object,null>\",\n  \"intendedAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"orderDetails\": {\n    \"availabilityDate\": \"<string,null-date-time>\",\n    \"isUpdate\": \"<boolean,null>\",\n    \"id\": \"<string,null>\",\n    \"externalId\": \"<string,null>\"\n  },\n  \"expireAt\": \"<string,null-date-time>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/setup-intents",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "setup-intents"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"irure_a_f\": {},\n    \"exercitation_041\": {},\n    \"officia_\": {}\n  }\n}",
+              "createdAt": "2026-10-22T02:07:40.000Z",
+              "updatedAt": "2026-10-22T02:07:40.000Z",
+              "uid": "35240-a657c420-6d0b-4ccb-8923-72d24df7adce"
+            },
+            {
+              "id": "70fffa97-dd31-4ce4-8fe4-7ea98969183a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                    "key": "version",
+                    "value": "<date>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reference\": \"<string>\",\n  \"merchantInitiatedTransactionType\": \"<string>\",\n  \"terms\": \"<string>\",\n  \"description\": \"<string,null>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\"\n  },\n  \"captureMode\": \"Auto\",\n  \"paymentMethods\": \"<array,null>\",\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"metadata\": \"<object,null>\",\n  \"intendedAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"orderDetails\": {\n    \"availabilityDate\": \"<string,null-date-time>\",\n    \"isUpdate\": \"<boolean,null>\",\n    \"id\": \"<string,null>\",\n    \"externalId\": \"<string,null>\"\n  },\n  \"expireAt\": \"<string,null-date-time>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/setup-intents",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "setup-intents"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"irure_a_f\": {},\n    \"exercitation_041\": {},\n    \"officia_\": {}\n  }\n}",
+              "createdAt": "2026-10-22T02:07:40.000Z",
+              "updatedAt": "2026-10-22T02:07:40.000Z",
+              "uid": "35240-70fffa97-dd31-4ce4-8fe4-7ea98969183a"
+            }
+          ],
+          "createdAt": "2026-10-22T02:07:40.000Z",
+          "updatedAt": "2026-10-22T02:07:40.000Z",
+          "uid": "35240-cb26b711-cf28-46b5-aa61-965d9aacd0da"
+        }
+      ],
+      "id": "1217f491-6989-4249-82bc-fecc0bfe43a0",
+      "createdAt": "2026-10-22T02:07:40.000Z",
+      "updatedAt": "2026-10-22T02:07:40.000Z",
+      "uid": "35240-1217f491-6989-4249-82bc-fecc0bfe43a0"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.dojo.tech"
+    }
+  ]
+}

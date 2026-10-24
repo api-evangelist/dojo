@@ -1,0 +1,264 @@
+{
+  "info": {
+    "_postman_id": "ec921c9f-d6e5-4a9e-a463-f257eca60eeb",
+    "name": "EPOS Data API (REST) Areas API",
+    "description": "REST contract that an external POS/EPOS system implements so Dojo products can\nfetch and update commerce entities (Orders, Tables, Areas, Parties, Reservations)\nand record payments.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:06:11.000Z",
+    "updatedAt": "2026-10-22T02:06:11.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ec921c9f-d6e5-4a9e-a463-f257eca60eeb"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "areas",
+          "item": [
+            {
+              "name": "List areas",
+              "id": "6454f9ff-09a9-4778-8921-56b355ba1df6",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "The ID of the waiter making the request, if known",
+                    "key": "waiter-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "The dojo product making the request, if known.",
+                    "key": "dojo-requesting-product",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "The ID of the device making the request, if known",
+                    "key": "device-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "The device making the request, if known",
+                    "key": "device-type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/areas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "areas"
+                  ]
+                },
+                "description": "Retrieves all areas that are being served. Capability: `ListAreas`"
+              },
+              "response": [
+                {
+                  "id": "e7779076-77f4-4dcf-92a3-e59a1203c3bd",
+                  "name": "Successfully returns all areas",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "The ID of the waiter making the request, if known",
+                        "key": "waiter-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The dojo product making the request, if known.",
+                        "key": "dojo-requesting-product",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The ID of the device making the request, if known",
+                        "key": "device-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The device making the request, if known",
+                        "key": "device-type",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/areas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "areas"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"waiterIds\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"waiterIds\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n]",
+                  "createdAt": "2026-10-22T02:06:12.000Z",
+                  "updatedAt": "2026-10-22T02:06:12.000Z",
+                  "uid": "35240-e7779076-77f4-4dcf-92a3-e59a1203c3bd"
+                },
+                {
+                  "id": "bb2834b1-0cfc-4cd1-b951-2c870bdc9b1f",
+                  "name": "Client Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "The ID of the waiter making the request, if known",
+                        "key": "waiter-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The dojo product making the request, if known.",
+                        "key": "dojo-requesting-product",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The ID of the device making the request, if known",
+                        "key": "device-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The device making the request, if known",
+                        "key": "device-type",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/areas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "areas"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errorType\": \"UnexpectedError\",\n  \"debugMessage\": \"<string>\",\n  \"traceId\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:06:12.000Z",
+                  "updatedAt": "2026-10-22T02:06:12.000Z",
+                  "uid": "35240-bb2834b1-0cfc-4cd1-b951-2c870bdc9b1f"
+                },
+                {
+                  "id": "878d8b78-c3fd-4ec9-93b1-6557c99e297e",
+                  "name": "Server Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "The ID of the waiter making the request, if known",
+                        "key": "waiter-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The dojo product making the request, if known.",
+                        "key": "dojo-requesting-product",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The ID of the device making the request, if known",
+                        "key": "device-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The device making the request, if known",
+                        "key": "device-type",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/areas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "areas"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errorType\": \"UnexpectedError\",\n  \"debugMessage\": \"<string>\",\n  \"traceId\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:06:12.000Z",
+                  "updatedAt": "2026-10-22T02:06:12.000Z",
+                  "uid": "35240-878d8b78-c3fd-4ec9-93b1-6557c99e297e"
+                }
+              ],
+              "createdAt": "2026-10-22T02:06:12.000Z",
+              "updatedAt": "2026-10-22T02:06:12.000Z",
+              "uid": "35240-6454f9ff-09a9-4778-8921-56b355ba1df6"
+            }
+          ],
+          "id": "32c2bfce-196c-4a64-8b8e-1b771ad73afe",
+          "createdAt": "2026-10-22T02:06:12.000Z",
+          "updatedAt": "2026-10-22T02:06:12.000Z",
+          "uid": "35240-32c2bfce-196c-4a64-8b8e-1b771ad73afe"
+        }
+      ],
+      "id": "f7d0821d-504e-4356-ba20-707bc0f4b812",
+      "createdAt": "2026-10-22T02:06:12.000Z",
+      "updatedAt": "2026-10-22T02:06:12.000Z",
+      "uid": "35240-f7d0821d-504e-4356-ba20-707bc0f4b812"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://your-epos.example.com"
+    }
+  ]
+}

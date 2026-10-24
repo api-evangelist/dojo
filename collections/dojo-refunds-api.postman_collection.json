@@ -1,0 +1,577 @@
+{
+  "info": {
+    "_postman_id": "fa6b8054-a1a1-403f-a598-96797d2a3dd6",
+    "name": "Dojo Refunds API",
+    "description": "# Introduction\n\nThe Dojo API is a REST API, using HTTP response codes to convey status, including successful responses and errors.\n\nContact Support:\n Name: Dojo Developer Experience Team",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:07:19.000Z",
+    "updatedAt": "2026-10-22T02:07:19.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-fa6b8054-a1a1-403f-a598-96797d2a3dd6"
+  },
+  "item": [
+    {
+      "name": "payment-intents",
+      "item": [
+        {
+          "name": "{paymentIntentId}",
+          "item": [
+            {
+              "name": "refunds",
+              "item": [
+                {
+                  "name": "Create a refund",
+                  "id": "942e8c21-fbda-4c4e-9217-6f12e18b21ae",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "description": "(Required) An idempotency key is used to recognize subsequent retries of the same request. How you generate the idempotency key is up to you. The key must be unique for each new refund processed on the payment intent.\n",
+                        "key": "idempotencyKey",
+                        "value": "<string,null>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"amount\": \"<long>\",\n  \"previousTransactionId\": \"<string,null>\",\n  \"refundReason\": \"<string,null>\",\n  \"notes\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/refunds",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        ":paymentIntentId",
+                        "refunds"
+                      ],
+                      "variable": [
+                        {
+                          "id": "e4d8d370-d26a-4a2c-a854-8d27145e9e89",
+                          "key": "paymentIntentId",
+                          "value": "<string,null>",
+                          "description": "(Required) The unique identifier of the payment intent.\n"
+                        }
+                      ]
+                    },
+                    "description": "Creates a refund. Refund allows you to return a payment that has previously been created as long as there have been no incremental payments or payment attempts, including unsuccessful payment attempts. You can refund the full amount or a partial amount."
+                  },
+                  "response": [
+                    {
+                      "id": "3a5ec22c-362e-40d8-9f33-09ed8ae7bd9b",
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "description": "(Required) An idempotency key is used to recognize subsequent retries of the same request. How you generate the idempotency key is up to you. The key must be unique for each new refund processed on the payment intent.\n",
+                            "key": "idempotencyKey",
+                            "value": "<string,null>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"amount\": \"<long>\",\n  \"previousTransactionId\": \"<string,null>\",\n  \"refundReason\": \"<string,null>\",\n  \"notes\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/refunds",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "refunds"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"paymentIntentId\": \"<string,null>\",\n  \"refundId\": \"<string,null>\",\n  \"refundReason\": \"<string,null>\",\n  \"notes\": \"<string,null>\"\n}",
+                      "createdAt": "2026-10-22T02:07:19.000Z",
+                      "updatedAt": "2026-10-22T02:07:19.000Z",
+                      "uid": "35240-3a5ec22c-362e-40d8-9f33-09ed8ae7bd9b"
+                    },
+                    {
+                      "id": "c29d8c0e-fcc0-4a1b-8ff6-969763dd0bfd",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "description": "(Required) An idempotency key is used to recognize subsequent retries of the same request. How you generate the idempotency key is up to you. The key must be unique for each new refund processed on the payment intent.\n",
+                            "key": "idempotencyKey",
+                            "value": "<string,null>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"amount\": \"<long>\",\n  \"previousTransactionId\": \"<string,null>\",\n  \"refundReason\": \"<string,null>\",\n  \"notes\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/refunds",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "refunds"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"exercitation79\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:19.000Z",
+                      "updatedAt": "2026-10-22T02:07:19.000Z",
+                      "uid": "35240-c29d8c0e-fcc0-4a1b-8ff6-969763dd0bfd"
+                    },
+                    {
+                      "id": "00d7e416-e282-4c5d-afb3-4bc360e9afe9",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "description": "(Required) An idempotency key is used to recognize subsequent retries of the same request. How you generate the idempotency key is up to you. The key must be unique for each new refund processed on the payment intent.\n",
+                            "key": "idempotencyKey",
+                            "value": "<string,null>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"amount\": \"<long>\",\n  \"previousTransactionId\": \"<string,null>\",\n  \"refundReason\": \"<string,null>\",\n  \"notes\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/refunds",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "refunds"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"exercitation79\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:19.000Z",
+                      "updatedAt": "2026-10-22T02:07:19.000Z",
+                      "uid": "35240-00d7e416-e282-4c5d-afb3-4bc360e9afe9"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:07:19.000Z",
+                  "updatedAt": "2026-10-22T02:07:19.000Z",
+                  "uid": "35240-942e8c21-fbda-4c4e-9217-6f12e18b21ae"
+                }
+              ],
+              "id": "d3b6a119-c800-4c8a-8dd8-5fca3bf67d40",
+              "createdAt": "2026-10-22T02:07:19.000Z",
+              "updatedAt": "2026-10-22T02:07:19.000Z",
+              "uid": "35240-d3b6a119-c800-4c8a-8dd8-5fca3bf67d40"
+            }
+          ],
+          "id": "4fb5f150-ff37-4cd7-b783-7889b4d8dbd3",
+          "createdAt": "2026-10-22T02:07:19.000Z",
+          "updatedAt": "2026-10-22T02:07:19.000Z",
+          "uid": "35240-4fb5f150-ff37-4cd7-b783-7889b4d8dbd3"
+        },
+        {
+          "name": "refunds",
+          "item": [
+            {
+              "name": "{refundId}",
+              "item": [
+                {
+                  "name": "Retrieve a refund",
+                  "id": "b674d868-bc0e-4a54-a415-c67483cf018b",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/refunds/:refundId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        "refunds",
+                        ":refundId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "bfedbd76-d2c7-4c7d-bc2a-a5e82619b432",
+                          "key": "refundId",
+                          "value": "<string,null>",
+                          "description": "(Required) A unique identifier for the refund. It will be used to reference this refund in all operations. It is recommended to use a UUID."
+                        }
+                      ]
+                    },
+                    "description": "Retrieves the details of a refund that has previously been created."
+                  },
+                  "response": [
+                    {
+                      "id": "427005f1-fbf6-4918-a308-805c08ab32d4",
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/refunds/:refundId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            "refunds",
+                            ":refundId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "refundId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"paymentIntentId\": \"<string,null>\",\n  \"refundId\": \"<string,null>\",\n  \"refundReason\": \"<string,null>\",\n  \"notes\": \"<string,null>\"\n}",
+                      "createdAt": "2026-10-22T02:07:19.000Z",
+                      "updatedAt": "2026-10-22T02:07:19.000Z",
+                      "uid": "35240-427005f1-fbf6-4918-a308-805c08ab32d4"
+                    },
+                    {
+                      "id": "5500b41a-a25c-447f-970c-a5ab54445584",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/refunds/:refundId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            "refunds",
+                            ":refundId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "refundId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"exercitation79\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:19.000Z",
+                      "updatedAt": "2026-10-22T02:07:19.000Z",
+                      "uid": "35240-5500b41a-a25c-447f-970c-a5ab54445584"
+                    },
+                    {
+                      "id": "95b77c48-edb0-476a-b909-b744eeac62a5",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/refunds/:refundId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            "refunds",
+                            ":refundId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "refundId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"exercitation79\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:19.000Z",
+                      "updatedAt": "2026-10-22T02:07:19.000Z",
+                      "uid": "35240-95b77c48-edb0-476a-b909-b744eeac62a5"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:07:19.000Z",
+                  "updatedAt": "2026-10-22T02:07:19.000Z",
+                  "uid": "35240-b674d868-bc0e-4a54-a415-c67483cf018b"
+                }
+              ],
+              "id": "d7e6b446-7099-4111-a51f-b7293fad92c8",
+              "createdAt": "2026-10-22T02:07:19.000Z",
+              "updatedAt": "2026-10-22T02:07:19.000Z",
+              "uid": "35240-d7e6b446-7099-4111-a51f-b7293fad92c8"
+            }
+          ],
+          "id": "4fe51e1d-d4c1-4863-9b5a-e5093fe99512",
+          "createdAt": "2026-10-22T02:07:19.000Z",
+          "updatedAt": "2026-10-22T02:07:19.000Z",
+          "uid": "35240-4fe51e1d-d4c1-4863-9b5a-e5093fe99512"
+        }
+      ],
+      "id": "1a577f4a-3fc1-49c1-97e8-65a20f3782cb",
+      "createdAt": "2026-10-22T02:07:19.000Z",
+      "updatedAt": "2026-10-22T02:07:19.000Z",
+      "uid": "35240-1a577f4a-3fc1-49c1-97e8-65a20f3782cb"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.dojo.tech"
+    }
+  ]
+}

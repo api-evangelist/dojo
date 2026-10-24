@@ -1,0 +1,1430 @@
+{
+  "info": {
+    "_postman_id": "2ca9e8e4-3e4a-4c75-96e3-4edd9672a74a",
+    "name": "EPOS Data API (REST) Reservations API",
+    "description": "REST contract that an external POS/EPOS system implements so Dojo products can\nfetch and update commerce entities (Orders, Tables, Areas, Parties, Reservations)\nand record payments.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:07:24.000Z",
+    "updatedAt": "2026-10-22T02:07:25.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-2ca9e8e4-3e4a-4c75-96e3-4edd9672a74a"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "reservations",
+          "item": [
+            {
+              "name": "{reservationId}",
+              "item": [
+                {
+                  "name": "Get reservation",
+                  "id": "35056952-9a5a-4ece-a608-6b16b2339c12",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "The ID of the waiter making the request, if known",
+                        "key": "waiter-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The dojo product making the request, if known.",
+                        "key": "dojo-requesting-product",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The ID of the device making the request, if known",
+                        "key": "device-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The device making the request, if known",
+                        "key": "device-type",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/reservations/:reservationId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "reservations",
+                        ":reservationId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "3c2b8b20-d0b2-4622-a3f1-f4d0acb7bf0c",
+                          "key": "reservationId",
+                          "value": "<string>",
+                          "description": "(Required) The ID of the reservation to retrieve."
+                        }
+                      ]
+                    },
+                    "description": "Retrieves a specific reservation. Capability: `GetReservationById`"
+                  },
+                  "response": [
+                    {
+                      "id": "7e5d6767-f0c6-468f-9c95-1fcdc0af0666",
+                      "name": "Ok",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "The ID of the waiter making the request, if known",
+                            "key": "waiter-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The dojo product making the request, if known.",
+                            "key": "dojo-requesting-product",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The ID of the device making the request, if known",
+                            "key": "device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The device making the request, if known",
+                            "key": "device-type",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/reservations/:reservationId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "reservations",
+                            ":reservationId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "reservationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"covers\": \"<integer>\",\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"hostNotes\": \"<string>\",\n  \"guestRequests\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:07:25.000Z",
+                      "updatedAt": "2026-10-22T02:07:25.000Z",
+                      "uid": "35240-7e5d6767-f0c6-468f-9c95-1fcdc0af0666"
+                    },
+                    {
+                      "id": "78ef2368-37bd-45ae-983d-719311ca3a89",
+                      "name": "Client Error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "The ID of the waiter making the request, if known",
+                            "key": "waiter-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The dojo product making the request, if known.",
+                            "key": "dojo-requesting-product",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The ID of the device making the request, if known",
+                            "key": "device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The device making the request, if known",
+                            "key": "device-type",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/reservations/:reservationId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "reservations",
+                            ":reservationId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "reservationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errorType\": \"UnexpectedError\",\n  \"debugMessage\": \"<string>\",\n  \"traceId\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:07:25.000Z",
+                      "updatedAt": "2026-10-22T02:07:25.000Z",
+                      "uid": "35240-78ef2368-37bd-45ae-983d-719311ca3a89"
+                    },
+                    {
+                      "id": "2541c538-7bdd-42ab-a5b1-7e2ef89951bd",
+                      "name": "Server Error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "The ID of the waiter making the request, if known",
+                            "key": "waiter-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The dojo product making the request, if known.",
+                            "key": "dojo-requesting-product",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The ID of the device making the request, if known",
+                            "key": "device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The device making the request, if known",
+                            "key": "device-type",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/reservations/:reservationId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "reservations",
+                            ":reservationId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "reservationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errorType\": \"UnexpectedError\",\n  \"debugMessage\": \"<string>\",\n  \"traceId\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:07:25.000Z",
+                      "updatedAt": "2026-10-22T02:07:25.000Z",
+                      "uid": "35240-2541c538-7bdd-42ab-a5b1-7e2ef89951bd"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:07:25.000Z",
+                  "updatedAt": "2026-10-22T02:07:25.000Z",
+                  "uid": "35240-35056952-9a5a-4ece-a608-6b16b2339c12"
+                },
+                {
+                  "name": "Update reservation",
+                  "id": "daceb4f4-2d25-4817-97e7-c3ead0b8d43f",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "The ID of the waiter making the request, if known",
+                        "key": "waiter-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The dojo product making the request, if known.",
+                        "key": "dojo-requesting-product",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The ID of the device making the request, if known",
+                        "key": "device-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The device making the request, if known",
+                        "key": "device-type",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"dojoReservationId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"covers\": \"<integer>\",\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"hostNotes\": \"<string>\",\n  \"guestRequests\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/reservations/:reservationId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "reservations",
+                        ":reservationId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "46c7dd3c-d60a-4a80-ba1c-3b676c1883f2",
+                          "key": "reservationId",
+                          "value": "<string>",
+                          "description": "(Required) The ID of the reservation to retrieve."
+                        }
+                      ]
+                    },
+                    "description": "Sets the reservation's details to those provided. Capbility: `UpdateReservationById`"
+                  },
+                  "response": [
+                    {
+                      "id": "369ac673-19f0-40c4-b8ef-4a8b43994b89",
+                      "name": "Reservation successfully updated.",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "description": "The ID of the waiter making the request, if known",
+                            "key": "waiter-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The dojo product making the request, if known.",
+                            "key": "dojo-requesting-product",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The ID of the device making the request, if known",
+                            "key": "device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The device making the request, if known",
+                            "key": "device-type",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"dojoReservationId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"covers\": \"<integer>\",\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"hostNotes\": \"<string>\",\n  \"guestRequests\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/reservations/:reservationId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "reservations",
+                            ":reservationId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "reservationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"covers\": \"<integer>\",\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"hostNotes\": \"<string>\",\n  \"guestRequests\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:07:25.000Z",
+                      "updatedAt": "2026-10-22T02:07:25.000Z",
+                      "uid": "35240-369ac673-19f0-40c4-b8ef-4a8b43994b89"
+                    },
+                    {
+                      "id": "2691da7c-64ba-42d6-95bb-0365c9587c09",
+                      "name": "Client Error",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "description": "The ID of the waiter making the request, if known",
+                            "key": "waiter-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The dojo product making the request, if known.",
+                            "key": "dojo-requesting-product",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The ID of the device making the request, if known",
+                            "key": "device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The device making the request, if known",
+                            "key": "device-type",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"dojoReservationId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"covers\": \"<integer>\",\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"hostNotes\": \"<string>\",\n  \"guestRequests\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/reservations/:reservationId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "reservations",
+                            ":reservationId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "reservationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errorType\": \"UnexpectedError\",\n  \"debugMessage\": \"<string>\",\n  \"traceId\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:07:25.000Z",
+                      "updatedAt": "2026-10-22T02:07:25.000Z",
+                      "uid": "35240-2691da7c-64ba-42d6-95bb-0365c9587c09"
+                    },
+                    {
+                      "id": "c72faa50-94f1-4969-b0b6-8a5915016e85",
+                      "name": "Server Error",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "description": "The ID of the waiter making the request, if known",
+                            "key": "waiter-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The dojo product making the request, if known.",
+                            "key": "dojo-requesting-product",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The ID of the device making the request, if known",
+                            "key": "device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The device making the request, if known",
+                            "key": "device-type",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"dojoReservationId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"covers\": \"<integer>\",\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"hostNotes\": \"<string>\",\n  \"guestRequests\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/reservations/:reservationId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "reservations",
+                            ":reservationId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "reservationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errorType\": \"UnexpectedError\",\n  \"debugMessage\": \"<string>\",\n  \"traceId\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:07:25.000Z",
+                      "updatedAt": "2026-10-22T02:07:25.000Z",
+                      "uid": "35240-c72faa50-94f1-4969-b0b6-8a5915016e85"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:07:25.000Z",
+                  "updatedAt": "2026-10-22T02:07:25.000Z",
+                  "uid": "35240-daceb4f4-2d25-4817-97e7-c3ead0b8d43f"
+                },
+                {
+                  "name": "Delete reservation",
+                  "id": "4484ecec-a105-487d-9e5a-7422e408b2c9",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "The ID of the waiter making the request, if known",
+                        "key": "waiter-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The dojo product making the request, if known.",
+                        "key": "dojo-requesting-product",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The ID of the device making the request, if known",
+                        "key": "device-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The device making the request, if known",
+                        "key": "device-type",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/reservations/:reservationId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "reservations",
+                        ":reservationId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "b9f8241f-45bb-4e02-b1fc-6746d7fa375d",
+                          "key": "reservationId",
+                          "value": "<string>",
+                          "description": "(Required) The ID of the reservation to retrieve."
+                        }
+                      ]
+                    },
+                    "description": "Deletes a specific reservation. Capability: `DeleteReservationById`"
+                  },
+                  "response": [
+                    {
+                      "id": "55c9ad4b-8101-43a5-87cd-40b808abc9e4",
+                      "name": ".",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "The ID of the waiter making the request, if known",
+                            "key": "waiter-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The dojo product making the request, if known.",
+                            "key": "dojo-requesting-product",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The ID of the device making the request, if known",
+                            "key": "device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The device making the request, if known",
+                            "key": "device-type",
+                            "value": "<string>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/reservations/:reservationId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "reservations",
+                            ":reservationId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "reservationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-22T02:07:25.000Z",
+                      "updatedAt": "2026-10-22T02:07:25.000Z",
+                      "uid": "35240-55c9ad4b-8101-43a5-87cd-40b808abc9e4"
+                    },
+                    {
+                      "id": "4052d4b1-94ae-4931-b563-f899204a9512",
+                      "name": "Client Error",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "The ID of the waiter making the request, if known",
+                            "key": "waiter-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The dojo product making the request, if known.",
+                            "key": "dojo-requesting-product",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The ID of the device making the request, if known",
+                            "key": "device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The device making the request, if known",
+                            "key": "device-type",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/reservations/:reservationId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "reservations",
+                            ":reservationId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "reservationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errorType\": \"UnexpectedError\",\n  \"debugMessage\": \"<string>\",\n  \"traceId\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:07:25.000Z",
+                      "updatedAt": "2026-10-22T02:07:25.000Z",
+                      "uid": "35240-4052d4b1-94ae-4931-b563-f899204a9512"
+                    },
+                    {
+                      "id": "eac1fcf1-3d13-49c7-919d-48d07d756e81",
+                      "name": "Server Error",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "The ID of the waiter making the request, if known",
+                            "key": "waiter-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The dojo product making the request, if known.",
+                            "key": "dojo-requesting-product",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The ID of the device making the request, if known",
+                            "key": "device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The device making the request, if known",
+                            "key": "device-type",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/reservations/:reservationId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "reservations",
+                            ":reservationId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "reservationId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errorType\": \"UnexpectedError\",\n  \"debugMessage\": \"<string>\",\n  \"traceId\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:07:25.000Z",
+                      "updatedAt": "2026-10-22T02:07:25.000Z",
+                      "uid": "35240-eac1fcf1-3d13-49c7-919d-48d07d756e81"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:07:25.000Z",
+                  "updatedAt": "2026-10-22T02:07:25.000Z",
+                  "uid": "35240-4484ecec-a105-487d-9e5a-7422e408b2c9"
+                }
+              ],
+              "id": "1da764d8-7be1-4840-93c5-3efb352dd1f5",
+              "createdAt": "2026-10-22T02:07:25.000Z",
+              "updatedAt": "2026-10-22T02:07:25.000Z",
+              "uid": "35240-1da764d8-7be1-4840-93c5-3efb352dd1f5"
+            },
+            {
+              "name": "search",
+              "item": [
+                {
+                  "name": "Search reservations",
+                  "id": "ecc129e9-41d7-48d5-bec2-f61827989f7a",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "The ID of the waiter making the request, if known",
+                        "key": "waiter-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The dojo product making the request, if known.",
+                        "key": "dojo-requesting-product",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The ID of the device making the request, if known",
+                        "key": "device-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The device making the request, if known",
+                        "key": "device-type",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cursor\": {\n    \"limit\": \"<integer>\",\n    \"before\": \"<string>\",\n    \"after\": \"<string>\"\n  },\n  \"tableId\": \"<string>\",\n  \"fromTime\": \"<dateTime>\",\n  \"toTime\": \"<dateTime>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/reservations/search",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "reservations",
+                        "search"
+                      ]
+                    },
+                    "description": "Search through reservations on the EPOS. Capability: `SearchReservations`"
+                  },
+                  "response": [
+                    {
+                      "id": "c9f4cabd-4e95-49ee-8db6-0314e46233ca",
+                      "name": "Ok",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "The ID of the waiter making the request, if known",
+                            "key": "waiter-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The dojo product making the request, if known.",
+                            "key": "dojo-requesting-product",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The ID of the device making the request, if known",
+                            "key": "device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The device making the request, if known",
+                            "key": "device-type",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"cursor\": {\n    \"limit\": \"<integer>\",\n    \"before\": \"<string>\",\n    \"after\": \"<string>\"\n  },\n  \"tableId\": \"<string>\",\n  \"fromTime\": \"<dateTime>\",\n  \"toTime\": \"<dateTime>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/reservations/search",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "reservations",
+                            "search"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"covers\": \"<integer>\",\n      \"startTime\": \"<dateTime>\",\n      \"endTime\": \"<dateTime>\",\n      \"tableIds\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"hostNotes\": \"<string>\",\n      \"guestRequests\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"covers\": \"<integer>\",\n      \"startTime\": \"<dateTime>\",\n      \"endTime\": \"<dateTime>\",\n      \"tableIds\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"hostNotes\": \"<string>\",\n      \"guestRequests\": \"<string>\"\n    }\n  ],\n  \"before\": \"<string>\",\n  \"after\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:07:25.000Z",
+                      "updatedAt": "2026-10-22T02:07:25.000Z",
+                      "uid": "35240-c9f4cabd-4e95-49ee-8db6-0314e46233ca"
+                    },
+                    {
+                      "id": "f1c19290-9f47-4f6e-be31-97ab06c28109",
+                      "name": "Client Error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "The ID of the waiter making the request, if known",
+                            "key": "waiter-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The dojo product making the request, if known.",
+                            "key": "dojo-requesting-product",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The ID of the device making the request, if known",
+                            "key": "device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The device making the request, if known",
+                            "key": "device-type",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"cursor\": {\n    \"limit\": \"<integer>\",\n    \"before\": \"<string>\",\n    \"after\": \"<string>\"\n  },\n  \"tableId\": \"<string>\",\n  \"fromTime\": \"<dateTime>\",\n  \"toTime\": \"<dateTime>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/reservations/search",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "reservations",
+                            "search"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errorType\": \"UnexpectedError\",\n  \"debugMessage\": \"<string>\",\n  \"traceId\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:07:25.000Z",
+                      "updatedAt": "2026-10-22T02:07:25.000Z",
+                      "uid": "35240-f1c19290-9f47-4f6e-be31-97ab06c28109"
+                    },
+                    {
+                      "id": "4907370e-30d2-447e-9c1a-ab38375ec1e0",
+                      "name": "Server Error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "The ID of the waiter making the request, if known",
+                            "key": "waiter-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The dojo product making the request, if known.",
+                            "key": "dojo-requesting-product",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The ID of the device making the request, if known",
+                            "key": "device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The device making the request, if known",
+                            "key": "device-type",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"cursor\": {\n    \"limit\": \"<integer>\",\n    \"before\": \"<string>\",\n    \"after\": \"<string>\"\n  },\n  \"tableId\": \"<string>\",\n  \"fromTime\": \"<dateTime>\",\n  \"toTime\": \"<dateTime>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/reservations/search",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "reservations",
+                            "search"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errorType\": \"UnexpectedError\",\n  \"debugMessage\": \"<string>\",\n  \"traceId\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:07:25.000Z",
+                      "updatedAt": "2026-10-22T02:07:25.000Z",
+                      "uid": "35240-4907370e-30d2-447e-9c1a-ab38375ec1e0"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:07:25.000Z",
+                  "updatedAt": "2026-10-22T02:07:25.000Z",
+                  "uid": "35240-ecc129e9-41d7-48d5-bec2-f61827989f7a"
+                }
+              ],
+              "id": "b3b2e1d0-3d95-4f5b-a31c-23436f829a0a",
+              "createdAt": "2026-10-22T02:07:25.000Z",
+              "updatedAt": "2026-10-22T02:07:25.000Z",
+              "uid": "35240-b3b2e1d0-3d95-4f5b-a31c-23436f829a0a"
+            },
+            {
+              "name": "Create reservation",
+              "id": "e0696fb2-3a07-480f-b097-425806a386ff",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "The ID of the waiter making the request, if known",
+                    "key": "waiter-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "The dojo product making the request, if known.",
+                    "key": "dojo-requesting-product",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "The ID of the device making the request, if known",
+                    "key": "device-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "The device making the request, if known",
+                    "key": "device-type",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dojoReservationId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"covers\": \"<integer>\",\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"hostNotes\": \"<string>\",\n  \"guestRequests\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/reservations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "reservations"
+                  ]
+                },
+                "description": "Create a new reservation in the POS domain. Capability: `CreateReservation`"
+              },
+              "response": [
+                {
+                  "id": "5f0cc2b3-6d21-4364-a841-b3ade4044665",
+                  "name": "Reservation successfully created.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "The ID of the waiter making the request, if known",
+                        "key": "waiter-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The dojo product making the request, if known.",
+                        "key": "dojo-requesting-product",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The ID of the device making the request, if known",
+                        "key": "device-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The device making the request, if known",
+                        "key": "device-type",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"dojoReservationId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"covers\": \"<integer>\",\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"hostNotes\": \"<string>\",\n  \"guestRequests\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/reservations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "reservations"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"covers\": \"<integer>\",\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"hostNotes\": \"<string>\",\n  \"guestRequests\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:07:25.000Z",
+                  "updatedAt": "2026-10-22T02:07:25.000Z",
+                  "uid": "35240-5f0cc2b3-6d21-4364-a841-b3ade4044665"
+                },
+                {
+                  "id": "77cfe181-82a2-48ed-9766-526af375ae57",
+                  "name": "Client Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "The ID of the waiter making the request, if known",
+                        "key": "waiter-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The dojo product making the request, if known.",
+                        "key": "dojo-requesting-product",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The ID of the device making the request, if known",
+                        "key": "device-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The device making the request, if known",
+                        "key": "device-type",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"dojoReservationId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"covers\": \"<integer>\",\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"hostNotes\": \"<string>\",\n  \"guestRequests\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/reservations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "reservations"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errorType\": \"UnexpectedError\",\n  \"debugMessage\": \"<string>\",\n  \"traceId\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:07:25.000Z",
+                  "updatedAt": "2026-10-22T02:07:25.000Z",
+                  "uid": "35240-77cfe181-82a2-48ed-9766-526af375ae57"
+                },
+                {
+                  "id": "766f1e42-b59b-4285-b0c7-3a0c8d3f3385",
+                  "name": "Server Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "The ID of the waiter making the request, if known",
+                        "key": "waiter-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The dojo product making the request, if known.",
+                        "key": "dojo-requesting-product",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The ID of the device making the request, if known",
+                        "key": "device-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The device making the request, if known",
+                        "key": "device-type",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"dojoReservationId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"covers\": \"<integer>\",\n  \"startTime\": \"<dateTime>\",\n  \"endTime\": \"<dateTime>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"hostNotes\": \"<string>\",\n  \"guestRequests\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/reservations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "reservations"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errorType\": \"UnexpectedError\",\n  \"debugMessage\": \"<string>\",\n  \"traceId\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:07:25.000Z",
+                  "updatedAt": "2026-10-22T02:07:25.000Z",
+                  "uid": "35240-766f1e42-b59b-4285-b0c7-3a0c8d3f3385"
+                }
+              ],
+              "createdAt": "2026-10-22T02:07:25.000Z",
+              "updatedAt": "2026-10-22T02:07:25.000Z",
+              "uid": "35240-e0696fb2-3a07-480f-b097-425806a386ff"
+            }
+          ],
+          "id": "78fe3c2b-c9f5-42e5-812d-47c9e99967b5",
+          "createdAt": "2026-10-22T02:07:25.000Z",
+          "updatedAt": "2026-10-22T02:07:25.000Z",
+          "uid": "35240-78fe3c2b-c9f5-42e5-812d-47c9e99967b5"
+        }
+      ],
+      "id": "2b5c3942-5070-4f07-9cca-a47aefb38164",
+      "createdAt": "2026-10-22T02:07:25.000Z",
+      "updatedAt": "2026-10-22T02:07:25.000Z",
+      "uid": "35240-2b5c3942-5070-4f07-9cca-a47aefb38164"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://your-epos.example.com"
+    }
+  ]
+}

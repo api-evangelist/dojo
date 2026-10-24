@@ -1,0 +1,551 @@
+{
+  "info": {
+    "_postman_id": "491e988c-72b3-4a67-90fb-d391257a0c1c",
+    "name": "Dojo Terminals API",
+    "description": "# Introduction\n\nThe Dojo API is a REST API, using HTTP response codes to convey status, including successful responses and errors.\n\nContact Support:\n Name: Dojo Developer Experience Team",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:08:08.000Z",
+    "updatedAt": "2026-10-22T02:08:08.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-491e988c-72b3-4a67-90fb-d391257a0c1c"
+  },
+  "item": [
+    {
+      "name": "terminals",
+      "item": [
+        {
+          "name": "{terminalId}",
+          "item": [
+            {
+              "name": "Retrieve a terminal",
+              "id": "618f7574-9bc8-4e80-8786-62a55aff8000",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                    "key": "version",
+                    "value": "<date>"
+                  },
+                  {
+                    "description": "(Required) This field shows the EPOS company whose software is generating the request. This value should not be configurable as it will remain the same for all customers using particular EPOS software.",
+                    "key": "software-house-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "This identifies the reseller of the EPOS. This may be the same as the `software-house-id` if they are also the seller.",
+                    "key": "reseller-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/terminals/:terminalId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "terminals",
+                    ":terminalId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "5c12238d-34a5-4fd3-89d3-91c486144a8e",
+                      "key": "terminalId",
+                      "value": "<string>",
+                      "description": "(Required) The unique identifier for the terminal."
+                    }
+                  ]
+                },
+                "description": "Retrieve a terminal by using its ID."
+              },
+              "response": [
+                {
+                  "id": "cac21d70-57b7-41fd-98e4-ba8f2fc3d049",
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "description": "(Required) This field shows the EPOS company whose software is generating the request. This value should not be configurable as it will remain the same for all customers using particular EPOS software.",
+                        "key": "software-house-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "This identifies the reseller of the EPOS. This may be the same as the `software-house-id` if they are also the seller.",
+                        "key": "reseller-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/terminals/:terminalId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "terminals",
+                        ":terminalId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "terminalId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string>\",\n  \"properties\": {\n    \"tid\": \"<string>\"\n  },\n  \"status\": \"Offline\",\n  \"updatedAt\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-10-22T02:08:08.000Z",
+                  "updatedAt": "2026-10-22T02:08:08.000Z",
+                  "uid": "35240-cac21d70-57b7-41fd-98e4-ba8f2fc3d049"
+                },
+                {
+                  "id": "302ad53f-efde-4b01-9286-05a9e198d453",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "description": "(Required) This field shows the EPOS company whose software is generating the request. This value should not be configurable as it will remain the same for all customers using particular EPOS software.",
+                        "key": "software-house-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "This identifies the reseller of the EPOS. This may be the same as the `software-house-id` if they are also the seller.",
+                        "key": "reseller-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/terminals/:terminalId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "terminals",
+                        ":terminalId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "terminalId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<string>\",\n  \"title\": \"<string>\",\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"traceId\": \"<string>\",\n  \"errors\": {\n    \"utab6\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"voluptate_db6\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"detail\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:08:08.000Z",
+                  "updatedAt": "2026-10-22T02:08:08.000Z",
+                  "uid": "35240-302ad53f-efde-4b01-9286-05a9e198d453"
+                },
+                {
+                  "id": "fa67f171-9838-43e1-b4a0-fc4baf997e33",
+                  "name": "Forbidden",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "description": "(Required) This field shows the EPOS company whose software is generating the request. This value should not be configurable as it will remain the same for all customers using particular EPOS software.",
+                        "key": "software-house-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "This identifies the reseller of the EPOS. This may be the same as the `software-house-id` if they are also the seller.",
+                        "key": "reseller-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/terminals/:terminalId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "terminals",
+                        ":terminalId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "terminalId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<string>\",\n  \"title\": \"<string>\",\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"traceId\": \"<string>\",\n  \"errors\": {\n    \"utab6\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"voluptate_db6\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"detail\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:08:08.000Z",
+                  "updatedAt": "2026-10-22T02:08:08.000Z",
+                  "uid": "35240-fa67f171-9838-43e1-b4a0-fc4baf997e33"
+                },
+                {
+                  "id": "bfbe8310-b960-4a57-896e-1338c342f434",
+                  "name": "Not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "description": "(Required) This field shows the EPOS company whose software is generating the request. This value should not be configurable as it will remain the same for all customers using particular EPOS software.",
+                        "key": "software-house-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "This identifies the reseller of the EPOS. This may be the same as the `software-house-id` if they are also the seller.",
+                        "key": "reseller-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/terminals/:terminalId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "terminals",
+                        ":terminalId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "terminalId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<string>\",\n  \"title\": \"<string>\",\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"traceId\": \"<string>\",\n  \"errors\": {\n    \"utab6\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"voluptate_db6\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"detail\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:08:08.000Z",
+                  "updatedAt": "2026-10-22T02:08:08.000Z",
+                  "uid": "35240-bfbe8310-b960-4a57-896e-1338c342f434"
+                }
+              ],
+              "createdAt": "2026-10-22T02:08:08.000Z",
+              "updatedAt": "2026-10-22T02:08:08.000Z",
+              "uid": "35240-618f7574-9bc8-4e80-8786-62a55aff8000"
+            }
+          ],
+          "id": "929ca094-7968-4622-9e49-4025c083de46",
+          "createdAt": "2026-10-22T02:08:08.000Z",
+          "updatedAt": "2026-10-22T02:08:08.000Z",
+          "uid": "35240-929ca094-7968-4622-9e49-4025c083de46"
+        },
+        {
+          "name": "Retrieve all terminals",
+          "id": "af771fec-0cbc-4945-8a76-fb9e7f75cd3a",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                "key": "version",
+                "value": "<date>"
+              },
+              {
+                "description": "(Required) This field shows the EPOS company whose software is generating the request. This value should not be configurable as it will remain the same for all customers using particular EPOS software.",
+                "key": "software-house-id",
+                "value": "<string>"
+              },
+              {
+                "description": "This identifies the reseller of the EPOS. This may be the same as the `software-house-id` if they are also the seller.",
+                "key": "reseller-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/terminals?statuses=Available&statuses=Available",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "terminals"
+              ],
+              "query": [
+                {
+                  "description": "A machine-readable value describing the state of the terminal. Terminals with any of the statuses provided in this parameter will be listed.",
+                  "key": "statuses",
+                  "value": "Available"
+                },
+                {
+                  "description": "A machine-readable value describing the state of the terminal. Terminals with any of the statuses provided in this parameter will be listed.",
+                  "key": "statuses",
+                  "value": "Available"
+                }
+              ]
+            },
+            "description": "Allows you to retrieve details of all terminals."
+          },
+          "response": [
+            {
+              "id": "1b7feee9-4c32-48f9-98a9-40914831104b",
+              "name": "A list of terminals.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                    "key": "version",
+                    "value": "<date>"
+                  },
+                  {
+                    "description": "(Required) This field shows the EPOS company whose software is generating the request. This value should not be configurable as it will remain the same for all customers using particular EPOS software.",
+                    "key": "software-house-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "This identifies the reseller of the EPOS. This may be the same as the `software-house-id` if they are also the seller.",
+                    "key": "reseller-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/terminals?statuses=Available",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "terminals"
+                  ],
+                  "query": [
+                    {
+                      "description": "A machine-readable value describing the state of the terminal. Terminals with any of the statuses provided in this parameter will be listed.",
+                      "key": "statuses",
+                      "value": "Available"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<string>\",\n    \"properties\": {\n      \"tid\": \"<string>\"\n    },\n    \"status\": \"Offline\",\n    \"updatedAt\": \"<dateTime>\"\n  },\n  {\n    \"id\": \"<string>\",\n    \"properties\": {\n      \"tid\": \"<string>\"\n    },\n    \"status\": \"Offline\",\n    \"updatedAt\": \"<dateTime>\"\n  }\n]",
+              "createdAt": "2026-10-22T02:08:08.000Z",
+              "updatedAt": "2026-10-22T02:08:08.000Z",
+              "uid": "35240-1b7feee9-4c32-48f9-98a9-40914831104b"
+            },
+            {
+              "id": "e78d5e52-549f-414b-aede-06041fff7e54",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                    "key": "version",
+                    "value": "<date>"
+                  },
+                  {
+                    "description": "(Required) This field shows the EPOS company whose software is generating the request. This value should not be configurable as it will remain the same for all customers using particular EPOS software.",
+                    "key": "software-house-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "This identifies the reseller of the EPOS. This may be the same as the `software-house-id` if they are also the seller.",
+                    "key": "reseller-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/terminals?statuses=Available",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "terminals"
+                  ],
+                  "query": [
+                    {
+                      "description": "A machine-readable value describing the state of the terminal. Terminals with any of the statuses provided in this parameter will be listed.",
+                      "key": "statuses",
+                      "value": "Available"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<string>\",\n  \"title\": \"<string>\",\n  \"type\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"traceId\": \"<string>\",\n  \"errors\": {\n    \"utab6\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"voluptate_db6\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"detail\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T02:08:08.000Z",
+              "updatedAt": "2026-10-22T02:08:08.000Z",
+              "uid": "35240-e78d5e52-549f-414b-aede-06041fff7e54"
+            }
+          ],
+          "createdAt": "2026-10-22T02:08:08.000Z",
+          "updatedAt": "2026-10-22T02:08:08.000Z",
+          "uid": "35240-af771fec-0cbc-4945-8a76-fb9e7f75cd3a"
+        }
+      ],
+      "id": "f67372a3-0d98-41ea-8511-366e5a57d617",
+      "createdAt": "2026-10-22T02:08:08.000Z",
+      "updatedAt": "2026-10-22T02:08:08.000Z",
+      "uid": "35240-f67372a3-0d98-41ea-8511-366e5a57d617"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.dojo.tech"
+    }
+  ]
+}

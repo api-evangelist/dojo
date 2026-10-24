@@ -1,0 +1,2649 @@
+{
+  "info": {
+    "_postman_id": "9dcce518-952d-42c2-8c7b-32a03210597c",
+    "name": "Dojo Payment intents API",
+    "description": "# Introduction\n\nThe Dojo API is a REST API, using HTTP response codes to convey status, including successful responses and errors.\n\nContact Support:\n Name: Dojo Developer Experience Team",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:07:10.000Z",
+    "updatedAt": "2026-10-22T02:07:10.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-9dcce518-952d-42c2-8c7b-32a03210597c"
+  },
+  "item": [
+    {
+      "name": "payment-intents",
+      "item": [
+        {
+          "name": "{paymentIntentId}",
+          "item": [
+            {
+              "name": "charge",
+              "item": [
+                {
+                  "name": "Charge a card",
+                  "id": "bffca6ed-b855-41c3-a8c8-1cdfa94154f4",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/charge",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        ":paymentIntentId",
+                        "charge"
+                      ],
+                      "variable": [
+                        {
+                          "id": "e999e3ae-97b1-4ae5-9741-3c68ea265e1d",
+                          "key": "paymentIntentId",
+                          "value": "<string,null>",
+                          "description": "(Required) The unique identifier of the payment intent.\n"
+                        }
+                      ]
+                    },
+                    "description": "Allows you to charge a card later. This is available for merchant-initiated transactions only."
+                  },
+                  "response": [
+                    {
+                      "id": "cc6e826b-4a9a-4f8d-9b15-dc2011fc851c",
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/charge",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "charge"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"paymentIntentId\": \"<string,null>\",\n  \"status\": \"Failed\",\n  \"message\": \"<string,null>\"\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-cc6e826b-4a9a-4f8d-9b15-dc2011fc851c"
+                    },
+                    {
+                      "id": "206ede55-cf5a-46cb-9ebe-a970ad61c280",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/charge",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "charge"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-206ede55-cf5a-46cb-9ebe-a970ad61c280"
+                    },
+                    {
+                      "id": "931e68f3-1cb2-4aa2-809e-7627cd4bcf37",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/charge",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "charge"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-931e68f3-1cb2-4aa2-809e-7627cd4bcf37"
+                    },
+                    {
+                      "id": "d334140f-0853-4aa9-ad7c-5e01e2a7ef03",
+                      "name": "Not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/charge",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "charge"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-d334140f-0853-4aa9-ad7c-5e01e2a7ef03"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:07:10.000Z",
+                  "updatedAt": "2026-10-22T02:07:10.000Z",
+                  "uid": "35240-bffca6ed-b855-41c3-a8c8-1cdfa94154f4"
+                }
+              ],
+              "id": "82fb96e1-1783-4d9a-8bec-5f7dffe7d9f7",
+              "createdAt": "2026-10-22T02:07:10.000Z",
+              "updatedAt": "2026-10-22T02:07:10.000Z",
+              "uid": "35240-82fb96e1-1783-4d9a-8bec-5f7dffe7d9f7"
+            },
+            {
+              "name": "refresh-client-session-secret",
+              "item": [
+                {
+                  "name": "Update a client session secret",
+                  "id": "e968fa9f-527d-4e88-8be2-8efefe539d4d",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/refresh-client-session-secret",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        ":paymentIntentId",
+                        "refresh-client-session-secret"
+                      ],
+                      "variable": [
+                        {
+                          "id": "e4400f72-3f70-4cac-8101-34577c220eb9",
+                          "key": "paymentIntentId",
+                          "value": "<string,null>",
+                          "description": "(Required) The unique identifier of the payment intent.\n"
+                        }
+                      ]
+                    },
+                    "description": "Updates a client session secret if the current secret key has been consumed or expired. These tokens are one-time use only. If you need to retry a payment, you must generate a new token."
+                  },
+                  "response": [
+                    {
+                      "id": "3ce166b3-1ca2-4fa6-86f6-b7f08ce6736b",
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/refresh-client-session-secret",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "refresh-client-session-secret"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string,null>\",\n  \"captureMode\": \"Auto\",\n  \"cardHolderNotPresent\": \"<boolean>\",\n  \"clientSessionSecret\": \"<string,null>\",\n  \"clientSessionSecretExpirationDate\": \"<dateTime>\",\n  \"paymentDetails\": {\n    \"transactionId\": \"<string,null>\",\n    \"transactionDateTime\": \"<string,null>\",\n    \"message\": \"<string,null>\",\n    \"paymentMethodId\": \"<string,null>\",\n    \"authCode\": \"<string,null>\",\n    \"card\": {\n      \"cardNumber\": \"<string,null>\",\n      \"cardName\": \"<string,null>\",\n      \"expiryDate\": \"<string,null>\",\n      \"cardType\": \"<string,null>\",\n      \"cardFundingType\": \"<string>\",\n      \"last4PAN\": \"<string,null>\",\n      \"entryMode\": \"<string>\",\n      \"verificationMethod\": \"<string>\"\n    },\n    \"avsResult\": \"<string,null>\"\n  },\n  \"status\": \"Authorized\",\n  \"paymentMethods\": \"<array,null>\",\n  \"amount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"tipsAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"requestedAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"totalAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"refundedAmount\": \"<integer,null-int64>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\"\n  },\n  \"requestSecurity\": {\n    \"userAgent\": \"<string,null>\",\n    \"ipAddress\": \"<string,null>\",\n    \"device\": \"<string,null>\"\n  },\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"reference\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"subtotalLineItems\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"itemLines\": \"<array,null>\",\n  \"taxLines\": \"<array,null>\",\n  \"actionLink\": {\n    \"url\": \"<uri>\",\n    \"label\": \"<string>\",\n    \"action\": \"OpenLink\",\n    \"fileName\": \"<string,null>\"\n  },\n  \"merchantConfig\": {\n    \"supportedPaymentMethods\": {\n      \"cardSchemes\": \"<array,null>\",\n      \"wallets\": \"<array,null>\"\n    }\n  },\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"autoExpireAction\": \"Capture\",\n  \"expireAt\": \"<string,null-date-time>\",\n  \"autoExpireIn\": \"<string,null>\",\n  \"metadata\": \"<object,null>\",\n  \"orderDetails\": {\n    \"availabilityDate\": \"<string,null-date-time>\",\n    \"isUpdate\": \"<boolean,null>\",\n    \"id\": \"<string,null>\",\n    \"externalId\": \"<string,null>\"\n  },\n  \"setupIntentId\": \"<string,null>\",\n  \"cashbackAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"serviceChargeAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"paymentLink\": \"<string,null-uri>\",\n  \"terminalSessionHistory\": \"<array,null>\",\n  \"captures\": \"<array,null>\"\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-3ce166b3-1ca2-4fa6-86f6-b7f08ce6736b"
+                    },
+                    {
+                      "id": "8940da13-6a28-4d80-b428-5b7b707b327c",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/refresh-client-session-secret",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "refresh-client-session-secret"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-8940da13-6a28-4d80-b428-5b7b707b327c"
+                    },
+                    {
+                      "id": "0ba6eb30-b9ab-4f69-b2f8-755fba6b22b0",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/refresh-client-session-secret",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "refresh-client-session-secret"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-0ba6eb30-b9ab-4f69-b2f8-755fba6b22b0"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:07:10.000Z",
+                  "updatedAt": "2026-10-22T02:07:10.000Z",
+                  "uid": "35240-e968fa9f-527d-4e88-8be2-8efefe539d4d"
+                }
+              ],
+              "id": "84657fd6-cbe4-4219-be24-5fd355d91077",
+              "createdAt": "2026-10-22T02:07:10.000Z",
+              "updatedAt": "2026-10-22T02:07:10.000Z",
+              "uid": "35240-84657fd6-cbe4-4219-be24-5fd355d91077"
+            },
+            {
+              "name": "tips-amount",
+              "item": [
+                {
+                  "name": "Change tips amount",
+                  "id": "53e85391-267f-4f85-98da-364633e78283",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"tipsAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/tips-amount",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        ":paymentIntentId",
+                        "tips-amount"
+                      ],
+                      "variable": [
+                        {
+                          "id": "860955e9-7a9e-443d-997f-7de89fd68e40",
+                          "key": "paymentIntentId",
+                          "value": "<string,null>",
+                          "description": "(Required) The unique identifier of the payment intent.\n"
+                        }
+                      ]
+                    },
+                    "description": "Changes tip amount for a payment intent. Available if you enabled tipping when creating the payment intent."
+                  },
+                  "response": [
+                    {
+                      "id": "373a1d60-220f-4e49-9904-b4a67195e1b2",
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tipsAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/tips-amount",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "tips-amount"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string,null>\",\n  \"captureMode\": \"Auto\",\n  \"cardHolderNotPresent\": \"<boolean>\",\n  \"clientSessionSecret\": \"<string,null>\",\n  \"clientSessionSecretExpirationDate\": \"<dateTime>\",\n  \"paymentDetails\": {\n    \"transactionId\": \"<string,null>\",\n    \"transactionDateTime\": \"<string,null>\",\n    \"message\": \"<string,null>\",\n    \"paymentMethodId\": \"<string,null>\",\n    \"authCode\": \"<string,null>\",\n    \"card\": {\n      \"cardNumber\": \"<string,null>\",\n      \"cardName\": \"<string,null>\",\n      \"expiryDate\": \"<string,null>\",\n      \"cardType\": \"<string,null>\",\n      \"cardFundingType\": \"<string>\",\n      \"last4PAN\": \"<string,null>\",\n      \"entryMode\": \"<string>\",\n      \"verificationMethod\": \"<string>\"\n    },\n    \"avsResult\": \"<string,null>\"\n  },\n  \"status\": \"Authorized\",\n  \"paymentMethods\": \"<array,null>\",\n  \"amount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"tipsAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"requestedAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"totalAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"refundedAmount\": \"<integer,null-int64>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\"\n  },\n  \"requestSecurity\": {\n    \"userAgent\": \"<string,null>\",\n    \"ipAddress\": \"<string,null>\",\n    \"device\": \"<string,null>\"\n  },\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"reference\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"subtotalLineItems\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"itemLines\": \"<array,null>\",\n  \"taxLines\": \"<array,null>\",\n  \"actionLink\": {\n    \"url\": \"<uri>\",\n    \"label\": \"<string>\",\n    \"action\": \"OpenLink\",\n    \"fileName\": \"<string,null>\"\n  },\n  \"merchantConfig\": {\n    \"supportedPaymentMethods\": {\n      \"cardSchemes\": \"<array,null>\",\n      \"wallets\": \"<array,null>\"\n    }\n  },\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"autoExpireAction\": \"Capture\",\n  \"expireAt\": \"<string,null-date-time>\",\n  \"autoExpireIn\": \"<string,null>\",\n  \"metadata\": \"<object,null>\",\n  \"orderDetails\": {\n    \"availabilityDate\": \"<string,null-date-time>\",\n    \"isUpdate\": \"<boolean,null>\",\n    \"id\": \"<string,null>\",\n    \"externalId\": \"<string,null>\"\n  },\n  \"setupIntentId\": \"<string,null>\",\n  \"cashbackAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"serviceChargeAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"paymentLink\": \"<string,null-uri>\",\n  \"terminalSessionHistory\": \"<array,null>\",\n  \"captures\": \"<array,null>\"\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-373a1d60-220f-4e49-9904-b4a67195e1b2"
+                    },
+                    {
+                      "id": "ebfcca98-598e-440a-b242-075f6d94adae",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tipsAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/tips-amount",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "tips-amount"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-ebfcca98-598e-440a-b242-075f6d94adae"
+                    },
+                    {
+                      "id": "8e40f68a-1797-4847-9503-c60f7f4e8dd9",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tipsAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/tips-amount",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "tips-amount"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-8e40f68a-1797-4847-9503-c60f7f4e8dd9"
+                    },
+                    {
+                      "id": "46b2052b-e5d9-42d2-b23e-e8620f443a35",
+                      "name": "Method not allowed",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"tipsAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/tips-amount",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "tips-amount"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Method Not Allowed",
+                      "code": 405,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-46b2052b-e5d9-42d2-b23e-e8620f443a35"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:07:10.000Z",
+                  "updatedAt": "2026-10-22T02:07:10.000Z",
+                  "uid": "35240-53e85391-267f-4f85-98da-364633e78283"
+                }
+              ],
+              "id": "0a8ec5a6-07a8-401f-be96-8d86fcc8154d",
+              "createdAt": "2026-10-22T02:07:10.000Z",
+              "updatedAt": "2026-10-22T02:07:10.000Z",
+              "uid": "35240-0a8ec5a6-07a8-401f-be96-8d86fcc8154d"
+            },
+            {
+              "name": "amount",
+              "item": [
+                {
+                  "name": "Change a payment intent amount",
+                  "id": "c59a327b-8a3c-4558-a378-2a1a081917d8",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"amount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"itemLines\": \"<array,null>\",\n  \"taxLines\": \"<array,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/amount",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        ":paymentIntentId",
+                        "amount"
+                      ],
+                      "variable": [
+                        {
+                          "id": "cca920fd-aad1-4b97-a2ad-f677572bf898",
+                          "key": "paymentIntentId",
+                          "value": "<string,null>",
+                          "description": "(Required) The unique identifier of the payment intent.\n"
+                        }
+                      ]
+                    },
+                    "description": "Changes the payment intent's amount. Available if you allow amount changes when creating the intent."
+                  },
+                  "response": [
+                    {
+                      "id": "dcb8641c-dfd8-489a-a148-650e62d4163b",
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"amount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"itemLines\": \"<array,null>\",\n  \"taxLines\": \"<array,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/amount",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "amount"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string,null>\",\n  \"captureMode\": \"Auto\",\n  \"cardHolderNotPresent\": \"<boolean>\",\n  \"clientSessionSecret\": \"<string,null>\",\n  \"clientSessionSecretExpirationDate\": \"<dateTime>\",\n  \"paymentDetails\": {\n    \"transactionId\": \"<string,null>\",\n    \"transactionDateTime\": \"<string,null>\",\n    \"message\": \"<string,null>\",\n    \"paymentMethodId\": \"<string,null>\",\n    \"authCode\": \"<string,null>\",\n    \"card\": {\n      \"cardNumber\": \"<string,null>\",\n      \"cardName\": \"<string,null>\",\n      \"expiryDate\": \"<string,null>\",\n      \"cardType\": \"<string,null>\",\n      \"cardFundingType\": \"<string>\",\n      \"last4PAN\": \"<string,null>\",\n      \"entryMode\": \"<string>\",\n      \"verificationMethod\": \"<string>\"\n    },\n    \"avsResult\": \"<string,null>\"\n  },\n  \"status\": \"Authorized\",\n  \"paymentMethods\": \"<array,null>\",\n  \"amount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"tipsAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"requestedAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"totalAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"refundedAmount\": \"<integer,null-int64>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\"\n  },\n  \"requestSecurity\": {\n    \"userAgent\": \"<string,null>\",\n    \"ipAddress\": \"<string,null>\",\n    \"device\": \"<string,null>\"\n  },\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"reference\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"subtotalLineItems\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"itemLines\": \"<array,null>\",\n  \"taxLines\": \"<array,null>\",\n  \"actionLink\": {\n    \"url\": \"<uri>\",\n    \"label\": \"<string>\",\n    \"action\": \"OpenLink\",\n    \"fileName\": \"<string,null>\"\n  },\n  \"merchantConfig\": {\n    \"supportedPaymentMethods\": {\n      \"cardSchemes\": \"<array,null>\",\n      \"wallets\": \"<array,null>\"\n    }\n  },\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"autoExpireAction\": \"Capture\",\n  \"expireAt\": \"<string,null-date-time>\",\n  \"autoExpireIn\": \"<string,null>\",\n  \"metadata\": \"<object,null>\",\n  \"orderDetails\": {\n    \"availabilityDate\": \"<string,null-date-time>\",\n    \"isUpdate\": \"<boolean,null>\",\n    \"id\": \"<string,null>\",\n    \"externalId\": \"<string,null>\"\n  },\n  \"setupIntentId\": \"<string,null>\",\n  \"cashbackAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"serviceChargeAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"paymentLink\": \"<string,null-uri>\",\n  \"terminalSessionHistory\": \"<array,null>\",\n  \"captures\": \"<array,null>\"\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-dcb8641c-dfd8-489a-a148-650e62d4163b"
+                    },
+                    {
+                      "id": "2ac89e06-8872-44c7-a942-48834b923c97",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"amount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"itemLines\": \"<array,null>\",\n  \"taxLines\": \"<array,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/amount",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "amount"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-2ac89e06-8872-44c7-a942-48834b923c97"
+                    },
+                    {
+                      "id": "8356596c-b8e0-4868-82e0-8efdb868e1cf",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"amount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"itemLines\": \"<array,null>\",\n  \"taxLines\": \"<array,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/amount",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "amount"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-8356596c-b8e0-4868-82e0-8efdb868e1cf"
+                    },
+                    {
+                      "id": "f9b29759-bf86-433e-9ecf-7e19ff9fd7b9",
+                      "name": "Method not allowed",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"amount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"itemLines\": \"<array,null>\",\n  \"taxLines\": \"<array,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/amount",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "amount"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Method Not Allowed",
+                      "code": 405,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-f9b29759-bf86-433e-9ecf-7e19ff9fd7b9"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:07:10.000Z",
+                  "updatedAt": "2026-10-22T02:07:10.000Z",
+                  "uid": "35240-c59a327b-8a3c-4558-a378-2a1a081917d8"
+                }
+              ],
+              "id": "719455ba-4127-4d8a-bdc1-2d4d5676947d",
+              "createdAt": "2026-10-22T02:07:10.000Z",
+              "updatedAt": "2026-10-22T02:07:10.000Z",
+              "uid": "35240-719455ba-4127-4d8a-bdc1-2d4d5676947d"
+            },
+            {
+              "name": "receipt",
+              "item": [
+                {
+                  "name": "Send a receipt",
+                  "id": "797a5e62-db6a-4d1f-931d-7a4a9944c606",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/receipt",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        ":paymentIntentId",
+                        "receipt"
+                      ],
+                      "variable": [
+                        {
+                          "id": "490974e4-5f75-4d31-912a-51002be8c77a",
+                          "key": "paymentIntentId",
+                          "value": "<string,null>",
+                          "description": "(Required) The unique identifier of the payment intent.\n"
+                        }
+                      ]
+                    },
+                    "description": "Sends a receipt to the email addresses you specified."
+                  },
+                  "response": [
+                    {
+                      "id": "7b7a5dd2-3f8d-4d49-8259-b2ec03e2baaf",
+                      "name": "Payment receipt requested successfully.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/receipt",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "receipt"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-7b7a5dd2-3f8d-4d49-8259-b2ec03e2baaf"
+                    },
+                    {
+                      "id": "79b62584-f0be-44dc-a7c9-c207db1d6ba0",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/receipt",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "receipt"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-79b62584-f0be-44dc-a7c9-c207db1d6ba0"
+                    },
+                    {
+                      "id": "8524c026-9fa8-4155-9f01-1e045b3f1e45",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/receipt",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "receipt"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-8524c026-9fa8-4155-9f01-1e045b3f1e45"
+                    },
+                    {
+                      "id": "2eb785c1-323f-494b-80ae-c225586c7483",
+                      "name": "Not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                            "key": "version",
+                            "value": "<date>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/payment-intents/:paymentIntentId/receipt",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "payment-intents",
+                            ":paymentIntentId",
+                            "receipt"
+                          ],
+                          "variable": [
+                            {
+                              "key": "paymentIntentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                      "createdAt": "2026-10-22T02:07:10.000Z",
+                      "updatedAt": "2026-10-22T02:07:10.000Z",
+                      "uid": "35240-2eb785c1-323f-494b-80ae-c225586c7483"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:07:10.000Z",
+                  "updatedAt": "2026-10-22T02:07:10.000Z",
+                  "uid": "35240-797a5e62-db6a-4d1f-931d-7a4a9944c606"
+                }
+              ],
+              "id": "bcc6dce8-ee43-48fa-8b8c-87660f58d3cf",
+              "createdAt": "2026-10-22T02:07:10.000Z",
+              "updatedAt": "2026-10-22T02:07:10.000Z",
+              "uid": "35240-bcc6dce8-ee43-48fa-8b8c-87660f58d3cf"
+            },
+            {
+              "name": "Retrieve a payment intent",
+              "id": "615494e0-43e3-4ac5-a68d-f409180d3e40",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                    "key": "version",
+                    "value": "<date>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/payment-intents/:paymentIntentId?returnCanceled=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payment-intents",
+                    ":paymentIntentId"
+                  ],
+                  "query": [
+                    {
+                      "description": "If the value is `true`, and the payment intent being retrieved has a status of `Canceled`, the payment intent will be returned in the response. Otherwise a 404 (not found) status code will be returned.",
+                      "key": "returnCanceled",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "dc3881a4-f8b2-4e53-b0b5-febcc830770d",
+                      "key": "paymentIntentId",
+                      "value": "<string,null>",
+                      "description": "(Required) The unique identifier of the payment intent.\n"
+                    }
+                  ]
+                },
+                "description": "Retrieves the details of a payment intent."
+              },
+              "response": [
+                {
+                  "id": "d4836512-eddb-49e3-a229-645d9cc899a5",
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/:paymentIntentId?returnCanceled=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        ":paymentIntentId"
+                      ],
+                      "query": [
+                        {
+                          "description": "If the value is `true`, and the payment intent being retrieved has a status of `Canceled`, the payment intent will be returned in the response. Otherwise a 404 (not found) status code will be returned.",
+                          "key": "returnCanceled",
+                          "value": "<boolean>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "paymentIntentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string,null>\",\n  \"captureMode\": \"Auto\",\n  \"cardHolderNotPresent\": \"<boolean>\",\n  \"clientSessionSecret\": \"<string,null>\",\n  \"clientSessionSecretExpirationDate\": \"<dateTime>\",\n  \"paymentDetails\": {\n    \"transactionId\": \"<string,null>\",\n    \"transactionDateTime\": \"<string,null>\",\n    \"message\": \"<string,null>\",\n    \"paymentMethodId\": \"<string,null>\",\n    \"authCode\": \"<string,null>\",\n    \"card\": {\n      \"cardNumber\": \"<string,null>\",\n      \"cardName\": \"<string,null>\",\n      \"expiryDate\": \"<string,null>\",\n      \"cardType\": \"<string,null>\",\n      \"cardFundingType\": \"<string>\",\n      \"last4PAN\": \"<string,null>\",\n      \"entryMode\": \"<string>\",\n      \"verificationMethod\": \"<string>\"\n    },\n    \"avsResult\": \"<string,null>\"\n  },\n  \"status\": \"Authorized\",\n  \"paymentMethods\": \"<array,null>\",\n  \"amount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"tipsAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"requestedAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"totalAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"refundedAmount\": \"<integer,null-int64>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\"\n  },\n  \"requestSecurity\": {\n    \"userAgent\": \"<string,null>\",\n    \"ipAddress\": \"<string,null>\",\n    \"device\": \"<string,null>\"\n  },\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"reference\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"subtotalLineItems\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"itemLines\": \"<array,null>\",\n  \"taxLines\": \"<array,null>\",\n  \"actionLink\": {\n    \"url\": \"<uri>\",\n    \"label\": \"<string>\",\n    \"action\": \"OpenLink\",\n    \"fileName\": \"<string,null>\"\n  },\n  \"merchantConfig\": {\n    \"supportedPaymentMethods\": {\n      \"cardSchemes\": \"<array,null>\",\n      \"wallets\": \"<array,null>\"\n    }\n  },\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"autoExpireAction\": \"Capture\",\n  \"expireAt\": \"<string,null-date-time>\",\n  \"autoExpireIn\": \"<string,null>\",\n  \"metadata\": \"<object,null>\",\n  \"orderDetails\": {\n    \"availabilityDate\": \"<string,null-date-time>\",\n    \"isUpdate\": \"<boolean,null>\",\n    \"id\": \"<string,null>\",\n    \"externalId\": \"<string,null>\"\n  },\n  \"setupIntentId\": \"<string,null>\",\n  \"cashbackAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"serviceChargeAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"paymentLink\": \"<string,null-uri>\",\n  \"terminalSessionHistory\": \"<array,null>\",\n  \"captures\": \"<array,null>\"\n}",
+                  "createdAt": "2026-10-22T02:07:10.000Z",
+                  "updatedAt": "2026-10-22T02:07:10.000Z",
+                  "uid": "35240-d4836512-eddb-49e3-a229-645d9cc899a5"
+                },
+                {
+                  "id": "1d857a8e-2133-4ecf-8699-ffafc2c075b8",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/:paymentIntentId?returnCanceled=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        ":paymentIntentId"
+                      ],
+                      "query": [
+                        {
+                          "description": "If the value is `true`, and the payment intent being retrieved has a status of `Canceled`, the payment intent will be returned in the response. Otherwise a 404 (not found) status code will be returned.",
+                          "key": "returnCanceled",
+                          "value": "<boolean>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "paymentIntentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                  "createdAt": "2026-10-22T02:07:10.000Z",
+                  "updatedAt": "2026-10-22T02:07:10.000Z",
+                  "uid": "35240-1d857a8e-2133-4ecf-8699-ffafc2c075b8"
+                },
+                {
+                  "id": "380f2b22-f239-42fb-9d3a-a3a464b8e750",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/:paymentIntentId?returnCanceled=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        ":paymentIntentId"
+                      ],
+                      "query": [
+                        {
+                          "description": "If the value is `true`, and the payment intent being retrieved has a status of `Canceled`, the payment intent will be returned in the response. Otherwise a 404 (not found) status code will be returned.",
+                          "key": "returnCanceled",
+                          "value": "<boolean>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "paymentIntentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                  "createdAt": "2026-10-22T02:07:10.000Z",
+                  "updatedAt": "2026-10-22T02:07:10.000Z",
+                  "uid": "35240-380f2b22-f239-42fb-9d3a-a3a464b8e750"
+                },
+                {
+                  "id": "e996643a-65c2-45be-9855-6b9599f2a85a",
+                  "name": "Not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/:paymentIntentId?returnCanceled=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        ":paymentIntentId"
+                      ],
+                      "query": [
+                        {
+                          "description": "If the value is `true`, and the payment intent being retrieved has a status of `Canceled`, the payment intent will be returned in the response. Otherwise a 404 (not found) status code will be returned.",
+                          "key": "returnCanceled",
+                          "value": "<boolean>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "paymentIntentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                  "createdAt": "2026-10-22T02:07:10.000Z",
+                  "updatedAt": "2026-10-22T02:07:10.000Z",
+                  "uid": "35240-e996643a-65c2-45be-9855-6b9599f2a85a"
+                }
+              ],
+              "createdAt": "2026-10-22T02:07:10.000Z",
+              "updatedAt": "2026-10-22T02:07:10.000Z",
+              "uid": "35240-615494e0-43e3-4ac5-a68d-f409180d3e40"
+            },
+            {
+              "name": "Cancel a payment intent",
+              "id": "86668cdd-a5bf-455d-8628-66a9d881c020",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                    "key": "version",
+                    "value": "<date>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/payment-intents/:paymentIntentId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payment-intents",
+                    ":paymentIntentId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "3fb61720-1489-434f-b5b8-2ec32abf89ac",
+                      "key": "paymentIntentId",
+                      "value": "<string,null>",
+                      "description": "(Required) The unique identifier of the payment intent.\n"
+                    }
+                  ]
+                },
+                "description": "Cancels a payment intent. If a payment intent's status is `Created`, it can be canceled. After cancellation, the payment intent status will change to `Canceled` and any operations will fail with an error."
+              },
+              "response": [
+                {
+                  "id": "5d130224-5855-423c-b4cc-54c97075a79a",
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/:paymentIntentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        ":paymentIntentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "paymentIntentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string,null>\",\n  \"captureMode\": \"Auto\",\n  \"cardHolderNotPresent\": \"<boolean>\",\n  \"clientSessionSecret\": \"<string,null>\",\n  \"clientSessionSecretExpirationDate\": \"<dateTime>\",\n  \"paymentDetails\": {\n    \"transactionId\": \"<string,null>\",\n    \"transactionDateTime\": \"<string,null>\",\n    \"message\": \"<string,null>\",\n    \"paymentMethodId\": \"<string,null>\",\n    \"authCode\": \"<string,null>\",\n    \"card\": {\n      \"cardNumber\": \"<string,null>\",\n      \"cardName\": \"<string,null>\",\n      \"expiryDate\": \"<string,null>\",\n      \"cardType\": \"<string,null>\",\n      \"cardFundingType\": \"<string>\",\n      \"last4PAN\": \"<string,null>\",\n      \"entryMode\": \"<string>\",\n      \"verificationMethod\": \"<string>\"\n    },\n    \"avsResult\": \"<string,null>\"\n  },\n  \"status\": \"Authorized\",\n  \"paymentMethods\": \"<array,null>\",\n  \"amount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"tipsAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"requestedAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"totalAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"refundedAmount\": \"<integer,null-int64>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\"\n  },\n  \"requestSecurity\": {\n    \"userAgent\": \"<string,null>\",\n    \"ipAddress\": \"<string,null>\",\n    \"device\": \"<string,null>\"\n  },\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"reference\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"subtotalLineItems\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"itemLines\": \"<array,null>\",\n  \"taxLines\": \"<array,null>\",\n  \"actionLink\": {\n    \"url\": \"<uri>\",\n    \"label\": \"<string>\",\n    \"action\": \"OpenLink\",\n    \"fileName\": \"<string,null>\"\n  },\n  \"merchantConfig\": {\n    \"supportedPaymentMethods\": {\n      \"cardSchemes\": \"<array,null>\",\n      \"wallets\": \"<array,null>\"\n    }\n  },\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"autoExpireAction\": \"Capture\",\n  \"expireAt\": \"<string,null-date-time>\",\n  \"autoExpireIn\": \"<string,null>\",\n  \"metadata\": \"<object,null>\",\n  \"orderDetails\": {\n    \"availabilityDate\": \"<string,null-date-time>\",\n    \"isUpdate\": \"<boolean,null>\",\n    \"id\": \"<string,null>\",\n    \"externalId\": \"<string,null>\"\n  },\n  \"setupIntentId\": \"<string,null>\",\n  \"cashbackAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"serviceChargeAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"paymentLink\": \"<string,null-uri>\",\n  \"terminalSessionHistory\": \"<array,null>\",\n  \"captures\": \"<array,null>\"\n}",
+                  "createdAt": "2026-10-22T02:07:10.000Z",
+                  "updatedAt": "2026-10-22T02:07:10.000Z",
+                  "uid": "35240-5d130224-5855-423c-b4cc-54c97075a79a"
+                },
+                {
+                  "id": "9cfa195f-ae13-449f-94c6-85b1df348a1c",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/:paymentIntentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        ":paymentIntentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "paymentIntentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                  "createdAt": "2026-10-22T02:07:10.000Z",
+                  "updatedAt": "2026-10-22T02:07:10.000Z",
+                  "uid": "35240-9cfa195f-ae13-449f-94c6-85b1df348a1c"
+                },
+                {
+                  "id": "74d19dac-c83c-4245-a56d-67af76eab056",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/:paymentIntentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        ":paymentIntentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "paymentIntentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                  "createdAt": "2026-10-22T02:07:10.000Z",
+                  "updatedAt": "2026-10-22T02:07:10.000Z",
+                  "uid": "35240-74d19dac-c83c-4245-a56d-67af76eab056"
+                },
+                {
+                  "id": "ae22bf55-da11-416a-9b60-5272f580a582",
+                  "name": "Not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/:paymentIntentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        ":paymentIntentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "paymentIntentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                  "createdAt": "2026-10-22T02:07:10.000Z",
+                  "updatedAt": "2026-10-22T02:07:10.000Z",
+                  "uid": "35240-ae22bf55-da11-416a-9b60-5272f580a582"
+                }
+              ],
+              "createdAt": "2026-10-22T02:07:10.000Z",
+              "updatedAt": "2026-10-22T02:07:10.000Z",
+              "uid": "35240-86668cdd-a5bf-455d-8628-66a9d881c020"
+            }
+          ],
+          "id": "c0c50b7e-c639-4fe1-9b0f-c6f1a9187f04",
+          "createdAt": "2026-10-22T02:07:10.000Z",
+          "updatedAt": "2026-10-22T02:07:10.000Z",
+          "uid": "35240-c0c50b7e-c639-4fe1-9b0f-c6f1a9187f04"
+        },
+        {
+          "name": "search",
+          "item": [
+            {
+              "name": "List all payment intents",
+              "id": "c4e04bcc-f660-458b-b1c1-2a7fce45e96b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                    "key": "version",
+                    "value": "<date>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"statuses\": \"<array,null>\",\n  \"startDate\": \"<string,null-date-time>\",\n  \"endDate\": \"<string,null-date-time>\",\n  \"cursor\": {\n    \"limit\": 50,\n    \"before\": \"<string,null>\",\n    \"after\": \"<string,null>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/payment-intents/search",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payment-intents",
+                    "search"
+                  ]
+                },
+                "description": "Retrieves a list of payment intents.\nResults are paginated. By default, the method returns up to 50 payment intents."
+              },
+              "response": [
+                {
+                  "id": "eab64016-1bc8-4fc2-b3da-c7f30fba4444",
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"statuses\": \"<array,null>\",\n  \"startDate\": \"<string,null-date-time>\",\n  \"endDate\": \"<string,null-date-time>\",\n  \"cursor\": {\n    \"limit\": 50,\n    \"before\": \"<string,null>\",\n    \"after\": \"<string,null>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/search",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        "search"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": \"<array,null>\",\n  \"before\": \"<string,null>\",\n  \"after\": \"<string,null>\"\n}",
+                  "createdAt": "2026-10-22T02:07:10.000Z",
+                  "updatedAt": "2026-10-22T02:07:10.000Z",
+                  "uid": "35240-eab64016-1bc8-4fc2-b3da-c7f30fba4444"
+                },
+                {
+                  "id": "917e5302-8504-4970-a6f4-5ef5a9099106",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"statuses\": \"<array,null>\",\n  \"startDate\": \"<string,null-date-time>\",\n  \"endDate\": \"<string,null-date-time>\",\n  \"cursor\": {\n    \"limit\": 50,\n    \"before\": \"<string,null>\",\n    \"after\": \"<string,null>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/search",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        "search"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                  "createdAt": "2026-10-22T02:07:10.000Z",
+                  "updatedAt": "2026-10-22T02:07:10.000Z",
+                  "uid": "35240-917e5302-8504-4970-a6f4-5ef5a9099106"
+                },
+                {
+                  "id": "0a902360-7460-4a58-87af-d9062d31452b",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                        "key": "version",
+                        "value": "<date>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"statuses\": \"<array,null>\",\n  \"startDate\": \"<string,null-date-time>\",\n  \"endDate\": \"<string,null-date-time>\",\n  \"cursor\": {\n    \"limit\": 50,\n    \"before\": \"<string,null>\",\n    \"after\": \"<string,null>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/payment-intents/search",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "payment-intents",
+                        "search"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+                  "createdAt": "2026-10-22T02:07:10.000Z",
+                  "updatedAt": "2026-10-22T02:07:10.000Z",
+                  "uid": "35240-0a902360-7460-4a58-87af-d9062d31452b"
+                }
+              ],
+              "createdAt": "2026-10-22T02:07:10.000Z",
+              "updatedAt": "2026-10-22T02:07:10.000Z",
+              "uid": "35240-c4e04bcc-f660-458b-b1c1-2a7fce45e96b"
+            }
+          ],
+          "id": "5b62b2f1-d83f-490f-961c-d1abf664b334",
+          "createdAt": "2026-10-22T02:07:10.000Z",
+          "updatedAt": "2026-10-22T02:07:10.000Z",
+          "uid": "35240-5b62b2f1-d83f-490f-961c-d1abf664b334"
+        },
+        {
+          "name": "Create a payment intent",
+          "id": "3f4af1ce-43d6-4f71-b76b-0d788e8ced63",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                "key": "version",
+                "value": "<date>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"reference\": \"<string>\",\n  \"captureMode\": \"Auto\",\n  \"tipsAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"description\": \"<string,null>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\",\n    \"secret\": \"<string,null>\",\n    \"savedCardId\": \"<string,null>\"\n  },\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"cardHolderNotPresent\": \"<boolean,null>\",\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"requestSecurity\": {\n    \"userAgent\": \"<string,null>\",\n    \"ipAddress\": \"<string,null>\",\n    \"device\": \"<string,null>\"\n  },\n  \"itemLines\": \"<array,null>\",\n  \"taxLines\": \"<array,null>\",\n  \"paymentMethods\": \"<array,null>\",\n  \"actionLink\": {\n    \"url\": \"<uri>\",\n    \"label\": \"<string>\",\n    \"action\": \"OpenLink\",\n    \"fileName\": \"<string,null>\"\n  },\n  \"expireAt\": \"<string,null-date-time>\",\n  \"autoExpireIn\": \"<string,null>\",\n  \"autoExpireAction\": \"Capture\",\n  \"metadata\": \"<object,null>\",\n  \"setupIntentId\": \"<string,null>\",\n  \"orderDetails\": {\n    \"availabilityDate\": \"<string,null-date-time>\",\n    \"isUpdate\": \"<boolean,null>\",\n    \"id\": \"<string,null>\",\n    \"externalId\": \"<string,null>\"\n  },\n  \"cashbackAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"serviceChargeAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"generateRemoteToken\": \"<boolean>\",\n  \"isNotOnlineCheckout\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/payment-intents",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "payment-intents"
+              ]
+            },
+            "description": "Creates a payment intent."
+          },
+          "response": [
+            {
+              "id": "673c6ed5-82bc-462d-8f6a-4bac19bf1812",
+              "name": "OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                    "key": "version",
+                    "value": "<date>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"reference\": \"<string>\",\n  \"captureMode\": \"Auto\",\n  \"tipsAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"description\": \"<string,null>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\",\n    \"secret\": \"<string,null>\",\n    \"savedCardId\": \"<string,null>\"\n  },\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"cardHolderNotPresent\": \"<boolean,null>\",\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"requestSecurity\": {\n    \"userAgent\": \"<string,null>\",\n    \"ipAddress\": \"<string,null>\",\n    \"device\": \"<string,null>\"\n  },\n  \"itemLines\": \"<array,null>\",\n  \"taxLines\": \"<array,null>\",\n  \"paymentMethods\": \"<array,null>\",\n  \"actionLink\": {\n    \"url\": \"<uri>\",\n    \"label\": \"<string>\",\n    \"action\": \"OpenLink\",\n    \"fileName\": \"<string,null>\"\n  },\n  \"expireAt\": \"<string,null-date-time>\",\n  \"autoExpireIn\": \"<string,null>\",\n  \"autoExpireAction\": \"Capture\",\n  \"metadata\": \"<object,null>\",\n  \"setupIntentId\": \"<string,null>\",\n  \"orderDetails\": {\n    \"availabilityDate\": \"<string,null-date-time>\",\n    \"isUpdate\": \"<boolean,null>\",\n    \"id\": \"<string,null>\",\n    \"externalId\": \"<string,null>\"\n  },\n  \"cashbackAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"serviceChargeAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"generateRemoteToken\": \"<boolean>\",\n  \"isNotOnlineCheckout\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/payment-intents",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payment-intents"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"id\": \"<string,null>\",\n  \"captureMode\": \"Auto\",\n  \"cardHolderNotPresent\": \"<boolean>\",\n  \"clientSessionSecret\": \"<string,null>\",\n  \"clientSessionSecretExpirationDate\": \"<dateTime>\",\n  \"paymentDetails\": {\n    \"transactionId\": \"<string,null>\",\n    \"transactionDateTime\": \"<string,null>\",\n    \"message\": \"<string,null>\",\n    \"paymentMethodId\": \"<string,null>\",\n    \"authCode\": \"<string,null>\",\n    \"card\": {\n      \"cardNumber\": \"<string,null>\",\n      \"cardName\": \"<string,null>\",\n      \"expiryDate\": \"<string,null>\",\n      \"cardType\": \"<string,null>\",\n      \"cardFundingType\": \"<string>\",\n      \"last4PAN\": \"<string,null>\",\n      \"entryMode\": \"<string>\",\n      \"verificationMethod\": \"<string>\"\n    },\n    \"avsResult\": \"<string,null>\"\n  },\n  \"status\": \"Authorized\",\n  \"paymentMethods\": \"<array,null>\",\n  \"amount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"tipsAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"requestedAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"totalAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"refundedAmount\": \"<integer,null-int64>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\"\n  },\n  \"requestSecurity\": {\n    \"userAgent\": \"<string,null>\",\n    \"ipAddress\": \"<string,null>\",\n    \"device\": \"<string,null>\"\n  },\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"reference\": \"<string,null>\",\n  \"description\": \"<string,null>\",\n  \"subtotalLineItems\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"itemLines\": \"<array,null>\",\n  \"taxLines\": \"<array,null>\",\n  \"actionLink\": {\n    \"url\": \"<uri>\",\n    \"label\": \"<string>\",\n    \"action\": \"OpenLink\",\n    \"fileName\": \"<string,null>\"\n  },\n  \"merchantConfig\": {\n    \"supportedPaymentMethods\": {\n      \"cardSchemes\": \"<array,null>\",\n      \"wallets\": \"<array,null>\"\n    }\n  },\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"autoExpireAction\": \"Capture\",\n  \"expireAt\": \"<string,null-date-time>\",\n  \"autoExpireIn\": \"<string,null>\",\n  \"metadata\": \"<object,null>\",\n  \"orderDetails\": {\n    \"availabilityDate\": \"<string,null-date-time>\",\n    \"isUpdate\": \"<boolean,null>\",\n    \"id\": \"<string,null>\",\n    \"externalId\": \"<string,null>\"\n  },\n  \"setupIntentId\": \"<string,null>\",\n  \"cashbackAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"serviceChargeAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"paymentLink\": \"<string,null-uri>\",\n  \"terminalSessionHistory\": \"<array,null>\",\n  \"captures\": \"<array,null>\"\n}",
+              "createdAt": "2026-10-22T02:07:10.000Z",
+              "updatedAt": "2026-10-22T02:07:10.000Z",
+              "uid": "35240-673c6ed5-82bc-462d-8f6a-4bac19bf1812"
+            },
+            {
+              "id": "2eeb4b5a-577e-444a-9810-784e3f3c99ce",
+              "name": "Bad request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                    "key": "version",
+                    "value": "<date>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"reference\": \"<string>\",\n  \"captureMode\": \"Auto\",\n  \"tipsAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"description\": \"<string,null>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\",\n    \"secret\": \"<string,null>\",\n    \"savedCardId\": \"<string,null>\"\n  },\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"cardHolderNotPresent\": \"<boolean,null>\",\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"requestSecurity\": {\n    \"userAgent\": \"<string,null>\",\n    \"ipAddress\": \"<string,null>\",\n    \"device\": \"<string,null>\"\n  },\n  \"itemLines\": \"<array,null>\",\n  \"taxLines\": \"<array,null>\",\n  \"paymentMethods\": \"<array,null>\",\n  \"actionLink\": {\n    \"url\": \"<uri>\",\n    \"label\": \"<string>\",\n    \"action\": \"OpenLink\",\n    \"fileName\": \"<string,null>\"\n  },\n  \"expireAt\": \"<string,null-date-time>\",\n  \"autoExpireIn\": \"<string,null>\",\n  \"autoExpireAction\": \"Capture\",\n  \"metadata\": \"<object,null>\",\n  \"setupIntentId\": \"<string,null>\",\n  \"orderDetails\": {\n    \"availabilityDate\": \"<string,null-date-time>\",\n    \"isUpdate\": \"<boolean,null>\",\n    \"id\": \"<string,null>\",\n    \"externalId\": \"<string,null>\"\n  },\n  \"cashbackAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"serviceChargeAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"generateRemoteToken\": \"<boolean>\",\n  \"isNotOnlineCheckout\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/payment-intents",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payment-intents"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+              "createdAt": "2026-10-22T02:07:10.000Z",
+              "updatedAt": "2026-10-22T02:07:10.000Z",
+              "uid": "35240-2eeb4b5a-577e-444a-9810-784e3f3c99ce"
+            },
+            {
+              "id": "41221da4-c573-4594-b4f4-72594939c0f3",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                    "key": "version",
+                    "value": "<date>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"reference\": \"<string>\",\n  \"captureMode\": \"Auto\",\n  \"tipsAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"description\": \"<string,null>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\",\n    \"secret\": \"<string,null>\",\n    \"savedCardId\": \"<string,null>\"\n  },\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"cardHolderNotPresent\": \"<boolean,null>\",\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"requestSecurity\": {\n    \"userAgent\": \"<string,null>\",\n    \"ipAddress\": \"<string,null>\",\n    \"device\": \"<string,null>\"\n  },\n  \"itemLines\": \"<array,null>\",\n  \"taxLines\": \"<array,null>\",\n  \"paymentMethods\": \"<array,null>\",\n  \"actionLink\": {\n    \"url\": \"<uri>\",\n    \"label\": \"<string>\",\n    \"action\": \"OpenLink\",\n    \"fileName\": \"<string,null>\"\n  },\n  \"expireAt\": \"<string,null-date-time>\",\n  \"autoExpireIn\": \"<string,null>\",\n  \"autoExpireAction\": \"Capture\",\n  \"metadata\": \"<object,null>\",\n  \"setupIntentId\": \"<string,null>\",\n  \"orderDetails\": {\n    \"availabilityDate\": \"<string,null-date-time>\",\n    \"isUpdate\": \"<boolean,null>\",\n    \"id\": \"<string,null>\",\n    \"externalId\": \"<string,null>\"\n  },\n  \"cashbackAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"serviceChargeAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"generateRemoteToken\": \"<boolean>\",\n  \"isNotOnlineCheckout\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/payment-intents",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payment-intents"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+              "createdAt": "2026-10-22T02:07:10.000Z",
+              "updatedAt": "2026-10-22T02:07:10.000Z",
+              "uid": "35240-41221da4-c573-4594-b4f4-72594939c0f3"
+            },
+            {
+              "id": "da76ac34-6da3-4c84-bef7-f87dd71e1c76",
+              "name": "Forbidden",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "(Required) The API version with format yyyy-mm-dd. The current version is `2026-02-27`.",
+                    "key": "version",
+                    "value": "<date>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"reference\": \"<string>\",\n  \"captureMode\": \"Auto\",\n  \"tipsAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"description\": \"<string,null>\",\n  \"customer\": {\n    \"id\": \"<string,null>\",\n    \"emailAddress\": \"<string,null>\",\n    \"phoneNumber\": \"<string,null>\",\n    \"secret\": \"<string,null>\",\n    \"savedCardId\": \"<string,null>\"\n  },\n  \"billingAddress\": {\n    \"countryCode\": \"<string>\",\n    \"address1\": \"<string,null>\",\n    \"address2\": \"<string,null>\",\n    \"address3\": \"<string,null>\",\n    \"address4\": \"<string,null>\",\n    \"city\": \"<string,null>\",\n    \"state\": \"<string,null>\",\n    \"postcode\": \"<string,null>\",\n    \"locality\": \"<string,null>\",\n    \"county\": \"<string,null>\"\n  },\n  \"shippingDetails\": {\n    \"name\": \"<string,null>\",\n    \"deliveryNotes\": \"<string,null>\",\n    \"address\": {\n      \"countryCode\": \"<string>\",\n      \"address1\": \"<string,null>\",\n      \"address2\": \"<string,null>\",\n      \"address3\": \"<string,null>\",\n      \"address4\": \"<string,null>\",\n      \"city\": \"<string,null>\",\n      \"state\": \"<string,null>\",\n      \"postcode\": \"<string,null>\",\n      \"locality\": \"<string,null>\",\n      \"county\": \"<string,null>\"\n    }\n  },\n  \"cardHolderNotPresent\": \"<boolean,null>\",\n  \"config\": {\n    \"title\": \"<string,null>\",\n    \"redirectUrl\": \"<string,null-uri>\",\n    \"cancelUrl\": \"<string,null-uri>\",\n    \"customerEmail\": {\n      \"collectionRequired\": false\n    },\n    \"details\": {\n      \"showTotal\": \"<boolean>\",\n      \"showReference\": \"<boolean>\"\n    },\n    \"billingAddress\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"shippingDetails\": {\n      \"collectionRequired\": \"<boolean>\"\n    },\n    \"payment\": {\n      \"customAmountAllowed\": \"<boolean>\",\n      \"tipsAllowed\": \"<boolean>\"\n    }\n  },\n  \"requestSecurity\": {\n    \"userAgent\": \"<string,null>\",\n    \"ipAddress\": \"<string,null>\",\n    \"device\": \"<string,null>\"\n  },\n  \"itemLines\": \"<array,null>\",\n  \"taxLines\": \"<array,null>\",\n  \"paymentMethods\": \"<array,null>\",\n  \"actionLink\": {\n    \"url\": \"<uri>\",\n    \"label\": \"<string>\",\n    \"action\": \"OpenLink\",\n    \"fileName\": \"<string,null>\"\n  },\n  \"expireAt\": \"<string,null-date-time>\",\n  \"autoExpireIn\": \"<string,null>\",\n  \"autoExpireAction\": \"Capture\",\n  \"metadata\": \"<object,null>\",\n  \"setupIntentId\": \"<string,null>\",\n  \"orderDetails\": {\n    \"availabilityDate\": \"<string,null-date-time>\",\n    \"isUpdate\": \"<boolean,null>\",\n    \"id\": \"<string,null>\",\n    \"externalId\": \"<string,null>\"\n  },\n  \"cashbackAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"serviceChargeAmount\": {\n    \"value\": \"<long>\",\n    \"currencyCode\": \"<string>\"\n  },\n  \"generateRemoteToken\": \"<boolean>\",\n  \"isNotOnlineCheckout\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/payment-intents",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "payment-intents"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"<string,null>\",\n  \"title\": \"<string,null>\",\n  \"status\": \"<integer,null>\",\n  \"detail\": \"<string,null>\",\n  \"instance\": \"<string,null>\",\n  \"extensions\": {\n    \"ut__\": {},\n    \"nulla04\": {},\n    \"cupidatat4b3\": {}\n  }\n}",
+              "createdAt": "2026-10-22T02:07:10.000Z",
+              "updatedAt": "2026-10-22T02:07:10.000Z",
+              "uid": "35240-da76ac34-6da3-4c84-bef7-f87dd71e1c76"
+            }
+          ],
+          "createdAt": "2026-10-22T02:07:10.000Z",
+          "updatedAt": "2026-10-22T02:07:10.000Z",
+          "uid": "35240-3f4af1ce-43d6-4f71-b76b-0d788e8ced63"
+        }
+      ],
+      "id": "cd97cc1d-9334-459e-98b0-26e5dbaf97a0",
+      "createdAt": "2026-10-22T02:07:10.000Z",
+      "updatedAt": "2026-10-22T02:07:10.000Z",
+      "uid": "35240-cd97cc1d-9334-459e-98b0-26e5dbaf97a0"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.dojo.tech"
+    }
+  ]
+}

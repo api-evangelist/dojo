@@ -1,0 +1,333 @@
+{
+  "info": {
+    "_postman_id": "4ab8d57c-a1b6-4c9f-a264-06a967ab1574",
+    "name": "EPOS Data API (REST) Tables API",
+    "description": "REST contract that an external POS/EPOS system implements so Dojo products can\nfetch and update commerce entities (Orders, Tables, Areas, Parties, Reservations)\nand record payments.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:07:45.000Z",
+    "updatedAt": "2026-10-22T02:07:46.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-4ab8d57c-a1b6-4c9f-a264-06a967ab1574"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "tables",
+          "item": [
+            {
+              "name": "search",
+              "item": [
+                {
+                  "name": "Search tables",
+                  "id": "13b6e876-fc81-4221-8fe9-e25585b7e4cc",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "The ID of the waiter making the request, if known",
+                        "key": "waiter-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The dojo product making the request, if known.",
+                        "key": "dojo-requesting-product",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The ID of the device making the request, if known",
+                        "key": "device-id",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "The device making the request, if known",
+                        "key": "device-type",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cursor\": {\n    \"limit\": \"<integer>\",\n    \"before\": \"<string>\",\n    \"after\": \"<string>\"\n  },\n  \"areaId\": \"<string>\",\n  \"waiterId\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/tables/search",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "tables",
+                        "search"
+                      ]
+                    },
+                    "description": "Search through tables on the EPOS. Capability: `SearchTables`"
+                  },
+                  "response": [
+                    {
+                      "id": "00742dd8-0e12-4a69-8be9-ed1466000d28",
+                      "name": "Ok",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "The ID of the waiter making the request, if known",
+                            "key": "waiter-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The dojo product making the request, if known.",
+                            "key": "dojo-requesting-product",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The ID of the device making the request, if known",
+                            "key": "device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The device making the request, if known",
+                            "key": "device-type",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"cursor\": {\n    \"limit\": \"<integer>\",\n    \"before\": \"<string>\",\n    \"after\": \"<string>\"\n  },\n  \"areaId\": \"<string>\",\n  \"waiterId\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/tables/search",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "tables",
+                            "search"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"data\": [\n      {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"maxCovers\": \"<integer>\",\n        \"areaId\": \"<string>\",\n        \"waiterIds\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"maxCovers\": \"<integer>\",\n        \"areaId\": \"<string>\",\n        \"waiterIds\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ],\n    \"before\": \"<string>\",\n    \"after\": \"<string>\"\n  },\n  {\n    \"data\": [\n      {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"maxCovers\": \"<integer>\",\n        \"areaId\": \"<string>\",\n        \"waiterIds\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"maxCovers\": \"<integer>\",\n        \"areaId\": \"<string>\",\n        \"waiterIds\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ],\n    \"before\": \"<string>\",\n    \"after\": \"<string>\"\n  }\n]",
+                      "createdAt": "2026-10-22T02:07:46.000Z",
+                      "updatedAt": "2026-10-22T02:07:46.000Z",
+                      "uid": "35240-00742dd8-0e12-4a69-8be9-ed1466000d28"
+                    },
+                    {
+                      "id": "cf318154-2fdb-4fdd-8d6d-f86e58f618c3",
+                      "name": "Client Error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "The ID of the waiter making the request, if known",
+                            "key": "waiter-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The dojo product making the request, if known.",
+                            "key": "dojo-requesting-product",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The ID of the device making the request, if known",
+                            "key": "device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The device making the request, if known",
+                            "key": "device-type",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"cursor\": {\n    \"limit\": \"<integer>\",\n    \"before\": \"<string>\",\n    \"after\": \"<string>\"\n  },\n  \"areaId\": \"<string>\",\n  \"waiterId\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/tables/search",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "tables",
+                            "search"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errorType\": \"NotFound\",\n  \"debugMessage\": \"<string>\",\n  \"traceId\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:07:46.000Z",
+                      "updatedAt": "2026-10-22T02:07:46.000Z",
+                      "uid": "35240-cf318154-2fdb-4fdd-8d6d-f86e58f618c3"
+                    },
+                    {
+                      "id": "b7ebdbe6-a742-4987-b68d-fd8645477a37",
+                      "name": "Server Error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "The ID of the waiter making the request, if known",
+                            "key": "waiter-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The dojo product making the request, if known.",
+                            "key": "dojo-requesting-product",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The ID of the device making the request, if known",
+                            "key": "device-id",
+                            "value": "<string>"
+                          },
+                          {
+                            "description": "The device making the request, if known",
+                            "key": "device-type",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"cursor\": {\n    \"limit\": \"<integer>\",\n    \"before\": \"<string>\",\n    \"after\": \"<string>\"\n  },\n  \"areaId\": \"<string>\",\n  \"waiterId\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/tables/search",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "tables",
+                            "search"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errorType\": \"NotFound\",\n  \"debugMessage\": \"<string>\",\n  \"traceId\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T02:07:46.000Z",
+                      "updatedAt": "2026-10-22T02:07:46.000Z",
+                      "uid": "35240-b7ebdbe6-a742-4987-b68d-fd8645477a37"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:07:46.000Z",
+                  "updatedAt": "2026-10-22T02:07:46.000Z",
+                  "uid": "35240-13b6e876-fc81-4221-8fe9-e25585b7e4cc"
+                }
+              ],
+              "id": "b101af6b-44ec-451c-bf3f-bbda6933058f",
+              "createdAt": "2026-10-22T02:07:46.000Z",
+              "updatedAt": "2026-10-22T02:07:46.000Z",
+              "uid": "35240-b101af6b-44ec-451c-bf3f-bbda6933058f"
+            }
+          ],
+          "id": "faa46261-378f-473c-b85d-bf4073a61b7e",
+          "createdAt": "2026-10-22T02:07:46.000Z",
+          "updatedAt": "2026-10-22T02:07:46.000Z",
+          "uid": "35240-faa46261-378f-473c-b85d-bf4073a61b7e"
+        }
+      ],
+      "id": "d10f4181-89e0-4c12-a970-fe899b342f92",
+      "createdAt": "2026-10-22T02:07:46.000Z",
+      "updatedAt": "2026-10-22T02:07:46.000Z",
+      "uid": "35240-d10f4181-89e0-4c12-a970-fe899b342f92"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://your-epos.example.com"
+    }
+  ]
+}

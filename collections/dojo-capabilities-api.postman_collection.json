@@ -1,0 +1,595 @@
+{
+  "info": {
+    "_postman_id": "b5e30a63-a7e1-49b4-aa76-b8e287fc427c",
+    "name": "Dojo Capabilities API",
+    "description": "# Introduction\n\nThe Dojo API is a REST API, using HTTP response codes to convey status, including successful responses and errors.\n\nContact Support:\n Name: Dojo Developer Experience Team",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:06:18.000Z",
+    "updatedAt": "2026-10-22T02:06:19.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-b5e30a63-a7e1-49b4-aa76-b8e287fc427c"
+  },
+  "item": [
+    {
+      "name": "epos",
+      "item": [
+        {
+          "name": "integrations",
+          "item": [
+            {
+              "name": "rest",
+              "item": [
+                {
+                  "name": "Get registered REST integrations",
+                  "id": "4381ac49-dc7c-471e-ac57-86fa9a8bbc55",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/epos/integrations/rest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "epos",
+                        "integrations",
+                        "rest"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "b1008a7a-6986-4472-9786-ce2cc9594789",
+                      "name": "A list of registered REST integrations",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/epos/integrations/rest",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "epos",
+                            "integrations",
+                            "rest"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"capabilities\": [\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      }\n    ],\n    \"auth\": {\n      \"authType\": \"basic\",\n      \"basic\": {\n        \"username\": \"<string>\"\n      }\n    },\n    \"url\": \"<string>\",\n    \"createdAt\": \"<dateTime>\"\n  },\n  {\n    \"capabilities\": [\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      }\n    ],\n    \"auth\": {\n      \"authType\": \"basic\",\n      \"basic\": {\n        \"username\": \"<string>\"\n      }\n    },\n    \"url\": \"<string>\",\n    \"createdAt\": \"<dateTime>\"\n  }\n]",
+                      "createdAt": "2026-10-22T02:06:19.000Z",
+                      "updatedAt": "2026-10-22T02:06:19.000Z",
+                      "uid": "35240-b1008a7a-6986-4472-9786-ce2cc9594789"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:06:19.000Z",
+                  "updatedAt": "2026-10-22T02:06:19.000Z",
+                  "uid": "35240-4381ac49-dc7c-471e-ac57-86fa9a8bbc55"
+                },
+                {
+                  "name": "Register a new REST integration",
+                  "id": "46846383-119d-4708-bd0c-afaf1dbb1308",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"capabilities\": [\n    {\n      \"name\": \"<string>\",\n      \"version\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"version\": \"<string>\"\n    }\n  ],\n  \"auth\": {\n    \"authType\": \"basic\",\n    \"basic\": {\n      \"username\": \"<string>\",\n      \"password\": \"<string>\"\n    }\n  },\n  \"url\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/epos/integrations/rest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "epos",
+                        "integrations",
+                        "rest"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "8be31ddb-fd65-4024-b8f5-3cd65bc678fa",
+                      "name": "Successful operation",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"capabilities\": [\n    {\n      \"name\": \"<string>\",\n      \"version\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"version\": \"<string>\"\n    }\n  ],\n  \"auth\": {\n    \"authType\": \"basic\",\n    \"basic\": {\n      \"username\": \"<string>\",\n      \"password\": \"<string>\"\n    }\n  },\n  \"url\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/epos/integrations/rest",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "epos",
+                            "integrations",
+                            "rest"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"capabilities\": [\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      }\n    ],\n    \"auth\": {\n      \"authType\": \"basic\",\n      \"basic\": {\n        \"username\": \"<string>\"\n      }\n    },\n    \"url\": \"<string>\",\n    \"createdAt\": \"<dateTime>\"\n  },\n  {\n    \"capabilities\": [\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      }\n    ],\n    \"auth\": {\n      \"authType\": \"basic\",\n      \"basic\": {\n        \"username\": \"<string>\"\n      }\n    },\n    \"url\": \"<string>\",\n    \"createdAt\": \"<dateTime>\"\n  }\n]",
+                      "createdAt": "2026-10-22T02:06:19.000Z",
+                      "updatedAt": "2026-10-22T02:06:19.000Z",
+                      "uid": "35240-8be31ddb-fd65-4024-b8f5-3cd65bc678fa"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:06:19.000Z",
+                  "updatedAt": "2026-10-22T02:06:19.000Z",
+                  "uid": "35240-46846383-119d-4708-bd0c-afaf1dbb1308"
+                }
+              ],
+              "id": "f296d614-62c8-41fe-83ce-2937e364b22b",
+              "createdAt": "2026-10-22T02:06:19.000Z",
+              "updatedAt": "2026-10-22T02:06:19.000Z",
+              "uid": "35240-f296d614-62c8-41fe-83ce-2937e364b22b"
+            },
+            {
+              "name": "ws",
+              "item": [
+                {
+                  "name": "Get registered WebSocket integrations",
+                  "id": "b89bf757-fe10-46fc-ada1-96bac398448c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/epos/integrations/ws",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "epos",
+                        "integrations",
+                        "ws"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "984c1375-88d8-4cda-84f0-f39b593c0af5",
+                      "name": "Get all the WebSocket integrations registered to this account.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/epos/integrations/ws",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "epos",
+                            "integrations",
+                            "ws"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"capabilities\": [\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      }\n    ],\n    \"createdAt\": \"<dateTime>\"\n  },\n  {\n    \"capabilities\": [\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      }\n    ],\n    \"createdAt\": \"<dateTime>\"\n  }\n]",
+                      "createdAt": "2026-10-22T02:06:19.000Z",
+                      "updatedAt": "2026-10-22T02:06:19.000Z",
+                      "uid": "35240-984c1375-88d8-4cda-84f0-f39b593c0af5"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:06:19.000Z",
+                  "updatedAt": "2026-10-22T02:06:19.000Z",
+                  "uid": "35240-b89bf757-fe10-46fc-ada1-96bac398448c"
+                },
+                {
+                  "name": "Register a new WebSocket integration",
+                  "id": "a6c6a8ee-494a-45bb-88c1-f9ab41ca8529",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"capabilities\": [\n    {\n      \"name\": \"<string>\",\n      \"version\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"version\": \"<string>\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/epos/integrations/ws",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "epos",
+                        "integrations",
+                        "ws"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "dc43ef88-9383-4bc8-9d00-38b74e783805",
+                      "name": "Successful operation",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"capabilities\": [\n    {\n      \"name\": \"<string>\",\n      \"version\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"version\": \"<string>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/epos/integrations/ws",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "epos",
+                            "integrations",
+                            "ws"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"capabilities\": [\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      }\n    ],\n    \"createdAt\": \"<dateTime>\"\n  },\n  {\n    \"capabilities\": [\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      }\n    ],\n    \"createdAt\": \"<dateTime>\"\n  }\n]",
+                      "createdAt": "2026-10-22T02:06:19.000Z",
+                      "updatedAt": "2026-10-22T02:06:19.000Z",
+                      "uid": "35240-dc43ef88-9383-4bc8-9d00-38b74e783805"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:06:19.000Z",
+                  "updatedAt": "2026-10-22T02:06:19.000Z",
+                  "uid": "35240-a6c6a8ee-494a-45bb-88c1-f9ab41ca8529"
+                }
+              ],
+              "id": "593367ca-f4b0-4a02-9290-797dcb324da4",
+              "createdAt": "2026-10-22T02:06:19.000Z",
+              "updatedAt": "2026-10-22T02:06:19.000Z",
+              "uid": "35240-593367ca-f4b0-4a02-9290-797dcb324da4"
+            },
+            {
+              "name": "dojo",
+              "item": [
+                {
+                  "name": "Get epos integrations dojo",
+                  "id": "7552f8ed-c727-4a33-af8b-74b64c9f4d20",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/epos/integrations/dojo",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "epos",
+                        "integrations",
+                        "dojo"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "df38948e-4894-4798-859f-6e272211722e",
+                      "name": "All the dojo managed integrations registered for this account",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "Authorization",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/epos/integrations/dojo",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "epos",
+                            "integrations",
+                            "dojo"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"capabilities\": [\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      }\n    ],\n    \"createdAt\": \"<dateTime>\"\n  },\n  {\n    \"capabilities\": [\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"version\": \"<string>\",\n        \"updatedAt\": \"<dateTime>\"\n      }\n    ],\n    \"createdAt\": \"<dateTime>\"\n  }\n]",
+                      "createdAt": "2026-10-22T02:06:19.000Z",
+                      "updatedAt": "2026-10-22T02:06:19.000Z",
+                      "uid": "35240-df38948e-4894-4798-859f-6e272211722e"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:06:19.000Z",
+                  "updatedAt": "2026-10-22T02:06:19.000Z",
+                  "uid": "35240-7552f8ed-c727-4a33-af8b-74b64c9f4d20"
+                }
+              ],
+              "id": "db7a3bab-cb08-4319-b419-824d82e82234",
+              "createdAt": "2026-10-22T02:06:19.000Z",
+              "updatedAt": "2026-10-22T02:06:19.000Z",
+              "uid": "35240-db7a3bab-cb08-4319-b419-824d82e82234"
+            },
+            {
+              "name": "Get all registered integrations",
+              "id": "0723979f-51c2-4b83-857a-39506d3e3e6b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/epos/integrations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "epos",
+                    "integrations"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "d4fb4185-87ee-42de-9d88-1b145a4620e0",
+                  "name": "All the registered integrations for this account",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "Authorization",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/epos/integrations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "epos",
+                        "integrations"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"restIntegrations\": [\n    {\n      \"capabilities\": [\n        {\n          \"name\": \"<string>\",\n          \"version\": \"<string>\",\n          \"updatedAt\": \"<dateTime>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"version\": \"<string>\",\n          \"updatedAt\": \"<dateTime>\"\n        }\n      ],\n      \"auth\": {\n        \"authType\": \"basic\",\n        \"basic\": {\n          \"username\": \"<string>\"\n        }\n      },\n      \"url\": \"<string>\",\n      \"createdAt\": \"<dateTime>\"\n    },\n    {\n      \"capabilities\": [\n        {\n          \"name\": \"<string>\",\n          \"version\": \"<string>\",\n          \"updatedAt\": \"<dateTime>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"version\": \"<string>\",\n          \"updatedAt\": \"<dateTime>\"\n        }\n      ],\n      \"auth\": {\n        \"authType\": \"basic\",\n        \"basic\": {\n          \"username\": \"<string>\"\n        }\n      },\n      \"url\": \"<string>\",\n      \"createdAt\": \"<dateTime>\"\n    }\n  ],\n  \"wsIntegrations\": [\n    {\n      \"capabilities\": [\n        {\n          \"name\": \"<string>\",\n          \"version\": \"<string>\",\n          \"updatedAt\": \"<dateTime>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"version\": \"<string>\",\n          \"updatedAt\": \"<dateTime>\"\n        }\n      ],\n      \"createdAt\": \"<dateTime>\"\n    },\n    {\n      \"capabilities\": [\n        {\n          \"name\": \"<string>\",\n          \"version\": \"<string>\",\n          \"updatedAt\": \"<dateTime>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"version\": \"<string>\",\n          \"updatedAt\": \"<dateTime>\"\n        }\n      ],\n      \"createdAt\": \"<dateTime>\"\n    }\n  ],\n  \"dojoManagedIntegrations\": [\n    {\n      \"capabilities\": [\n        {\n          \"name\": \"<string>\",\n          \"version\": \"<string>\",\n          \"updatedAt\": \"<dateTime>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"version\": \"<string>\",\n          \"updatedAt\": \"<dateTime>\"\n        }\n      ],\n      \"createdAt\": \"<dateTime>\"\n    },\n    {\n      \"capabilities\": [\n        {\n          \"name\": \"<string>\",\n          \"version\": \"<string>\",\n          \"updatedAt\": \"<dateTime>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"version\": \"<string>\",\n          \"updatedAt\": \"<dateTime>\"\n        }\n      ],\n      \"createdAt\": \"<dateTime>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T02:06:19.000Z",
+                  "updatedAt": "2026-10-22T02:06:19.000Z",
+                  "uid": "35240-d4fb4185-87ee-42de-9d88-1b145a4620e0"
+                }
+              ],
+              "createdAt": "2026-10-22T02:06:19.000Z",
+              "updatedAt": "2026-10-22T02:06:19.000Z",
+              "uid": "35240-0723979f-51c2-4b83-857a-39506d3e3e6b"
+            }
+          ],
+          "id": "95aa54fd-47c0-4c32-b960-e8fb6809176c",
+          "createdAt": "2026-10-22T02:06:19.000Z",
+          "updatedAt": "2026-10-22T02:06:19.000Z",
+          "uid": "35240-95aa54fd-47c0-4c32-b960-e8fb6809176c"
+        }
+      ],
+      "id": "f510a7be-2c33-49d8-b701-ecf1461a7f62",
+      "createdAt": "2026-10-22T02:06:19.000Z",
+      "updatedAt": "2026-10-22T02:06:19.000Z",
+      "uid": "35240-f510a7be-2c33-49d8-b701-ecf1461a7f62"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.dojo.tech"
+    }
+  ]
+}
