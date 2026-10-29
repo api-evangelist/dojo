@@ -1,4 +1,4 @@
-# Dojo (dojo)
+# Dojo
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,88 +64,178 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Dojo is a United Kingdom payments company (Paymentsense trading as Dojo, headquartered in London) that provides card acquiring and payment processing for in-person, online, and omnichannel merchants. It combines Dojo card machines and terminals, a payment gateway, and merchant tooling into a single acquirer-processor stack aimed at UK small and mid-market businesses and hospitality. Dojo is genuinely API-native, publishing a public developer portal at [docs.dojo.tech](https://docs.dojo.tech) with a REST API served from `https://api.dojo.tech`.
+Dojo is a United Kingdom payments company (Paymentsense trading as Dojo, headquartered in London) that provides card acquiring and payment processing for in-person, online, and omnichannel merchants. It combines Dojo card machines and terminals, a payment gateway, and merchant tooling (bookings, EPOS integrations, business banking-style accounts) into a single acquirer-processor stack aimed at UK small and mid-market businesses and hospitality. Dojo is genuinely API-native and publishes a public developer portal at docs.dojo.tech with a REST API for payment intents, customers, refunds, captures, terminals, and webhooks, alongside separate specs for transactions, EPOS data ingestion, and Tap to Pay on iPhone. Authentication is a secret API key sent in the Authorization header (sandbox sk_sandbox_ and production sk_prod_ prefixes), and the platform supports webhook event subscriptions. Positioned within the UK's dense card-acquiring and PSP cluster alongside players like Checkout.com and SumUp.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/dojo/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/dojo/refs/heads/main/apis.yml)
+**Areas:** Payments · United Kingdom · Payment Gateway · Payment Processing · Acquiring · Card Payments · In-Person Payments · Point-of-Sale · Webhook · Real-Time · Payment Terminals
 
-## Tags
+## Dojo on APIs.io
 
-- Payments
-- United Kingdom
-- Payment Gateway
-- Payment Processing
-- Acquiring
-- Card Payments
-- In-Person Payments
-- Terminals
-- Point of Sale
-- Webhooks
+Everything profiled for Dojo is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/dojo/](https://apis.io/providers/dojo/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (19)
 
-- **Created:** 2026-07-24
-- **Modified:** 2026-07-24
+- [Dojo Areas API](https://apis.io/apis/dojo/dojo-areas-api/) — The Areas API from Dojo — 1 operation(s) for areas.
+- [Dojo Capabilities API](https://apis.io/apis/dojo/dojo-capabilities-api/) — Register your REST and WebSockets endpoints.
+- [Dojo Captures API](https://apis.io/apis/dojo/dojo-captures-api/) — Allows you to capture the full payment amount or part of the amount. **Documentation**: [Captures](../../payments/manage-payments/capture)
+- [Dojo Customers API](https://apis.io/apis/dojo/dojo-customers-api/) — Allows to create and manage a customer of your business.
+- [Dojo Events API](https://apis.io/apis/dojo/dojo-events-api/) — The Events API from Dojo — 1 operation(s) for events.
+- [Dojo Flows API](https://apis.io/apis/dojo/dojo-flows-api/) — The Flows API from Dojo — 2 operation(s) for flows.
+- [Dojo Orders API](https://apis.io/apis/dojo/dojo-orders-api/) — The Orders API from Dojo — 7 operation(s) for orders.
+- [Dojo Parties API](https://apis.io/apis/dojo/dojo-parties-api/) — The Parties API from Dojo — 3 operation(s) for parties.
+- [Dojo Payment intents API](https://apis.io/apis/dojo/dojo-payment-intents-api/) — Allows you to take and manage payments. **Documentation**: [Payment intents](../../payments/manage-payments/payment-intent)
+- [Dojo Refunds API](https://apis.io/apis/dojo/dojo-refunds-api/) — Allows you to create a refund for a captured payment. **Documentation**: [Refunds](/payments/manage-payments/cancelling-payments/refund)
+- [Dojo Reservations API](https://apis.io/apis/dojo/dojo-reservations-api/) — The Reservations API from Dojo — 3 operation(s) for reservations.
+- [Dojo Reversal API](https://apis.io/apis/dojo/dojo-reversal-api/) — Allows you to create a reversal for payments. **Documentation**: [Reversal](../../payments/manage-payments/cancelling-payments/reversal)
+- [Dojo Setup intents API](https://apis.io/apis/dojo/dojo-setup-intents-api/) — Allows you to setup a card for future payments. **Documentation**: [Setup intent](../payments/manage-payments/setup-intent)
+- [Dojo Tables API](https://apis.io/apis/dojo/dojo-tables-api/) — The Tables API from Dojo — 1 operation(s) for tables.
+- [Dojo Tap to Pay on iPhone API](https://apis.io/apis/dojo/dojo-tap-to-pay-on-iphone-api/) — Allows you to create a terminal secret value.
+- [Dojo Terminal sessions API](https://apis.io/apis/dojo/dojo-terminal-sessions-api/) — Allows you to manage sessions on the terminal.
+- [Dojo Terminals API](https://apis.io/apis/dojo/dojo-terminals-api/) — Allows you to manage payments on the terminal. **Documentation**: [Terminals](../payments/accept-payments/in-person-payments/pay-at-counter/terminals)
+- [Dojo Transactions API](https://apis.io/apis/dojo/dojo-transactions-api/) — Allows you to take and manage payments.
+- [Dojo Webhooks API](https://apis.io/apis/dojo/dojo-webhooks-api/) — Webhooks notify you when a specific event has occurred. **Documentation**: [Webhooks](../../development-resources/webhooks)
 
-## APIs
+### Published properties
 
-### Dojo API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Core REST payments API for accepting and managing card payments: payment intents, refunds, reversals, captures, customers, setup intents, terminals, terminal sessions, capabilities, and webhook event subscriptions. Authenticates with a secret API key in the `Authorization` header. Version 2026-02-27 (40 paths).
+#### AsyncAPI (1)
 
-- **Human URL:** [https://docs.dojo.tech/api](https://docs.dojo.tech/api)
-- **Base URL:** `https://api.dojo.tech`
-- [OpenAPI](openapi/dojo-api.json)
-- [Documentation](https://docs.dojo.tech/docs)
-- [API Reference](https://docs.dojo.tech/api)
+Event-driven and webhook contracts.
 
-### Dojo Transaction API
+- [EPOS Data API (WebSockets)](https://apis.io/asyncapis/dojo/dojo-epos-data-asyncapi/)
 
-Retrieves processed card transaction records for a merchant.
+#### Event channels (22)
 
-- **Human URL:** [https://docs.dojo.tech/transactions/api](https://docs.dojo.tech/transactions/api)
-- **Base URL:** `https://api.dojo.tech`
-- [OpenAPI](openapi/dojo-transactions-api.json)
+Individual events and webhooks the provider emits.
 
-### Dojo EPOS Data API
+- [CancelOrderByIdV1](https://apis.io/channels/dojo/cancelorderbyidv1/)
+- [CreateOrderLockV1](https://apis.io/channels/dojo/createorderlockv1/)
+- [CreateOrderV1](https://apis.io/channels/dojo/createorderv1/)
+- [CreatePartyV1](https://apis.io/channels/dojo/createpartyv1/)
+- [CreateReservationV1](https://apis.io/channels/dojo/createreservationv1/)
+- [DeleteOrderLockV1](https://apis.io/channels/dojo/deleteorderlockv1/)
+- [DeletePartyByIdV1](https://apis.io/channels/dojo/deletepartybyidv1/)
+- [DeleteReservationByIdV1](https://apis.io/channels/dojo/deletereservationbyidv1/)
+- [ExtendOrderLockV1](https://apis.io/channels/dojo/extendorderlockv1/)
+- [GetOrderBillByIdV1](https://apis.io/channels/dojo/getorderbillbyidv1/)
+- [GetOrderByIdV1](https://apis.io/channels/dojo/getorderbyidv1/)
+- [GetPartyByIdV1](https://apis.io/channels/dojo/getpartybyidv1/)
+- [GetReservationByIdV1](https://apis.io/channels/dojo/getreservationbyidv1/)
+- [HandleEventV1](https://apis.io/channels/dojo/handleeventv1/)
+- [ListAreasV1](https://apis.io/channels/dojo/listareasv1/)
+- [RecordOrderPaymentByIdV1](https://apis.io/channels/dojo/recordorderpaymentbyidv1/)
+- [SearchOrdersV1](https://apis.io/channels/dojo/searchordersv1/)
+- [SearchPartiesV1](https://apis.io/channels/dojo/searchpartiesv1/)
+- [SearchReservationsV1](https://apis.io/channels/dojo/searchreservationsv1/)
+- [SearchTablesV1](https://apis.io/channels/dojo/searchtablesv1/)
+- [UpdatePartyV1](https://apis.io/channels/dojo/updatepartyv1/)
+- [UpdateReservationV1](https://apis.io/channels/dojo/updatereservationv1/)
 
-A REST contract a merchant's EPOS (point-of-sale) system implements so Dojo can read orders, tables, areas, parties, and reservations for hospitality integrations. The server is merchant-hosted. Version 1.0 (15 paths).
+#### MCP servers (1)
 
-- **Human URL:** [https://docs.dojo.tech/epos-data/api](https://docs.dojo.tech/epos-data/api)
-- [OpenAPI](openapi/dojo-epos-data-api.json)
+Model Context Protocol servers that expose the API to agents.
 
-### Dojo Tap to Pay on iPhone API
+- [dojo](https://apis.io/servers/dojo/dojo/)
 
-Supports Dojo's Tap to Pay on iPhone in-person acceptance flow.
+#### Agentic access (1)
 
-- **Human URL:** [https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api](https://docs.dojo.tech/payments/accept-payments/in-person-payments/tap-to-pay/tap-to-pay-on-iphone/api)
-- **Base URL:** `https://api.dojo.tech`
-- [OpenAPI](openapi/dojo-tap-to-pay-on-iphone-api.json)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### Dojo EPOS Tester Tool API
+- [Dojo Agentic Access](https://apis.io/agentic-access/dojo/dojo-agentic-access/)
 
-Helper API for validating an EPOS integration against Dojo's EPOS Data contract.
+#### Collections (5)
 
-- **Human URL:** [https://docs.dojo.tech/epos-tester-tool/api](https://docs.dojo.tech/epos-tester-tool/api)
-- [OpenAPI](openapi/dojo-epos-tester-tool-api.json)
+Postman and Open Collection request collections.
 
-## Common Properties
+- [Dojo API](https://apis.io/collections/dojo/open-dojo-api/)
+- [EPOS Data API (REST)](https://apis.io/collections/dojo/open-dojo-epos-data-api/)
+- [EPOS Tester](https://apis.io/collections/dojo/open-dojo-epos-tester-tool-api/)
+- [Tap to Pay on iPhone](https://apis.io/collections/dojo/open-dojo-tap-to-pay-on-iphone-api/)
+- [Transaction API](https://apis.io/collections/dojo/open-dojo-transactions-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Dojo Api Overlay](https://apis.io/overlays/dojo/dojo-api-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Dojo Authentication](https://apis.io/security/dojo/dojo-authentication/)
+- [Dojo Domain Security](https://apis.io/security/dojo/dojo-domain-security/)
+- [Dojo Vulnerability Disclosure](https://apis.io/security/dojo/dojo-vulnerability-disclosure/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://dojo.tech/)
-- [Developer Portal](https://docs.dojo.tech)
 - [Documentation](https://docs.dojo.tech/docs)
-- [API Reference](https://docs.dojo.tech/api)
-- [Getting Started](https://docs.dojo.tech/get-started)
-- [Postman](https://docs.dojo.tech/development-resources/postman)
-- [Change Log](https://docs.dojo.tech/changelog)
-- [Status Page](https://status.dojo.tech)
-- [GitHub Organization](https://github.com/dojo-engineering)
-- [LinkedIn](https://www.linkedin.com/company/dojo-tech)
+- [Getting started](https://docs.dojo.tech/get-started)
+- [API reference](https://docs.dojo.tech/api)
+- [Pricing](https://dojo.tech/pricing/)
+- [Sign up](https://developer.dojo.tech/signup)
+- [Support](https://support.dojo.tech/hc/en-gb)
+- [Changelog](https://docs.dojo.tech/changelog)
+- [Blog](https://dojo.tech/blog/)
+- [Terms of service](https://docs.dojo.tech/development-resources/terms-and-conditions)
+- [Privacy policy](https://dojo.tech/legal/privacy-policy/)
+- [GitHub](https://github.com/dojo-engineering)
+- [Status](https://status.dojo.tech)
 
-## Authentication
+## API Evangelist rating
 
-Secret API key sent in the `Authorization` header. Sandbox keys are prefixed `sk_sandbox_` and production keys `sk_prod_`; keys are generated in the Dojo developer portal.
+**Kin Score 53.6** — developing · rubric 0.25.0 · scored 2026-10-23
 
-## Maintainers
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 60.6 |
+| Contract governance | 4.5 |
+| Operational transparency | 52.6 |
+| Developer ergonomics | 61.3 |
+| Access clarity | 38.2 |
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Agent readiness 35.8** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | verified |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | — |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 27.7** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/dojo/](https://apis.io/providers/dojo/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Dojo: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/dojo/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
